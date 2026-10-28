@@ -36,7 +36,7 @@ fi
 
 echo "== server: restart"
 ssh "$SERVER" "cd $APP/backend && if pm2 describe nenalet >/dev/null 2>&1; then pm2 restart nenalet --update-env >/dev/null;
-  else pm2 start .venv/bin/uvicorn --name nenalet --cwd $APP/backend -- nenalet.app:app --host 127.0.0.1 --port $PORT >/dev/null; fi
+  else pm2 start .venv/bin/python --name nenalet --interpreter none --cwd $APP/backend -- -m uvicorn nenalet.app:app --host 127.0.0.1 --port $PORT >/dev/null; fi
   pm2 save >/dev/null"
 
 echo "== ověření"

@@ -1,0 +1,2035 @@
+[
+ {
+  "id": "legit-001",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-banka",
+  "synthetic": false,
+  "verdict": "podezrele",
+  "confidence": "nizka",
+  "flagged": true,
+  "latency_ms": 16142,
+  "usage": {
+   "input": 193,
+   "output": 1007,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-002",
+  "label": "legit",
+  "channel": "email",
+  "category": "legit-urad",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 8437,
+  "usage": {
+   "input": 594,
+   "output": 513,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-003",
+  "label": "legit",
+  "channel": "email",
+  "category": "legit-urad",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7925,
+  "usage": {
+   "input": 716,
+   "output": 513,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-004",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-zdravotnictvi",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 11378,
+  "usage": {
+   "input": 224,
+   "output": 742,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-005",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-dopravce",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 8612,
+  "usage": {
+   "input": 220,
+   "output": 538,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-006",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-dopravce",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7557,
+  "usage": {
+   "input": 172,
+   "output": 472,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-007",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-dopravce",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 8992,
+  "usage": {
+   "input": 177,
+   "output": 559,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-008",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-reklama",
+  "synthetic": false,
+  "verdict": "podezrele",
+  "confidence": "nizka",
+  "flagged": true,
+  "latency_ms": 13310,
+  "usage": {
+   "input": 218,
+   "output": 866,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-009",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-ucet",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7752,
+  "usage": {
+   "input": 195,
+   "output": 503,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-010",
+  "label": "legit",
+  "channel": "email",
+  "category": "legit-ucet",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 8863,
+  "usage": {
+   "input": 464,
+   "output": 547,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-011",
+  "label": "legit",
+  "channel": "web",
+  "category": "legit-banka",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7545,
+  "usage": {
+   "input": 400,
+   "output": 467,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-012",
+  "label": "legit",
+  "channel": "ad",
+  "category": "legit-banka",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 8291,
+  "usage": {
+   "input": 470,
+   "output": 487,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-013",
+  "label": "legit",
+  "channel": "web",
+  "category": "legit-bazar",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 12755,
+  "usage": {
+   "input": 700,
+   "output": 807,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-014",
+  "label": "legit",
+  "channel": "web",
+  "category": "legit-urad",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 8782,
+  "usage": {
+   "input": 671,
+   "output": 515,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-015",
+  "label": "legit",
+  "channel": "web",
+  "category": "legit-urad",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7492,
+  "usage": {
+   "input": 262,
+   "output": 500,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-016",
+  "label": "legit",
+  "channel": "web",
+  "category": "legit-dopravce",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "vysoka",
+  "flagged": false,
+  "latency_ms": 8291,
+  "usage": {
+   "input": 736,
+   "output": 488,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-017",
+  "label": "legit",
+  "channel": "web",
+  "category": "legit-dopravce",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7346,
+  "usage": {
+   "input": 456,
+   "output": 404,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-018",
+  "label": "legit",
+  "channel": "web",
+  "category": "legit-urad",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7632,
+  "usage": {
+   "input": 501,
+   "output": 448,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-019",
+  "label": "legit",
+  "channel": "web",
+  "category": "legit-dopravce",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 8714,
+  "usage": {
+   "input": 1132,
+   "output": 530,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-020",
+  "label": "legit",
+  "channel": "web",
+  "category": "legit-banka",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7831,
+  "usage": {
+   "input": 512,
+   "output": 504,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-021",
+  "label": "legit",
+  "channel": "web",
+  "category": "legit-dopravce",
+  "synthetic": false,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7382,
+  "usage": {
+   "input": 799,
+   "output": 452,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-022",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-dopravce",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 8527,
+  "usage": {
+   "input": 232,
+   "output": 550,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-023",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-dopravce",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 8011,
+  "usage": {
+   "input": 232,
+   "output": 489,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-024",
+  "label": "legit",
+  "channel": "email",
+  "category": "legit-dopravce",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7426,
+  "usage": {
+   "input": 385,
+   "output": 490,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-025",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-dopravce",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 8563,
+  "usage": {
+   "input": 236,
+   "output": 525,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-026",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-banka",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 8353,
+  "usage": {
+   "input": 231,
+   "output": 511,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-027",
+  "label": "legit",
+  "channel": "email",
+  "category": "legit-banka",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7461,
+  "usage": {
+   "input": 391,
+   "output": 511,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-028",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-banka",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7925,
+  "usage": {
+   "input": 260,
+   "output": 488,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-029",
+  "label": "legit",
+  "channel": "call",
+  "category": "legit-banka",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 8489,
+  "usage": {
+   "input": 416,
+   "output": 521,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-030",
+  "label": "legit",
+  "channel": "marketplace",
+  "category": "legit-bazar",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7200,
+  "usage": {
+   "input": 223,
+   "output": 435,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-031",
+  "label": "legit",
+  "channel": "marketplace",
+  "category": "legit-bazar",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7975,
+  "usage": {
+   "input": 225,
+   "output": 491,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-032",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-rodina",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "vysoka",
+  "flagged": false,
+  "latency_ms": 7355,
+  "usage": {
+   "input": 180,
+   "output": 463,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-033",
+  "label": "legit",
+  "channel": "chat",
+  "category": "legit-rodina",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7025,
+  "usage": {
+   "input": 190,
+   "output": 423,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-034",
+  "label": "legit",
+  "channel": "chat",
+  "category": "legit-osobni",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 6927,
+  "usage": {
+   "input": 184,
+   "output": 426,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-035",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-zdravotnictvi",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 6740,
+  "usage": {
+   "input": 198,
+   "output": 393,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-036",
+  "label": "legit",
+  "channel": "email",
+  "category": "legit-dopravce",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 7335,
+  "usage": {
+   "input": 372,
+   "output": 479,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-037",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-rodina",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "vysoka",
+  "flagged": false,
+  "latency_ms": 7681,
+  "usage": {
+   "input": 180,
+   "output": 450,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "legit-038",
+  "label": "legit",
+  "channel": "sms",
+  "category": "legit-operator",
+  "synthetic": true,
+  "verdict": "bez_varovnych_signalu",
+  "confidence": "stredni",
+  "flagged": false,
+  "latency_ms": 8606,
+  "usage": {
+   "input": 206,
+   "output": 520,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-001",
+  "label": "scam",
+  "channel": "chat",
+  "category": "prevzeti-uctu",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12213,
+  "usage": {
+   "input": 225,
+   "output": 780,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-002",
+  "label": "scam",
+  "channel": "email",
+  "category": "falesny-urad",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12923,
+  "usage": {
+   "input": 570,
+   "output": 840,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-003",
+  "label": "scam",
+  "channel": "email",
+  "category": "falesny-operator",
+  "synthetic": false,
+  "verdict": "podezrele",
+  "confidence": "stredni",
+  "flagged": true,
+  "latency_ms": 11582,
+  "usage": {
+   "input": 306,
+   "output": 712,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-004",
+  "label": "scam",
+  "channel": "email",
+  "category": "phishing-ucet",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12150,
+  "usage": {
+   "input": 338,
+   "output": 752,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-005",
+  "label": "scam",
+  "channel": "email",
+  "category": "falesny-dopravce",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "stredni",
+  "flagged": true,
+  "latency_ms": 11553,
+  "usage": {
+   "input": 268,
+   "output": 734,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-006",
+  "label": "scam",
+  "channel": "email",
+  "category": "falesny-operator",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 13818,
+  "usage": {
+   "input": 473,
+   "output": 891,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-007",
+  "label": "scam",
+  "channel": "sms",
+  "category": "falesny-urad",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11559,
+  "usage": {
+   "input": 155,
+   "output": 757,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-008",
+  "label": "scam",
+  "channel": "email",
+  "category": "phishing-ucet",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 13270,
+  "usage": {
+   "input": 582,
+   "output": 881,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-009",
+  "label": "scam",
+  "channel": "email",
+  "category": "bankovni-phishing",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12059,
+  "usage": {
+   "input": 359,
+   "output": 787,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-010",
+  "label": "scam",
+  "channel": "email",
+  "category": "vydirani-sextortion",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12660,
+  "usage": {
+   "input": 2190,
+   "output": 856,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-011",
+  "label": "scam",
+  "channel": "email",
+  "category": "vydirani-sextortion",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12095,
+  "usage": {
+   "input": 1440,
+   "output": 749,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-012",
+  "label": "scam",
+  "channel": "email",
+  "category": "falesny-policista",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11654,
+  "usage": {
+   "input": 287,
+   "output": 760,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-013",
+  "label": "scam",
+  "channel": "email",
+  "category": "falesny-policista",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12551,
+  "usage": {
+   "input": 677,
+   "output": 822,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-014",
+  "label": "scam",
+  "channel": "email",
+  "category": "vyhra",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11986,
+  "usage": {
+   "input": 274,
+   "output": 807,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-015",
+  "label": "scam",
+  "channel": "chat",
+  "category": "prevzeti-uctu",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11466,
+  "usage": {
+   "input": 142,
+   "output": 742,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-016",
+  "label": "scam",
+  "channel": "chat",
+  "category": "prevzeti-uctu",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12167,
+  "usage": {
+   "input": 228,
+   "output": 759,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-017",
+  "label": "scam",
+  "channel": "sms",
+  "category": "falesny-urad",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11735,
+  "usage": {
+   "input": 155,
+   "output": 745,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-018",
+  "label": "scam",
+  "channel": "sms",
+  "category": "bankid-phishing",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12080,
+  "usage": {
+   "input": 229,
+   "output": 705,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-019",
+  "label": "scam",
+  "channel": "email",
+  "category": "bankovni-phishing",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11742,
+  "usage": {
+   "input": 556,
+   "output": 798,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-020",
+  "label": "scam",
+  "channel": "call",
+  "category": "falesny-policista",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "stredni",
+  "flagged": true,
+  "latency_ms": 9598,
+  "usage": {
+   "input": 158,
+   "output": 599,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-021",
+  "label": "scam",
+  "channel": "email",
+  "category": "bankovni-phishing",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11187,
+  "usage": {
+   "input": 497,
+   "output": 711,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-022",
+  "label": "scam",
+  "channel": "email",
+  "category": "bankovni-phishing",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11622,
+  "usage": {
+   "input": 287,
+   "output": 793,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-023",
+  "label": "scam",
+  "channel": "call",
+  "category": "falesny-banker",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11214,
+  "usage": {
+   "input": 167,
+   "output": 706,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-024",
+  "label": "scam",
+  "channel": "call",
+  "category": "falesny-policista",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11219,
+  "usage": {
+   "input": 248,
+   "output": 722,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-025",
+  "label": "scam",
+  "channel": "sms",
+  "category": "bankovni-phishing",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 10450,
+  "usage": {
+   "input": 204,
+   "output": 696,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-026",
+  "label": "scam",
+  "channel": "email",
+  "category": "bankovni-phishing",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11483,
+  "usage": {
+   "input": 431,
+   "output": 759,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-027",
+  "label": "scam",
+  "channel": "email",
+  "category": "bankovni-phishing",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 10774,
+  "usage": {
+   "input": 239,
+   "output": 725,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-028",
+  "label": "scam",
+  "channel": "email",
+  "category": "bankovni-phishing",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12171,
+  "usage": {
+   "input": 479,
+   "output": 819,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-029",
+  "label": "scam",
+  "channel": "call",
+  "category": "falesny-banker",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11388,
+  "usage": {
+   "input": 518,
+   "output": 744,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-030",
+  "label": "scam",
+  "channel": "call",
+  "category": "vzdalena-plocha",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 10892,
+  "usage": {
+   "input": 256,
+   "output": 768,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-031",
+  "label": "scam",
+  "channel": "call",
+  "category": "falesny-banker",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12561,
+  "usage": {
+   "input": 293,
+   "output": 670,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-032",
+  "label": "scam",
+  "channel": "sms",
+  "category": "bankovni-phishing",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11048,
+  "usage": {
+   "input": 261,
+   "output": 746,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 1,
+  "error": null
+ },
+ {
+  "id": "scam-033",
+  "label": "scam",
+  "channel": "sms",
+  "category": "falesny-dopravce",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 10747,
+  "usage": {
+   "input": 175,
+   "output": 692,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-034",
+  "label": "scam",
+  "channel": "sms",
+  "category": "falesny-dopravce",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 10187,
+  "usage": {
+   "input": 160,
+   "output": 650,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-035",
+  "label": "scam",
+  "channel": "sms",
+  "category": "falesny-dopravce",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 10916,
+  "usage": {
+   "input": 369,
+   "output": 722,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 1,
+  "error": null
+ },
+ {
+  "id": "scam-036",
+  "label": "scam",
+  "channel": "sms",
+  "category": "falesny-dopravce",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12569,
+  "usage": {
+   "input": 385,
+   "output": 805,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-037",
+  "label": "scam",
+  "channel": "sms",
+  "category": "falesny-dopravce",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11032,
+  "usage": {
+   "input": 290,
+   "output": 702,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 1,
+  "error": null
+ },
+ {
+  "id": "scam-038",
+  "label": "scam",
+  "channel": "email",
+  "category": "falesny-dopravce",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12110,
+  "usage": {
+   "input": 426,
+   "output": 832,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-039",
+  "label": "scam",
+  "channel": "email",
+  "category": "falesny-dopravce",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 10710,
+  "usage": {
+   "input": 290,
+   "output": 746,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-040",
+  "label": "scam",
+  "channel": "chat",
+  "category": "bazar-kuryr",
+  "synthetic": false,
+  "verdict": "podezrele",
+  "confidence": "stredni",
+  "flagged": true,
+  "latency_ms": 11547,
+  "usage": {
+   "input": 176,
+   "output": 729,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-041",
+  "label": "scam",
+  "channel": "chat",
+  "category": "bazar-kuryr",
+  "synthetic": false,
+  "verdict": "podezrele",
+  "confidence": "stredni",
+  "flagged": true,
+  "latency_ms": 10209,
+  "usage": {
+   "input": 226,
+   "output": 633,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-042",
+  "label": "scam",
+  "channel": "chat",
+  "category": "bazar-kuryr",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12210,
+  "usage": {
+   "input": 314,
+   "output": 727,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-043",
+  "label": "scam",
+  "channel": "email",
+  "category": "bazar-falesna-platba",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 14722,
+  "usage": {
+   "input": 855,
+   "output": 955,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 1,
+  "error": null
+ },
+ {
+  "id": "scam-044",
+  "label": "scam",
+  "channel": "web",
+  "category": "bazar-falesna-platba",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11138,
+  "usage": {
+   "input": 508,
+   "output": 744,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 1,
+  "error": null
+ },
+ {
+  "id": "scam-045",
+  "label": "scam",
+  "channel": "web",
+  "category": "bazar-falesna-platba",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 13948,
+  "usage": {
+   "input": 644,
+   "output": 921,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-046",
+  "label": "scam",
+  "channel": "marketplace",
+  "category": "bazar-kuryr",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 9084,
+  "usage": {
+   "input": 133,
+   "output": 578,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-047",
+  "label": "scam",
+  "channel": "web",
+  "category": "rizikovy-eshop",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 13136,
+  "usage": {
+   "input": 604,
+   "output": 893,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 1,
+  "error": null
+ },
+ {
+  "id": "scam-048",
+  "label": "scam",
+  "channel": "web",
+  "category": "rizikovy-eshop",
+  "synthetic": false,
+  "verdict": "podezrele",
+  "confidence": "nizka",
+  "flagged": true,
+  "latency_ms": 13494,
+  "usage": {
+   "input": 483,
+   "output": 879,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-049",
+  "label": "scam",
+  "channel": "sms",
+  "category": "falesny-urad",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 12201,
+  "usage": {
+   "input": 250,
+   "output": 789,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-050",
+  "label": "scam",
+  "channel": "sms",
+  "category": "falesny-urad",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11001,
+  "usage": {
+   "input": 371,
+   "output": 726,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 1,
+  "error": null
+ },
+ {
+  "id": "scam-051",
+  "label": "scam",
+  "channel": "email",
+  "category": "falesny-urad",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 13048,
+  "usage": {
+   "input": 407,
+   "output": 884,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-052",
+  "label": "scam",
+  "channel": "sms",
+  "category": "falesny-urad",
+  "synthetic": false,
+  "verdict": "podezrele",
+  "confidence": "stredni",
+  "flagged": true,
+  "latency_ms": 11135,
+  "usage": {
+   "input": 157,
+   "output": 713,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-053",
+  "label": "scam",
+  "channel": "sms",
+  "category": "falesny-urad",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 10676,
+  "usage": {
+   "input": 182,
+   "output": 708,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-054",
+  "label": "scam",
+  "channel": "sms",
+  "category": "falesny-urad",
+  "synthetic": false,
+  "verdict": "podezrele",
+  "confidence": "stredni",
+  "flagged": true,
+  "latency_ms": 10319,
+  "usage": {
+   "input": 166,
+   "output": 633,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-055",
+  "label": "scam",
+  "channel": "email",
+  "category": "falesna-energie",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11147,
+  "usage": {
+   "input": 527,
+   "output": 752,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-056",
+  "label": "scam",
+  "channel": "call",
+  "category": "falesna-energie",
+  "synthetic": false,
+  "verdict": "podezrele",
+  "confidence": "stredni",
+  "flagged": true,
+  "latency_ms": 11111,
+  "usage": {
+   "input": 152,
+   "output": 743,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-057",
+  "label": "scam",
+  "channel": "web",
+  "category": "investicni-deepfake",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 11719,
+  "usage": {
+   "input": 262,
+   "output": 786,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-058",
+  "label": "scam",
+  "channel": "ad",
+  "category": "investicni-deepfake",
+  "synthetic": false,
+  "verdict": "podezrele",
+  "confidence": "stredni",
+  "flagged": true,
+  "latency_ms": 8898,
+  "usage": {
+   "input": 159,
+   "output": 508,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-059",
+  "label": "scam",
+  "channel": "ad",
+  "category": "investicni-deepfake",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 9555,
+  "usage": {
+   "input": 150,
+   "output": 594,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-060",
+  "label": "scam",
+  "channel": "web",
+  "category": "investicni-deepfake",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 10285,
+  "usage": {
+   "input": 215,
+   "output": 725,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-061",
+  "label": "scam",
+  "channel": "sms",
+  "category": "vnuk-v-nouzi",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 8689,
+  "usage": {
+   "input": 150,
+   "output": 600,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-062",
+  "label": "scam",
+  "channel": "chat",
+  "category": "vnuk-v-nouzi",
+  "synthetic": false,
+  "verdict": "podezrele",
+  "confidence": "stredni",
+  "flagged": true,
+  "latency_ms": 9936,
+  "usage": {
+   "input": 136,
+   "output": 661,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-063",
+  "label": "scam",
+  "channel": "call",
+  "category": "vnuk-v-nouzi",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 10970,
+  "usage": {
+   "input": 197,
+   "output": 721,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-064",
+  "label": "scam",
+  "channel": "chat",
+  "category": "prace-z-domova",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 10192,
+  "usage": {
+   "input": 223,
+   "output": 611,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-065",
+  "label": "scam",
+  "channel": "chat",
+  "category": "romance",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 13760,
+  "usage": {
+   "input": 603,
+   "output": 891,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-066",
+  "label": "scam",
+  "channel": "ad",
+  "category": "vyhra",
+  "synthetic": false,
+  "verdict": "podezrele",
+  "confidence": "stredni",
+  "flagged": true,
+  "latency_ms": 9427,
+  "usage": {
+   "input": 145,
+   "output": 598,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-067",
+  "label": "scam",
+  "channel": "web",
+  "category": "vyhra",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 10975,
+  "usage": {
+   "input": 406,
+   "output": 722,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-068",
+  "label": "scam",
+  "channel": "chat",
+  "category": "prace-z-domova",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 13477,
+  "usage": {
+   "input": 463,
+   "output": 840,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ },
+ {
+  "id": "scam-069",
+  "label": "scam",
+  "channel": "sms",
+  "category": "phishing-ucet",
+  "synthetic": false,
+  "verdict": "podvod",
+  "confidence": "vysoka",
+  "flagged": true,
+  "latency_ms": 10880,
+  "usage": {
+   "input": 187,
+   "output": 709,
+   "cache_read": 3733,
+   "cache_write": 0
+  },
+  "n_danger_checks": 0,
+  "error": null
+ }
+]

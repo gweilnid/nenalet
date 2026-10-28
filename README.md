@@ -29,7 +29,18 @@ Výsledek je vždy v lidské češtině: verdikt (podvod / podezřelé / bez var
 
 Přesnost měříme na testové sadě skutečných českých podvodných zpráv z veřejných zdrojů (Policie ČR, banky, dopravci, hoax.cz, zpravodajství) a legitimních zpráv – viz [`eval/`](eval/) a stránku [Metodika](https://b2bsaas.cz/nenalet/metodika). Výsledky včetně chyb zveřejňujeme.
 
-<!-- VYSLEDKY -->
+### Výsledky (28. 10. 2026, 107 zpráv: 69 podvodů, 38 legitimních)
+
+| Varianta | Zachycené podvody | Planý poplach | Cena / kontrola | Odpověď (medián) |
+|---|---|---|---|---|
+| Jen automatické kontroly (bez AI) | 7/69 · 10 % | 0/38 · 0 % | 0 Kč | < 1 s |
+| Claude Haiku 5.5 + kontroly | 67/69 · 97 % | 14/38 · 37 % | 0,01 Kč | 4,9 s |
+| **Claude Opus 5.5 + kontroly (v provozu)** | **69/69 · 100 %** (95% CI 95–100 %) | **2/38 · 5 %** (95% CI 1–17 %) | 0,39 Kč | 10,9 s |
+
+- „Zachycený podvod“ = verdikt *podvod* nebo *podezřelé* (obojí člověka zastaví a poradí ověření); jednoznačně „podvod“ u 86 % podvodů.
+- Oba plané poplachy jsou skutečné zprávy (bezpečnostní SMS České spořitelny s telefonním číslem; reklamní SMS „každá vstupenka vyhrává“) – na ověřeně skutečných legitimních zprávách je to **2/15 (13 %)**. Obě dopadly jako „podezřelé“ s radou ověřit si to přes známý kontakt.
+- Instrukce pro model vznikly před sestavením testové sady a podle výsledků se neladily.
+- Podrobnosti: [`eval/results/`](eval/results/), [stránka Metodika](https://b2bsaas.cz/nenalet/metodika).
 
 ## Soukromí a bezpečnost
 

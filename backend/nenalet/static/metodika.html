@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Metodika a přesnost – Nenaleť</title>
+<meta name="description" content="Jak přesně Nenaleť pozná podvod: měření na 107 skutečných českých zprávách, chyby, omezení a ochrana soukromí.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316244f'/%3E%3Cpath d='M20 33l8 8 16-18' stroke='%23ffb020' stroke-width='7' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="./" aria-label="Nenaleť – úvod">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14"/><path d="M20 33l8 8 16-18"/></svg>
+      <span>Nenaleť</span>
+    </a>
+    <nav class="top-nav"><a href="./">Ověřit zprávu</a></nav>
+  </div>
+</header>
+
+<main class="doc wrap">
+  <h1>Metodika a přesnost</h1>
+  <p class="lede">Přesnost Nenaleť měříme na testové sadě skutečných českých podvodů a legitimních zpráv. Zveřejňujeme výsledky i chyby. Celou sadu, zdroje a skript si můžete stáhnout a měření zopakovat.</p>
+
+  <section class="kpis" aria-label="Hlavní výsledky">
+    <div class="kpi"><span class="kpi-num">69 / 69</span><span class="kpi-label">podvodů zachyceno<br>(100 %, 95% CI 95–100 %)</span></div>
+    <div class="kpi"><span class="kpi-num">2 / 38</span><span class="kpi-label">planých poplachů u legitimních zpráv<br>(5 %, 95% CI 1–17 %)</span></div>
+    <div class="kpi"><span class="kpi-num">0,39 Kč</span><span class="kpi-label">cena jedné kontroly<br>(medián odpovědi 11 s)</span></div>
+  </section>
+
+  <h2>Výsledky měření (28. 10. 2026)</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Varianta</th><th>Zachycené podvody</th><th>Z toho jednoznačně „podvod“</th><th>Planý poplach</th><th>Cena / kontrola</th><th>Odpověď (medián)</th></tr></thead>
+      <tbody>
+        <tr><td>Jen automatické kontroly (bez AI)</td><td>7/69 · 10 %</td><td>0 %</td><td>0/38 · 0 %</td><td>0 Kč</td><td>&lt; 1 s</td></tr>
+        <tr><td>Claude Haiku 5.5 + kontroly</td><td>67/69 · 97 %</td><td>81 %</td><td>14/38 · 37 %</td><td>0,01 Kč</td><td>4,9 s</td></tr>
+        <tr class="pick"><td><b>Claude Opus 5.5 + kontroly</b> (v provozu)</td><td><b>69/69 · 100 %</b></td><td>86 %</td><td><b>2/38 · 5 %</b></td><td>0,39 Kč</td><td>10,9 s</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Za zachycený podvod považujeme verdikt „podvod“ nebo „podezřelé“, protože obojí člověka zastaví a poradí mu ověření. Intervaly spolehlivosti jsou Wilsonovy 95% intervaly. Při takhle malé sadě jsou široké a uvádíme je právě proto.</p>
+  <p>Oba plané poplachy padly na skutečné (ne dopsané) zprávy. Když počítáme jen 15 ověřeně skutečných legitimních zpráv, je planý poplach 2 z 15 (13 %, 95% CI 4–38 %). Toto číslo je pro reálný provoz poctivější.</p>
+  <p>Samotné automatické kontroly zachytí málo podvodů, protože většina zveřejněných podvodných zpráv odkaz buď nemá, nebo ho zdroj zamaskoval. Když ale něco najdou, nemýlí se a dávají konkrétní a ověřitelné vysvětlení. Hlavní práci dělá model, který posoudí situaci. Levnější model Haiku zachytí skoro stejně podvodů, ale u třetiny běžných zpráv vyvolá zbytečný poplach. Lidé by pak nástroji přestali věřit, proto v provozu běží Opus.</p>
+
+  <h2>Testová sada</h2>
+  <ul class="plain">
+    <li><b>69 podvodů</b>: všechno skutečné, veřejně zveřejněné texty z varování Policie ČR, bank (Komerční banka, Česká spořitelna, Moneta), ČNB, dopravců (Zásilkovna, PPL, DPD, GLS), Finanční správy, ČSSZ, archivu hoax.cz a zpravodajství (Novinky, Seznam Zprávy, ČT24 a další). Zahrnují falešné dopravce, bankéře, policisty a úřady, „vnuka v nouzi“, falešné kupce z bazarů, investiční podvody s deepfaky známých osobností, rizikové e-shopy, výhry, práci z domova a vydírání. Kanály: e-mail, SMS, chat, telefonát, web, reklama.</li>
+    <li><b>38 legitimních textů</b>: 15 skutečných zpráv (např. notifikace datové schránky, eRecept, PPL, Allegro, Seznam, Česká spořitelna), 6 úryvků ze skutečných bezpečnostních rad bank a dopravců (plné slov jako „PIN“ nebo „odkaz“, slouží jako záludné případy) a 17 zpráv dopsaných podle zveřejněných skutečných formátů. Tyto jsou v sadě označené a každá odkazuje na předlohu. Sada záměrně obsahuje záludné legitimní zprávy, třeba skutečná bezpečnostní upozornění bank nebo reklamu „každá vstupenka vyhrává“.</li>
+    <li>Zdroje (85) jsou v <a href="https://github.com/gweilnid/nenalet/blob/main/eval/SOURCES.md">SOURCES.md</a>, data v <a href="https://github.com/gweilnid/nenalet/blob/main/eval/dataset.jsonl">dataset.jsonl</a>. Jména obětí jsou anonymizovaná. Podvodné odkazy jsme při měření neotevírali, ověřovali jsme jen registr domén a seznam ČOI.</li>
+    <li><b>Instrukce pro model vznikly dřív, než existovala testová sada</b>, a podle výsledků jsme je neupravovali. Čísla tedy nejsou „naladěná“ na test.</li>
+  </ul>
+
+  <h2>Kde se Nenaleť spletl</h2>
+  <ul class="plain">
+    <li><b>Skutečná SMS České spořitelny</b> o aktivaci nového zařízení s výzvou „pokud jste to nebyl vy, volejte na +420 956 777 438“ dopadla jako „podezřelé“. Stejně vypadá typický podvod a Nenaleť zatím neumí ověřit, že je číslo oficiální linkou banky. Další krok: databáze oficiálních čísel bank.</li>
+    <li><b>Skutečná reklamní SMS Cinema City</b> „každá vstupenka vyhrává na www.vyhernivstupenka.cz“ dopadla jako „podezřelé“. Matoucí byla i pro novináře, ze stejného čísla pak přišla podvodná SMS.</li>
+    <li>V obou případech Nenaleť poradil ověřit si zprávu přes známý kontakt. Takový planý poplach stojí člověka jeden telefonát. Přehlédnutý podvod by ho mohl stát úspory.</li>
+  </ul>
+
+  <h2>Omezení měření</h2>
+  <ul class="plain">
+    <li>Sada je malá (107 zpráv), obsahuje jen text a u části telefonátů jde o popis z varování, ne o přepis hovoru.</li>
+    <li>Legitimních skutečných zpráv je málo, protože banky přesné texty svých SMS zveřejňují zřídka. Proto část legitimních zpráv dopisujeme podle formátů.</li>
+    <li>V reálném provozu mohou být zprávy jiné. Proto má každý výsledek tlačítka „sedí / mýlí se“ a přesnost v provozu průběžně sledujeme. Ukládáme jen tuto anonymní odpověď, ne obsah zprávy.</li>
+  </ul>
+
+  <h2>Pozná, jestli obrázek vytvořila AI?</h2>
+  <p>Jen tehdy, když se tvůrce sám přizná. Hledáme podepsaný údaj o původu <b>C2PA</b>, který přidávají Google, OpenAI, Adobe, Microsoft a další, a vodoznak <b>SynthID</b> přes rozhraní OpenAI. Když takový údaj najdeme, víme jistě, že obrázek vytvořila AI. Když nic nenajdeme, neznamená to, že je obrázek pravý: snímky obrazovky a sociální sítě tyto údaje mažou a podvodníci používají nástroje, které je vůbec nepřidávají. Google SynthID pro obsah od Googlu zatím veřejné rozhraní pro vývojáře nemá. Když na pravosti obrázku záleží, Nenaleť poradí ověřit si ho v aplikaci Gemini. Anthropic vlastní detektor nemá, Claude obrázky ani hlas negeneruje. Proto Nenaleť vždy posuzuje hlavně to, <b>co po vás zpráva chce</b>.</p>
+
+  <h2>Soukromí a provoz</h2>
+  <ul class="plain">
+    <li>Obsah zpráv neukládáme. Pro posouzení ho jednorázově zpracuje model Claude (Anthropic, přes OpenRouter). Ukládáme jen anonymní statistiku (verdikt, rychlost, typ vstupu) a dobrovolné hodnocení.</li>
+    <li>Odkazované stránky stahuje server bezpečně: bez JavaScriptu, s limitem velikosti a bez přístupu k interním adresám.</li>
+    <li>Ochrana proti zneužití: nejvýš 30 kontrol z jedné adresy za hodinu a denní strop.</li>
+    <li>Zdrojový kód je otevřený: <a href="https://github.com/gweilnid/nenalet">github.com/gweilnid/nenalet</a>.</li>
+  </ul>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p><b>Když už se něco stalo:</b> zadali jste údaje z karty → hned volejte své bance a kartu zablokujte. Poslali jste peníze → kontaktujte banku a Policii ČR na čísle <b>158</b>.</p>
+  </div>
+</footer>
+</body>
+</html>
