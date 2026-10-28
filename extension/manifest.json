@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Nenaleť – ověř podezřelou zprávu",
+  "short_name": "Nenaleť",
+  "version": "1.0.0",
+  "description": "Pravým tlačítkem ověříte podezřelý text, odkaz, obrázek nebo celou stránku. Srozumitelný verdikt a rada, co dělat.",
+  "default_locale": "cs",
+  "permissions": ["contextMenus", "activeTab", "storage"],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "action": { "default_popup": "popup.html", "default_title": "Nenaleť – ověřit" },
+  "options_page": "options.html",
+  "icons": { "16": "icons/16.png", "32": "icons/32.png", "48": "icons/48.png", "128": "icons/128.png" }
+}

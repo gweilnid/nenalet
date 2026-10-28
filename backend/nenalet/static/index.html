@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nenaleť – ověřte si podezřelou zprávu</title>
+<meta name="description" content="Vložte SMS, e-mail, odkaz nebo snímek obrazovky. Nenaleť ověří fakta v registrech a srozumitelně řekne, jestli jde o podvod a co dělat.">
+<meta name="theme-color" content="#16244f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316244f'/%3E%3Cpath d='M20 33l8 8 16-18' stroke='%23ffb020' stroke-width='7' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="./" aria-label="Nenaleť – úvod">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14"/><path d="M20 33l8 8 16-18"/></svg>
+      <span>Nenaleť</span>
+    </a>
+    <nav class="top-nav">
+      <a href="#instalace">Do mobilu a Chromu</a>
+      <a href="#jak">Jak to funguje</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <h1>Přišlo vám něco podezřelého?</h1>
+    <p class="lede">Vložte SMS, e-mail, odkaz nebo snímek obrazovky. Ověříme fakta ve veřejných registrech a lidsky vám řekneme, jestli jde o podvod a co máte udělat.</p>
+
+    <form id="form" class="checker" autocomplete="off">
+      <label for="text" class="field-label">Text zprávy nebo odkaz</label>
+      <textarea id="text" name="text" rows="5" placeholder="Sem vložte zprávu (dlouze podržte prstem → Vložit)…"></textarea>
+
+      <div class="image-row">
+        <label class="btn-secondary" for="image">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+          Přidat snímek obrazovky
+        </label>
+        <input id="image" name="image" type="file" accept="image/*" hidden>
+        <div id="preview" class="preview" hidden>
+          <img id="preview-img" alt="Náhled přiloženého obrázku">
+          <button type="button" id="remove-image" class="link-btn">Odebrat</button>
+        </div>
+      </div>
+
+      <button id="submit" class="btn-primary" type="submit">Ověřit</button>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+
+      <div class="samples">
+        <span>Vyzkoušejte ukázku:</span>
+        <button type="button" class="chip" data-sample="0">SMS od „dopravce“</button>
+        <button type="button" class="chip" data-sample="1">„Mami, mám nové číslo“</button>
+        <button type="button" class="chip" data-sample="2">Kód z banky</button>
+      </div>
+    </form>
+  </section>
+
+  <section id="result" class="result wrap" hidden tabindex="-1" aria-live="polite">
+    <div class="verdict" id="verdict">
+      <div class="verdict-badge"><span id="v-icon" aria-hidden="true"></span><span id="v-label"></span></div>
+      <p class="verdict-headline" id="v-headline"></p>
+      <p class="verdict-expl" id="v-expl"></p>
+      <p class="verdict-meta" id="v-meta"></p>
+    </div>
+
+    <div class="result-grid">
+      <div class="panel" id="todo-panel">
+        <h2>Co teď udělat</h2>
+        <ol id="todo" class="todo"></ol>
+      </div>
+      <div class="panel" id="flags-panel">
+        <h2>Proč si to myslíme</h2>
+        <ul id="flags" class="flags"></ul>
+        <ul id="good" class="good"></ul>
+      </div>
+    </div>
+
+    <details class="panel checks-panel" id="checks-panel" open>
+      <summary><h2>Co jsme ověřili v registrech</h2></summary>
+      <ul id="checks" class="checks"></ul>
+    </details>
+
+    <div class="feedback" id="feedback">
+      <p>Sedí podle vás tohle hodnocení?</p>
+      <div class="feedback-btns">
+        <button type="button" class="chip" data-correct="ano">Ano, sedí</button>
+        <button type="button" class="chip" data-correct="ne">Ne, mýlí se</button>
+        <button type="button" class="chip" data-correct="nevim">Nevím</button>
+      </div>
+      <p id="feedback-thanks" class="muted" hidden>Děkujeme, pomůže nám to měřit přesnost.</p>
+    </div>
+
+    <p class="disclaimer" id="disclaimer"></p>
+    <button type="button" class="btn-secondary again" id="again">Ověřit něco dalšího</button>
+  </section>
+
+  <section id="instalace" class="install wrap">
+    <h2>Ověřujte tam, kde podvod potkáte</h2>
+    <p class="section-lede">Nemusíte nic kopírovat. Stačí sdílet zprávu nebo stránku přímo do Nenaleť.</p>
+    <div class="install-grid">
+      <article class="install-card">
+        <h3>iPhone: Zkratka „Nenaleť“</h3>
+        <ol>
+          <li>Na iPhonu otevřete <a id="shortcut-link" href="zkratka">odkaz na zkratku</a> a klepněte na <b>Přidat zkratku</b>.</li>
+          <li>U podezřelé SMS, e-mailu, stránky nebo snímku obrazovky klepněte na <b>Sdílet</b>.</li>
+          <li>Vyberte <b>Nenaleť</b>. Za pár sekund uvidíte verdikt a radu.</li>
+        </ol>
+      </article>
+      <article class="install-card">
+        <h3>Počítač: rozšíření pro Chrome</h3>
+        <ol>
+          <li>Stáhněte <a href="nenalet-chrome.zip">rozšíření Nenaleť</a> a rozbalte ho.</li>
+          <li>V Chromu otevřete <code>chrome://extensions</code>, zapněte <b>Režim pro vývojáře</b> a zvolte <b>Načíst nerozbalené</b>.</li>
+          <li>Pak stačí na podezřelý text, odkaz, obrázek nebo celou stránku kliknout pravým tlačítkem a zvolit <b>Ověřit v Nenaleť</b>.</li>
+        </ol>
+      </article>
+    </div>
+  </section>
+
+  <section id="jak" class="how wrap">
+    <h2>Jak to funguje a kde se může mýlit</h2>
+    <div class="how-grid">
+      <div>
+        <h3>1. Ověřená fakta</h3>
+        <p>U každého odkazu zjistíme, jestli opravdu patří firmě, za kterou se zpráva vydává, kdy byla doména založena (registr domén), jestli je na seznamu rizikových e-shopů České obchodní inspekce a jestli IČO na stránce existuje v rejstříku ARES. Tyto kontroly dělá program, ne umělá inteligence.</p>
+        <p>U obrázků hledáme podepsaný údaj o původu <b>C2PA</b>, který přidávají nástroje Googlu, OpenAI, Adobe nebo Microsoftu, a přes rozhraní OpenAI i neviditelný vodoznak <b>SynthID</b>. Když obrázek takto označený je, víme jistě, že ho vytvořila umělá inteligence.</p>
+      </div>
+      <div>
+        <h3>2. Posouzení situace</h3>
+        <p>Jazykový model Claude pak posoudí celou situaci: kdo se za koho vydává, jestli na vás někdo spěchá, chce peníze, kód nebo instalaci aplikace. Podvodníci dnes píšou bezchybně a umí napodobit hlas i obličej, proto hodnotíme <b>co po vás chtějí</b>, ne jak zpráva vypadá.</p>
+      </div>
+      <div>
+        <h3>3. Kde se může mýlit</h3>
+        <p>Nenaleť se může splést oběma směry. Když obrázek žádné označení původu nemá, neumí spolehlivě poznat, jestli ho vytvořila AI. Snímky obrazovky a sociální sítě tato označení mažou a podvodníci používají nástroje, které je vůbec nepřidávají. Nemá ani přístup k vašemu bankovnímu účtu. Přesnost průběžně měříme na sadě skutečných českých podvodů a běžných zpráv. Výsledky najdete v <a href="metodika">metodice</a>.</p>
+      </div>
+      <div>
+        <h3>4. Vaše soukromí</h3>
+        <p>Obsah zpráv neukládáme. Pro posouzení ho jednorázově zpracuje model Claude od společnosti Anthropic. Ukládáme jen anonymní statistiku (jaký verdikt padl a jak rychle) a vaše hodnocení, jestli verdikt seděl.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p><b>Když už se něco stalo:</b> zadali jste údaje z karty → hned volejte své bance a kartu zablokujte. Poslali jste peníze → kontaktujte banku a Policii ČR na čísle <b>158</b>.</p>
+    <p class="muted">Nenaleť vznikl jako projekt do AI výzvy pro Česko 2026. Zdrojový kód je otevřený.</p>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

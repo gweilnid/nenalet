@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.pyc
+backend/data/
+.pytest_cache/
+shortcut/Nenalet-unsigned.shortcut
+dist/
+.DS_Store
+# Sestavené soubory (build_dist.py) – podepsaná zkratka obsahuje údaje o podepisujícím
+shortcut/Nenalet.shortcut
+backend/nenalet/static/Nenalet.shortcut
+backend/nenalet/static/nenalet-chrome.zip

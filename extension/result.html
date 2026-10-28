@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>Nenaleť – výsledek</title>
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<main class="result-page">
+  <h1 class="brand">Nenaleť</h1>
+  <div id="loading" class="loading" role="status" aria-live="polite">
+    <div class="spinner" aria-hidden="true"></div>
+    <p id="progress">Kontroluji…</p>
+  </div>
+  <p id="error" class="error" hidden></p>
+
+  <section id="result" hidden>
+    <div class="verdict" id="verdict">
+      <div class="verdict-badge"><span id="v-icon" aria-hidden="true"></span> <span id="v-label"></span></div>
+      <p class="verdict-headline" id="v-headline"></p>
+      <p id="v-expl"></p>
+      <p class="meta" id="v-meta"></p>
+    </div>
+    <h2>Co teď udělat</h2>
+    <ol id="todo" class="todo"></ol>
+    <div id="flags-wrap">
+      <h2>Proč si to myslíme</h2>
+      <ul id="flags" class="flags"></ul>
+      <ul id="good" class="good"></ul>
+    </div>
+    <div id="checks-wrap">
+      <h2>Co jsme ověřili v registrech</h2>
+      <ul id="checks" class="checks"></ul>
+    </div>
+    <div class="feedback">
+      <p>Sedí podle vás tohle hodnocení?</p>
+      <div class="row">
+        <button class="chip" data-correct="ano">Ano</button>
+        <button class="chip" data-correct="ne">Ne, mýlí se</button>
+        <button class="chip" data-correct="nevim">Nevím</button>
+      </div>
+      <p id="thanks" class="hint" hidden>Děkujeme.</p>
+    </div>
+    <p class="hint" id="disclaimer"></p>
+  </section>
+</main>
+<script type="module" src="result.js"></script>
+</body>
+</html>
