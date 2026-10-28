@@ -8,6 +8,8 @@ Projekt do soutěže **AI výzva pro Česko 2026** (mesic.ai). Řeší obavu, kt
 - iPhone: zkratka „Nenaleť“ v nabídce Sdílet
 - Počítač: rozšíření pro Chrome (pravé tlačítko → Ověřit v Nenaleť)
 
+![Ukázka: falešná SMS od „Zásilkovny“ – verdikt, rada co dělat a ověřená fakta](docs/ukazka-sms-dopravce.gif)
+
 ## Proč to funguje i proti dokonalým deepfakům
 
 AI umožňuje podvodníkům psát bezchybnou češtinu, napodobit hlas vnuka nebo obličej známé osobnosti. Detektory deepfaků se dají obejít a samy často chybují. Nenaleť proto nehodnotí, **jak zpráva vypadá**, ale **co po vás chce a kdo za ní doopravdy stojí**:
