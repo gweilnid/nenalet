@@ -57,7 +57,7 @@ class Settings:
     # Jazykový model připraví podklady a texty pro člověka, rozhodovací model Jev vybere verdikt.
     # Když Jev váhá („podezřelé“), nesouhlasí s podklady nebo něco selže, posoudí to silnější druhý model.
     model: str = field(default_factory=lambda: os.environ.get("NENALET_MODEL", "openai/gpt-5.6-luna"))
-    decider: str = field(default_factory=lambda: os.environ.get("NENALET_DECIDER", "jev"))  # "jev" nebo "" (rozhoduje model)
+    decider: str = field(default_factory=lambda: os.environ.get("NENALET_DECIDER", "jev"))  # "jev", "laya" nebo "" (rozhoduje model)
     second_model: str = field(default_factory=lambda: os.environ.get("NENALET_SECOND_MODEL", "google/gemini-3.8-flash"))
     effort: str = field(default_factory=lambda: os.environ.get("NENALET_EFFORT", "low"))
     data_dir: Path = field(default_factory=lambda: Path(os.environ.get("NENALET_DATA_DIR", BACKEND_DIR / "data")))

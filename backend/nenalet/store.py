@@ -5,7 +5,11 @@ from __future__ import annotations
 import sqlite3
 import threading
 import time
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
+
+PRAGUE = ZoneInfo("Europe/Prague")
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS checks (
@@ -65,13 +69,32 @@ class Store:
             p50 = c.execute(
                 "SELECT latency_ms FROM checks ORDER BY latency_ms LIMIT 1 OFFSET (SELECT COUNT(*)/2 FROM checks)"
             ).fetchone()
+            since = int(time.time()) - 14 * 86400
+            recent = c.execute("SELECT ts, client FROM checks WHERE ts >= ? ORDER BY ts", (since,)).fetchall()
+            last = c.execute("SELECT MAX(ts) FROM checks").fetchone()[0]
         return {
             "checks_total": total,
             "by_verdict": by_verdict,
             "by_client": by_client,
             "feedback": {"total": fb[0], "helpful": fb[1] or 0, "not_helpful": fb[2] or 0, "correct": fb[3] or 0, "incorrect": fb[4] or 0},
             "latency_ms_median": p50[0] if p50 else None,
+            # Kdy se Nenaleť používal (pražský čas): poslední kontrola a počty po dnech za 14 dní.
+            "last_check": _local(last).isoformat(timespec="minutes") if last else None,
+            "by_day": _by_day(recent),
         }
+
+
+def _local(ts: int) -> datetime:
+    return datetime.fromtimestamp(ts, tz=PRAGUE)
+
+
+def _by_day(rows: list[tuple[int, str]]) -> dict[str, dict]:
+    days: dict[str, dict] = {}
+    for ts, client in rows:
+        d = days.setdefault(_local(ts).date().isoformat(), {"checks": 0})
+        d["checks"] += 1
+        d[client or "other"] = d.get(client or "other", 0) + 1
+    return days
 
 
 class RateLimiter:

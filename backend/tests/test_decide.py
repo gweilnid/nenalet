@@ -76,3 +76,25 @@ def test_vypadek_jeva_jde_na_druhy_model():
 def test_vypadek_levneho_modelu_jde_na_druhy_model():
     mv, used, _, calls = run("podvod", "podvod", strong="podezrele", cheap_fails=True)
     assert calls == ["cheap/model", "strong/model"] and mv.verdict == "podezrele" and used == "strong/model"
+
+
+def test_laya_jako_rozhodovaci_model(monkeypatch):
+    from nenalet import laya_decider
+
+    async def fake_ask(self, model, content):
+        return verdict("bez_varovnych_signalu"), "cheap/model", {"cost": 0.001}
+
+    async def fake_laya(state):
+        assert "nalezene_varovne_signaly" in state
+        return jev.Decision("bez_varovnych_signalu", 0.97, {"bez_varovnych_signalu": 0.97}, 0.0)
+
+    async def no_jev(http, state):
+        raise AssertionError("při decider=laya se Jev nevolá")
+
+    monkeypatch.setattr(Analyzer, "_ask", fake_ask)
+    monkeypatch.setattr(laya_decider, "decide", fake_laya)
+    monkeypatch.setattr(jev, "decide", no_jev)
+    a = Analyzer(None, dataclasses.replace(CFG, decider="laya"), client=object())
+    mv, used, usage = asyncio.run(a._decide(CheckRequest(text="Ahoj"), Facts(), []))
+    assert mv.verdict == "bez_varovnych_signalu" and mv.confidence == "vysoka"
+    assert used == "cheap/model + laya-nenalet" and usage["cost"] == pytest.approx(0.001)

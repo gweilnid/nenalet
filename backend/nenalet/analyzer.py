@@ -347,7 +347,7 @@ class Analyzer:
         return await self._ask_claude(model, content)
 
     async def _decide(self, req: CheckRequest, facts: Facts, content: list[dict]) -> tuple[ModelVerdict | None, str, dict | None]:
-        if self.cfg.decider == "jev":
+        if self.cfg.decider in ("jev", "laya"):
             return await self._decide_with_jev(req, facts, content)
         return await self._decide_by_model(content)
 
@@ -364,7 +364,7 @@ class Analyzer:
         return mv2, f"{used} → {used2}" if used else used2, merge_usage(usage, usage2)
 
     async def _decide_with_jev(self, req: CheckRequest, facts: Facts, content: list[dict]) -> tuple[ModelVerdict | None, str, dict | None]:
-        """Jazykový model připraví podklady, Jev rozhodne. Váhání, neshoda nebo výpadek → druhý model."""
+        """Jazykový model připraví podklady, rozhodovací model (Jev nebo Laya) rozhodne. Váhání, neshoda nebo výpadek → druhý model."""
         second = self.cfg.second_model
         try:
             mv, used, usage = await self._ask(self.cfg.model, content)
@@ -375,13 +375,19 @@ class Analyzer:
             return await self._ask(second, content)
         if mv is None:
             return await self._second_opinion(content, (mv, used, usage)) if second else (mv, used, usage)
+        state = jev.state_for(req.text, req.url, _facts_block(facts), mv)
         try:
-            d = await jev.decide(self.http, jev.state_for(req.text, req.url, _facts_block(facts), mv))
+            if self.cfg.decider == "laya":
+                from . import laya_decider  # noqa: PLC0415
+
+                d, decider_name = await laya_decider.decide(state), laya_decider.LAYA_NAME
+            else:
+                d, decider_name = await jev.decide(self.http, state), jev.JEV_MODEL
         except jev.JevError as e:
-            log.warning("Jev nerozhodl: %r", e)
+            log.warning("rozhodovací model nerozhodl: %r", e)
             d = None
         if d is not None:
-            used = f"{used} + {jev.JEV_MODEL}"
+            used = f"{used} + {decider_name}"
             usage = merge_usage(usage, {"cost": d.cost})
             agrees = (d.choice in jev.RISKY) == (mv.verdict in jev.RISKY)
             if d.choice in ("podvod", "bez_varovnych_signalu") and agrees:

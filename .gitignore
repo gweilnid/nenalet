@@ -25,3 +25,8 @@ backend/nenalet/static/video.mp4
 backend/nenalet/static/video.jpg
 # kandidáti loga (ip-as-logo), vybraný je brand/nenalet-axolotl.png
 brand/logo-kandidati/
+
+# Laya: stažené a natrénované modely
+laya/checkpoints/
+laya/runs/
+laya/.venv/
