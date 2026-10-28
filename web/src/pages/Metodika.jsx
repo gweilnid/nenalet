@@ -61,11 +61,6 @@ export default function Metodika() {
             <li>Oba plané poplachy padly na skutečné zprávy. U 15 ověřeně skutečných legitimních zpráv je to 2 z 15 (13 %, 95% CI 4–38 %).</li>
           </ul>
 
-          <h2>Pozná, jestli obrázek vytvořila AI?</h2>
-          <p>
-            Jen tehdy, když se tvůrce sám přizná. Hledáme podepsaný údaj o původu C2PA, který přidávají Google, OpenAI, Adobe, Microsoft a další, a vodoznak SynthID přes rozhraní OpenAI. Když takový údaj najdeme, víme jistě, že obrázek vytvořila AI. Když nic nenajdeme, neznamená to, že je obrázek pravý. Google SynthID pro obsah od Googlu zatím veřejné rozhraní pro vývojáře nemá, Nenaleť proto u důležitých obrázků poradí ověření v aplikaci Gemini. Anthropic vlastní detektor nemá. Nenaleť proto vždy posuzuje hlavně to, co po vás zpráva chce.
-          </p>
-
           <h2>Soukromí a provoz</h2>
           <ul>
             <li>Obsah zpráv neukládáme. Jednorázově ho posoudí model Claude (Anthropic, přes OpenRouter). Ukládáme jen anonymní statistiku a dobrovolné hodnocení.</li>

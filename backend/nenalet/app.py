@@ -73,14 +73,13 @@ async def _parse_request(request: Request) -> CheckRequest:
             text=(form.get("text") or None),
             url=(form.get("url") or None),
             image_base64=image_b64 or (form.get("image_base64") or None),
-            image_url=form.get("image_url") or None,
             client=form.get("client") or "other",
         )
     return CheckRequest.model_validate(await request.json())
 
 
 def _input_kind(req: CheckRequest) -> str:
-    kinds = [k for k, v in (("text", req.text), ("url", req.url), ("image", req.image_base64 or req.image_url)) if v]
+    kinds = [k for k, v in (("text", req.text), ("url", req.url), ("image", req.image_base64)) if v]
     return "+".join(kinds) or "none"
 
 

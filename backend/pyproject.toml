@@ -5,10 +5,8 @@ description = "Add your description here"
 requires-python = ">=3.12"
 dependencies = [
     "anthropic>=2.3.0",
-    "c2pa-python>=0.38.1",
     "fastapi>=0.162.0",
     "httpx>=0.28.1",
-    "openai>=2.52.0",
     "pillow>=13.0.0",
     "pillow-heif>=1.8.1",
     "pydantic>=2.14.1",

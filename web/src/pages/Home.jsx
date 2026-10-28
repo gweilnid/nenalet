@@ -23,12 +23,9 @@ const WATCH = [
 ];
 
 const LIMITS = [
-  [
-    'Obrázky od AI pozná, jen když jsou podepsané.',
-    'Hledáme podpis původu C2PA (Google, OpenAI, Adobe, Microsoft) a vodoznak SynthID. Snímky obrazovky a sociální sítě tyto údaje mažou, takže „nic nenalezeno“ neznamená, že je obrázek pravý.',
-  ],
   ['Nevidí do vašeho účtu.', 'Neví, jestli jste opravdu něco objednali nebo platili. U nejasných zpráv proto radí ověření přes kontakt, který znáte.'],
   ['Občas zbytečně varuje.', 'U 2 z 38 legitimních zpráv řekl „podezřelé“. Raději jeden zbytečný telefonát bance než ztracené úspory.'],
+  ['Neověří telefonní čísla.', 'Zatím nepozná, jestli číslo ve zprávě patří bance. U výzvy „zavolejte nám“ proto radí volat na číslo ze zadní strany karty.'],
   ['Vaše zprávy neukládáme.', 'Obsah jednorázově posoudí model Claude a zahodí se. Ukládáme jen anonymní statistiku a vaše hodnocení „sedí / nesedí“.'],
 ];
 
@@ -112,10 +109,10 @@ export default function Home() {
             <h2 id="why-h" style={{ gridColumn: '1 / -1' }}>Hlídá, co po vás zpráva chce</h2>
             <div className="why-statement">
               <ScrollReveal as="p" enableBlur={false} baseOpacity={0.18} baseRotation={0} stagger={0.04}>
-                Podvodník dnes píše bezchybně česky a umí napodobit i hlas vnuka. Nenaleť proto nehodnotí, jak zpráva vypadá, ale co po vás chce.
+                Podvodník dnes píše bezchybně česky a vydává se za banku, dopravce i vnuka. Nenaleť proto nehodnotí, jak zpráva vypadá, ale co po vás chce.
               </ScrollReveal>
               <p className="why-source">
-                Podvodů s pomocí AI se bojí 77,5 % lidí v Česku, deepfaků 72,3 % (
+                Podvodů s pomocí AI se bojí 77,5 % lidí v Česku, víc než čehokoli jiného (
                 <a href="https://asociace.ai/cesky-barometr-obav-z-ai-2026/">Český barometr obav z AI 2026</a>).
               </p>
             </div>

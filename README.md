@@ -2,7 +2,7 @@
 
 **Ověřte si podezřelou zprávu dřív, než naletíte.** Nenaleť je bezplatný pomocník pro lidi v Česku – hlavně pro seniory a jejich rodiny. V iPhonu jedním klepnutím nasdílíte SMS, e-mail, odkaz, webovou stránku nebo snímek obrazovky (v Chromu pravým tlačítkem) a během pár sekund dostanete srozumitelnou odpověď: jde o podvod? Proč? Co máte teď udělat?
 
-Projekt do soutěže **AI výzva pro Česko 2026** (mesic.ai). Řeší obavu, kterou má v [Českém barometru obav z AI 2026](https://asociace.ai/cesky-barometr-obav-z-ai-2026/) nejvíc lidí: **podvody s pomocí AI (77,5 %)** a **deepfaky (72,3 %)**. Jen 26,4 % lidí si věří, že by přesvědčivý deepfake poznalo.
+Projekt do soutěže **AI výzva pro Česko 2026** (mesic.ai). Řeší obavu, kterou má v [Českém barometru obav z AI 2026](https://asociace.ai/cesky-barometr-obav-z-ai-2026/) nejvíc lidí: **podvody s pomocí AI (77,5 %)**.
 
 - Web: https://b2bsaas.cz/nenalet/ – ukázky na skutečných podvodech (výsledky předem spočítané, web sám nevolá AI)
 - iPhone: zkratka „Nenaleť“ v nabídce Sdílet
@@ -10,9 +10,9 @@ Projekt do soutěže **AI výzva pro Česko 2026** (mesic.ai). Řeší obavu, kt
 
 ![Ukázka: falešná SMS od „Zásilkovny“ – verdikt, rada co dělat a ověřená fakta](docs/ukazka-sms-dopravce.gif)
 
-## Proč to funguje i proti dokonalým deepfakům
+## Proč to funguje i proti dokonalým podvodům
 
-AI umožňuje podvodníkům psát bezchybnou češtinu, napodobit hlas vnuka nebo obličej známé osobnosti. Detektory deepfaků se dají obejít a samy často chybují. Nenaleť proto nehodnotí, **jak zpráva vypadá**, ale **co po vás chce a kdo za ní doopravdy stojí**:
+Podvodníci dnes píšou bezchybnou češtinu a vydávají se za banky, dopravce, úřady i příbuzné. Podle vzhledu zprávy se podvod poznat nedá. Nenaleť proto nehodnotí, **jak zpráva vypadá**, ale **co po vás chce a kdo za ní doopravdy stojí**:
 
 1. **Ověřená fakta (bez AI, deterministicky)**
    - Patří odkaz opravdu firmě, za kterou se zpráva vydává? (napodobeniny typu `zasilkovna-cz.top`, `csob.cz.secure-login.xyz`, záměny písmen `a1za.cz`)
@@ -20,8 +20,6 @@ AI umožňuje podvodníkům psát bezchybnou češtinu, napodobit hlas vnuka neb
    - Je web na [seznamu rizikových e-shopů České obchodní inspekce](https://coi.gov.cz/pro-spotrebitele/rizikove-e-shopy/)? (aktuálně ~1 300 domén, obnovuje se dvakrát denně)
    - Existuje IČO uvedené na webu v [rejstříku ARES](https://ares.gov.cz/) a sedí kontrolní číslice?
    - Chce stránka údaje z platební karty, přesměrovává jinam, stahuje aplikaci?
-   - **Vytvořila obrázek AI?** Hledáme podepsaný údaj o původu [C2PA Content Credentials](https://c2pa.org/) (přidávají ho Google, OpenAI, Adobe, Microsoft…) a přes [OpenAI Content Provenance API](https://developers.openai.com/api/docs/guides/content-provenance) i neviditelný vodoznak **SynthID** v obrázcích od OpenAI. Ověřujeme originál souboru – u obrázku na webu ho rozšíření stáhne, protože snímek obrazovky podpis C2PA ztrácí.
-   - Google SynthID pro obsah od Googlu zatím veřejné API pro vývojáře nemá; když na pravosti obrázku záleží, Nenaleť poradí ověření v aplikaci Gemini. Anthropic vlastní detektor nemá (Claude obrázky ani hlas negeneruje).
 2. **Posouzení situace jazykovým modelem Claude** – dostane zprávu (i obrázek) spolu s ověřenými fakty a posoudí manipulační vzorec: vydávání se za banku/dopravce/úřad/příbuzného, nátlak a spěch, žádost o peníze, kódy, kartu, instalaci aplikace, „bezpečný účet“. Fakta nesmí popřít ani si vymýšlet další.
 3. **Pojistka** – když ověřená fakta ukazují na nebezpečí, výsledek nikdy nemůže být „v pořádku“, i kdyby se model spletl.
 
@@ -54,7 +52,8 @@ Přesnost měříme na testové sadě skutečných českých podvodných zpráv 
 
 ## Kde se může mýlit (a co s tím děláme)
 
-- Neumí spolehlivě poznat, zda je obraz či hlas vytvořený AI – a netvrdí to. Hodnotí situaci kolem.
+- Neposuzuje pravost fotek, hlasu ani videa – hodnotí, co po vás zpráva chce.
+- Zatím neověří, jestli telefonní číslo ve zprávě patří bance.
 - Nevidí do vašeho účtu ani do historie konverzace; když chybí kontext, řekne „podezřelé“ a poradí, jak si to ověřit nezávislou cestou.
 - Může dát planý poplach u legitimní zprávy (měříme a zveřejňujeme) – proto vždy radí ověření přes známý kontakt, ne „ignorujte to“.
 - Seznam oficiálních domén značek není úplný; nové napodobeniny nemusí poznat podle jména, zachytí je ale stáří domény nebo obsah.

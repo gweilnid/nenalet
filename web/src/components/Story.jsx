@@ -99,7 +99,7 @@ const STEPS = [
   },
   {
     h: 'Ověříme fakta v registrech',
-    p: 'Program zjistí, komu odkaz patří, jak stará je doména, jestli je web na seznamu České obchodní inspekce a jestli existuje IČO. U obrázků hledá podpis původu, že ho vytvořila AI.',
+    p: 'Program zjistí, komu odkaz patří, jak stará je doména, jestli je web na seznamu České obchodní inspekce a jestli existuje IČO.',
   },
   {
     h: 'Dostanete verdikt a radu',

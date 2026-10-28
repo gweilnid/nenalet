@@ -22,7 +22,6 @@ from .config import OPENROUTER_BASE_URL, Settings, openrouter_model_id, settings
 from .netguard import BlockedTarget, safe_fetch
 from .page import PageInfo, ico_checksum_ok, parse_page
 from .prompt import SYSTEM_PROMPT
-from .provenance import check_image_provenance
 from .schemas import (
     SEVERITY,
     VERDICT_LABELS,
@@ -62,9 +61,6 @@ class Facts:
         self.checks.append(Check(name=name, status=status, detail=detail, source=source))
 
 
-PIL_MIME = {"JPEG": "image/jpeg", "PNG": "image/png", "WEBP": "image/webp", "GIF": "image/gif", "HEIF": "image/heic", "MPO": "image/jpeg"}
-
-
 def decode_b64(b64: str, max_bytes: int) -> bytes:
     b64 = b64.strip()
     if b64.startswith("data:") and "," in b64[:100]:
@@ -76,14 +72,6 @@ def decode_b64(b64: str, max_bytes: int) -> bytes:
     if len(data) > max_bytes:
         raise InputError("Obrázek je příliš velký (max. 10 MB).")
     return data
-
-
-def image_mime(data: bytes) -> str | None:
-    try:
-        with Image.open(io.BytesIO(data)) as im:
-            return PIL_MIME.get(im.format or "")
-    except (UnidentifiedImageError, OSError):
-        return None
 
 
 def normalize_image(data: bytes) -> tuple[bytes, str]:
@@ -102,17 +90,6 @@ def normalize_image(data: bytes) -> tuple[bytes, str]:
 
 def decode_image(b64: str, max_bytes: int) -> tuple[bytes, str]:
     return normalize_image(decode_b64(b64, max_bytes))
-
-
-async def fetch_image(url: str, max_bytes: int) -> bytes | None:
-    """Stáhne originál obrázku (kvůli podpisům původu, které snímek obrazovky ztrácí)."""
-    try:
-        res = await safe_fetch(url, max_bytes=max_bytes)
-    except (BlockedTarget, httpx.HTTPError, OSError):
-        return None
-    if res.truncated or res.status != 200:
-        return None
-    return res.body
 
 
 def _age_days(registered: date) -> int:
@@ -267,10 +244,6 @@ def build_user_content(req: CheckRequest, facts: Facts, image: tuple[bytes, str]
     return parts
 
 
-async def _no_checks() -> list[Check]:
-    return []
-
-
 def _floor_from_facts(checks: list[Check]) -> str:
     return "podezrele" if any(c.status == "nebezpeci" for c in checks) else "nelze_posoudit"
 
@@ -343,22 +316,11 @@ class Analyzer:
             text = f"{text}\n{extra}".strip() if extra else text
         req = req.model_copy(update={"text": text or None, "url": urls[0] if urls else None})
 
-        # Originál obrázku: nahraný soubor, nebo stažený z adresy (rozšíření u obrázku na webu).
-        original = decode_b64(req.image_base64, self.cfg.max_image_bytes) if req.image_base64 else None
-        from_url = await fetch_image(req.image_url, self.cfg.max_image_bytes) if req.image_url else None
-        if req.image_url and from_url is None and original is None:
-            raise InputError("Obrázek z této adresy se nepodařilo stáhnout. Zkuste pořídit snímek obrazovky.")
-        image = normalize_image(original or from_url) if (original or from_url) else None
+        image = normalize_image(decode_b64(req.image_base64, self.cfg.max_image_bytes)) if req.image_base64 else None
         if not (req.text or req.url or image):
             raise InputError("Vložte prosím text zprávy, odkaz nebo obrázek.")
 
-        provenance_src = from_url or original  # podpisy hledáme hlavně v originálu
-        provenance_mime = image_mime(provenance_src) if provenance_src else None
-        facts, provenance = await asyncio.gather(
-            gather_facts(req, self.coi, self.cfg),
-            check_image_provenance(provenance_src, provenance_mime) if provenance_mime else _no_checks(),
-        )
-        facts.checks.extend(provenance)
+        facts = await gather_facts(req, self.coi, self.cfg)
         mv, model_used, usage = await self._ask_model(build_user_content(req, facts, image))
         if mv is None:
             mv = ModelVerdict(

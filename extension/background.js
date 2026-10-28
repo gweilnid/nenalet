@@ -5,7 +5,7 @@ import { isWebUrl, screenshot, shorten } from "./util.js";
 const MENUS = [
   { id: "nenalet-text", title: "Ověřit označený text v Nenaleť", contexts: ["selection"] },
   { id: "nenalet-link", title: "Ověřit odkaz v Nenaleť", contexts: ["link"] },
-  { id: "nenalet-image", title: "Ověřit obrázek v Nenaleť (i zda ho vytvořila AI)", contexts: ["image"] },
+  { id: "nenalet-image", title: "Ověřit obrázek v Nenaleť", contexts: ["image"] },
   { id: "nenalet-page", title: "Ověřit tuto stránku v Nenaleť", contexts: ["page", "frame", "video"] },
 ];
 
@@ -32,18 +32,15 @@ async function handleMenu(info, tab) {
   } else {
     const shot = await screenshot(windowId);
     const pageUrl = isWebUrl(info.pageUrl || tab?.url) ? info.pageUrl || tab.url : null;
-    // U obrázku pošleme i jeho adresu: server stáhne originál a hledá v něm podpis původu (C2PA)
-    // a vodoznak SynthID, které se snímkem obrazovky ztrácejí.
-    const imageUrl = info.menuItemId === "nenalet-image" && isWebUrl(info.srcUrl) ? info.srcUrl : null;
+    const isImage = info.menuItemId === "nenalet-image";
     await submit(
       windowId,
       {
         url: pageUrl,
         image_base64: shot,
-        image_url: imageUrl,
-        text: imageUrl ? "Uživatel chce ověřit tento obrázek na stránce (je na snímku obrazovky)." : null,
+        text: isImage ? "Uživatel chce ověřit tento obrázek na stránce (je na snímku obrazovky)." : null,
       },
-      imageUrl ? `Obrázek na stránce ${shorten(pageUrl || "", 60)}` : `Stránka: ${shorten(pageUrl || "aktuální stránka")}`
+      isImage ? `Obrázek na stránce ${shorten(pageUrl || "", 60)}` : `Stránka: ${shorten(pageUrl || "aktuální stránka")}`
     );
   }
 }
