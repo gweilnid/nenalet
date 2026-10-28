@@ -26,15 +26,18 @@ function linkFlagged(ex) {
   return !!h && ex.result.checks.some((c) => (c.status === 'nebezpeci' || c.status === 'varovani') && c.name.toLowerCase().includes(h));
 }
 
-/** Formulář, na který vede SMS „České pošty“ (stránka sama už nefunguje; ověřuje se její adresa). */
+/** Falešná stránka „České pošty“: rekonstrukce podle popisu v článcích (eval/fake_posta/page.html). */
 function PostForm() {
   return (
     <div className="post-form">
-      <p className="pp-title">Potvrďte svou adresu</p>
-      <p>Balíček dorazil do skladu, ale nemohl být doručen z důvodu neúplných údajů o adrese.</p>
+      <p className="fp-bar">Česká pošta</p>
+      <p className="pp-title">Vaše zásilka nemohla být doručena</p>
+      <p>Balíček dorazil do skladu, ale nemohl být doručen z důvodu neúplných údajů o adrese. Potvrďte prosím svou adresu.</p>
       <span className="pp-field">Jméno a příjmení</span>
-      <span className="pp-field">Ulice a číslo</span>
-      <span className="pp-btn">Pokračovat</span>
+      <p>Za opětovné doručení je nutné uhradit poplatek. Platbu provedete kartou.</p>
+      <span className="pp-field"><mark className="hl">Číslo karty</mark></span>
+      <span className="pp-field"><mark className="hl">Platnost · CVV</mark></span>
+      <span className="pp-btn">Potvrdit a zaplatit</span>
     </div>
   );
 }
@@ -186,7 +189,7 @@ export default function CaseExplorer({ examples }) {
           </div>
         </div>
         <p className="case-source small muted">
-          Skutečný případ, zdroj: <a href={ex.source_url}>{ex.source_name}</a>
+          {ex.text || !isPage ? 'Skutečný případ' : 'Stránka podle popisu v článku, výsledek skutečné kontroly Nenaleť'}, zdroj: <a href={ex.source_url}>{ex.source_name}</a>
         </p>
       </div>
 

@@ -1,0 +1,59 @@
+{
+ "verdict": "podvod",
+ "verdict_label": "Téměř jistě podvod",
+ "confidence": "vysoka",
+ "headline": "Jde o podvod. Stránka se vydává za Českou poštu a chce údaje z karty.",
+ "scam_type": "falešný dopravce",
+ "red_flags": [
+  {
+   "signal": "Falešná adresa stránky",
+   "evidence": "ceskapostacz.com.cn",
+   "explanation": "Naše kontrola zjistila, že adresa jen napodobuje Českou poštu a nepatří k jejím oficiálním stránkám (např. ceskaposta.cz)."
+  },
+  {
+   "signal": "Žádost o údaje z platební karty",
+   "evidence": "Stránka chce vyplnit číslo karty, platnost a CVV kód.",
+   "explanation": "Podvodníci tyto údaje použijí k vybrání peněz z vašeho účtu."
+  },
+  {
+   "signal": "Poplatek za doručení",
+   "evidence": "„Za opětovné doručení je nutné uhradit poplatek. Platbu provedete kartou.“",
+   "explanation": "Malý poplatek je běžná návnada, jak vás přimět zadat kartu."
+  },
+  {
+   "signal": "Vymyšlený problém se zásilkou",
+   "evidence": "„Vaše zásilka nemohla být doručena … z důvodu neúplných údajů o adrese“",
+   "explanation": "Strach o balík má vyvolat spěch, abyste nepřemýšleli."
+  },
+  {
+   "signal": "Zahraniční koncovka adresy",
+   "evidence": "Adresa končí na „.com.cn“ (Čína).",
+   "explanation": "Česká pošta takovou adresu nepoužívá."
+  }
+ ],
+ "reassuring_signs": [],
+ "what_to_do": [
+  "Na stránce nic nevyplňujte a nic neplaťte. Stránku zavřete.",
+  "Pokud jste už zadali údaje z karty, ihned volejte své bance na číslo ze zadní strany karty a kartu nechte zablokovat.",
+  "Zásilku si ověřte sami na oficiálních stránkách ceskaposta.cz nebo v aplikaci Pošta Online.",
+  "Zprávu s odkazem smažte. Pokud jste přišli o peníze, oznamte to Policii ČR na čísle 158."
+ ],
+ "explanation": "Stránka vypadá jako Česká pošta, ale běží na cizí, falešné adrese. Chce po vás údaje z platební karty pod záminkou poplatku za doručení. Česká pošta takto o platbu kartou nežádá.",
+ "checks": [
+  {
+   "name": "Odkaz ceskapostacz.com.cn",
+   "status": "nebezpeci",
+   "detail": "Napodobenina značky Česká pošta: adresa obsahuje „ceskaposta“, ale nepatří k oficiálním doménám (balikovna.cz, ceskaposta.cz, cpost.cz, postaonline.cz).",
+   "source": "porovnání s oficiálními doménami"
+  },
+  {
+   "name": "Formulář na stránce",
+   "status": "varovani",
+   "detail": "Stránka chce vyplnit údaje z platební karty (card, expir, cvv).",
+   "source": null
+  }
+ ],
+ "model": "anthropic/claude-opus-5.5",
+ "latency_ms": 13428,
+ "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+}

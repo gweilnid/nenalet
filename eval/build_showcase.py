@@ -76,7 +76,10 @@ async def main() -> None:
 
     async def one(item_id: str, title: str) -> dict:
         item = items[item_id]
-        if item_id in cached:
+        fake_posta = HERE / "fake_posta" / "result.json"  # z check_fake_posta.py (rekonstrukce stránky)
+        if item_id == "page-ceskaposta" and fake_posta.exists():
+            result = {k: v for k, v in json.loads(fake_posta.read_text(encoding="utf-8")).items() if k != "latency_ms"}
+        elif item_id in cached:
             result = cached[item_id]
         else:
             req = CheckRequest(url=item["url"], client="eval") if item_id in EXTRA else to_request(item)

