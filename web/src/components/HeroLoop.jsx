@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { Logo, VerdictMark } from './Icons.jsx';
+import { useLang, VERDICT_EN } from '../lib/lang.jsx';
 import recSms from '../assets/rec-sms.webp';
 import recShare from '../assets/rec-share.webp';
 import recResult from '../assets/rec-result.webp';
@@ -23,6 +24,7 @@ function Status({ dark }) {
 
 /** Skutečné snímky obrazovky ze záznamu iPhonu: SMS → Sdílet → výsledek Nenaleť. */
 function RealIphone() {
+  const { t } = useLang();
   return (
     <div className="iphone loop-object" data-ui>
       <div className="ip-screen">
@@ -30,7 +32,7 @@ function RealIphone() {
         <img className="rec rec-share" src={recShare} alt="" />
         <i className="rec-ring" />
         <img className="rec rec-result" src={recResult} alt="" />
-        <span className="rec-fast">zrychleno</span>
+        <span className="rec-fast">{t({ cs: 'zrychleno', en: 'sped up' })}</span>
       </div>
     </div>
   );
@@ -38,6 +40,7 @@ function RealIphone() {
 
 /** Pravá SMS od PPL ve vzhledu Zpráv v iPhonu (tmavý režim jako na záznamu). */
 function PplSms({ ex }) {
+  const { t } = useLang();
   const [before, link] = ex.text.split(/(ppl\.cz\/\S+)/);
   return (
     <div className="iphone loop-object" data-ui>
@@ -48,12 +51,12 @@ function PplSms({ ex }) {
           <span className="msg-avatar" aria-hidden="true" />
           <b>{ex.sender} ›</b>
         </div>
-        <p className="msg-meta">Textová zpráva · SMS<br />Dnes 9:41</p>
+        <p className="msg-meta">{t({ cs: 'Textová zpráva · SMS', en: 'Text Message · SMS' })}<br />{t({ cs: 'Dnes', en: 'Today' })} 9:41</p>
         <p className="msg-bubble">
           {before}
           {link && <u>{link}</u>}
         </p>
-        <div className="msg-input"><i aria-hidden="true">+</i><span>Textová zpráva · SMS</span></div>
+        <div className="msg-input"><i aria-hidden="true">+</i><span>{t({ cs: 'Textová zpráva · SMS', en: 'Text Message · SMS' })}</span></div>
       </div>
     </div>
   );
@@ -86,6 +89,7 @@ function PostSafari() {
 
 /* ---------- Chrome s rozšířením ---------- */
 function ShopChrome({ ex }) {
+  const { t } = useLang();
   const r = ex.result;
   return (
     <div className="chrome loop-object" data-ui>
@@ -108,8 +112,8 @@ function ShopChrome({ ex }) {
           <p className="sh-story">S lítostí vám musím oznámit, že moje sbírka bude brzy uzavřena…</p>
         </div>
         <div className="ch-menu">
-          <span>Zpět</span><span>Znovu načíst</span><span>Uložit jako…</span>
-          <span className="is-us">Ověřit tuto stránku v Nenaleť</span><span>Prozkoumat</span>
+          <span>{t({ cs: 'Zpět', en: 'Back' })}</span><span>{t({ cs: 'Znovu načíst', en: 'Reload' })}</span><span>{t({ cs: 'Uložit jako…', en: 'Save as…' })}</span>
+          <span className="is-us">Ověřit tuto stránku v Nenaleť</span><span>{t({ cs: 'Prozkoumat', en: 'Inspect' })}</span>
         </div>
         <svg className="ch-cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l17 10-7.5 1.6L9 21z" /></svg>
         <aside className="ch-panel">
@@ -125,10 +129,10 @@ function ShopChrome({ ex }) {
 }
 
 const SCENES = [
-  { id: 'real-gls', tab: 'SMS od „GLS“', View: RealIphone, real: true },
-  { id: 'scam-047', tab: 'Podvodný e-shop', View: ShopChrome, chrome: true },
-  { id: 'page-ceskaposta', tab: 'Falešná Česká pošta', View: PostSafari },
-  { id: 'legit-005', tab: 'Pravá SMS od PPL', View: PplSms },
+  { id: 'real-gls', tab: { cs: 'SMS od „GLS“', en: 'SMS from “GLS”' }, View: RealIphone, real: true },
+  { id: 'scam-047', tab: { cs: 'Podvodný e-shop', en: 'Scam online shop' }, View: ShopChrome, chrome: true },
+  { id: 'page-ceskaposta', tab: { cs: 'Falešná Česká pošta', en: 'Fake Czech Post' }, View: PostSafari },
+  { id: 'legit-005', tab: { cs: 'Pravá SMS od PPL', en: 'Genuine SMS from PPL' }, View: PplSms },
 ];
 
 function timeline(scene, q) {
@@ -179,6 +183,7 @@ function menuTarget() {
 
 /** Úvodní smyčka: skutečný záznam z iPhonu, ověření e-shopu v Chromu, falešná pošta a pravá SMS. */
 export default function HeroLoop({ examples }) {
+  const { t, lang } = useLang();
   const byId = Object.fromEntries(examples.map((e) => [e.id, e]));
   const scenes = SCENES.filter((s) => s.real || byId[s.id]);
   const [index, setIndex] = useState(0);
@@ -225,12 +230,13 @@ export default function HeroLoop({ examples }) {
     { scope: stage, dependencies: [index, run], revertOnUpdate: true }
   );
 
-  const label = scene.real ? 'Nenaleť: Téměř jistě podvod.' : `Nenaleť: ${r.verdict_label}.`;
+  const verdict = scene.real ? 'podvod' : r.verdict;
+  const label = `Nenaleť: ${lang === 'en' ? VERDICT_EN[verdict] || r.verdict_label : scene.real ? 'Téměř jistě podvod' : r.verdict_label}.`;
 
   return (
     <div className="hero-loop">
       <div className="loop-stage" ref={stage}>
-        <div className="loop-tabs" role="group" aria-label="Ukázky v úvodu">
+        <div className="loop-tabs" role="group" aria-label={t({ cs: 'Ukázky v úvodu', en: 'Examples' })}>
           {scenes.map((s, i) => (
             <button
               key={s.id}
@@ -243,11 +249,11 @@ export default function HeroLoop({ examples }) {
                 setRun((n) => n + 1);
               }}
             >
-              {s.tab}
+              {t(s.tab)}
             </button>
           ))}
         </div>
-        <div className={`loop-scene${scene.chrome || scene.real ? ' is-wide' : ''}`} key={scene.id} aria-label={`Ukázka: ${scene.tab}. ${label}`}>
+        <div className={`loop-scene${scene.chrome || scene.real ? ' is-wide' : ''}`} key={scene.id} aria-label={`${t({ cs: 'Ukázka', en: 'Example' })}: ${t(scene.tab)}. ${label}`}>
           <scene.View ex={ex} />
           {!scene.real && !scene.chrome && (
             <div className="loop-verdict" data-ui>
@@ -260,10 +266,11 @@ export default function HeroLoop({ examples }) {
       </div>
       <p className="loop-note">
         {scene.real
-          ? 'Skutečný záznam obrazovky z iPhonu, čekání na výsledek je zkrácené.'
+          ? t({ cs: 'Skutečný záznam obrazovky z iPhonu, čekání na výsledek je zkrácené.', en: 'A real iPhone screen recording, with the wait for the result shortened.' })
           : scene.id === 'page-ceskaposta'
-            ? 'Falešná stránka podle popisu Novinek a CNN Prima, výsledek je skutečná kontrola Nenaleť.'
-            : 'Skutečný případ a skutečný výsledek Nenaleť.'}
+            ? t({ cs: 'Falešná stránka podle popisu Novinek a CNN Prima, výsledek je skutečná kontrola Nenaleť.', en: 'A fake page rebuilt from reports by Novinky and CNN Prima; the result is a real Nenaleť check.' })
+            : t({ cs: 'Skutečný případ a skutečný výsledek Nenaleť.', en: 'A real case and a real Nenaleť result.' })}
+        {lang === 'en' && ' Nenaleť answers in Czech.'}
       </p>
     </div>
   );

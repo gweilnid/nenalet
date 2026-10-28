@@ -3,20 +3,23 @@ import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { Logo, VerdictMark } from './Icons.jsx';
 import { segment, senderFlag } from '../lib/highlight.js';
+import { useLang } from '../lib/lang.jsx';
 
 gsap.registerPlugin(useGSAP);
 
 const reduceMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
 // Situace jsou skutečné případy z testové sady; výsledky spočítal Nenaleť předem (eval/build_showcase.py).
+const PAGE_PC = { cs: 'Stránka v počítači', en: 'Page on a computer' };
+const PAGE_PHONE = { cs: 'Stránka v mobilu', en: 'Page on a phone' };
 export const CASES = [
-  { id: 'scam-047', group: 'page', title: 'Nedůvěryhodný e-shop', where: 'Stránka v počítači', situation: 'Na Facebooku vám vyskočí výprodej šperků se slevou 75 %.' },
-  { id: 'page-ceskaposta', group: 'page', title: 'Falešná stránka České pošty', where: 'Stránka v mobilu', situation: 'SMS o nedoručeném balíku vás pošle na stránku, kde máte potvrdit adresu.' },
-  { id: 'scam-044', group: 'page', title: 'Peníze za zboží z bazaru', where: 'Stránka v mobilu', situation: 'Kupec vám pošle odkaz na „Zásilkovnu“, kde si máte vyzvednout platbu.' },
-  { id: 'scam-060', group: 'page', title: 'Článek o snadné investici', where: 'Stránka v počítači', situation: 'Reklama vás zavede na „zprávu“ o dividendách z ČEZ pro každého.' },
-  { id: 'scam-025', group: 'message', title: 'SMS od „banky“', where: 'SMS', situation: 'K vašemu účtu se prý připojilo cizí zařízení a máte ho hned ověřit.' },
-  { id: 'scam-061', group: 'message', title: '„Mami, mám nové číslo“', where: 'Zpráva', situation: 'Dítě prý má nový telefon a chce, abyste mu napsali na WhatsApp.' },
-  { id: 'legit-005', group: 'message', title: 'Pravá zpráva od dopravce', where: 'SMS', situation: 'Nenaleť pozná i skutečnou zprávu a zbytečně nestraší.' },
+  { id: 'scam-047', group: 'page', title: { cs: 'Nedůvěryhodný e-shop', en: 'Untrustworthy online shop' }, where: PAGE_PC, situation: { cs: 'Na Facebooku vám vyskočí výprodej šperků se slevou 75 %.', en: 'A jewellery clearance sale at 75% off pops up on Facebook.' } },
+  { id: 'page-ceskaposta', group: 'page', title: { cs: 'Falešná stránka České pošty', en: 'Fake Czech Post page' }, where: PAGE_PHONE, situation: { cs: 'SMS o nedoručeném balíku vás pošle na stránku, kde máte potvrdit adresu.', en: 'A text about an undelivered parcel sends you to a page asking you to confirm your address.' } },
+  { id: 'scam-044', group: 'page', title: { cs: 'Peníze za zboží z bazaru', en: 'Payment for something you sold' }, where: PAGE_PHONE, situation: { cs: 'Kupec vám pošle odkaz na „Zásilkovnu“, kde si máte vyzvednout platbu.', en: 'A buyer sends you a link to “Zásilkovna”, a parcel service, where you are supposed to collect the payment.' } },
+  { id: 'scam-060', group: 'page', title: { cs: 'Článek o snadné investici', en: 'An article about easy investing' }, where: PAGE_PC, situation: { cs: 'Reklama vás zavede na „zprávu“ o dividendách z ČEZ pro každého.', en: 'An ad takes you to a “news story” about ČEZ dividends for everyone.' } },
+  { id: 'scam-025', group: 'message', title: { cs: 'SMS od „banky“', en: 'A text from the “bank”' }, where: { cs: 'SMS', en: 'SMS' }, situation: { cs: 'K vašemu účtu se prý připojilo cizí zařízení a máte ho hned ověřit.', en: 'An unknown device has supposedly connected to your account and you must verify it right away.' } },
+  { id: 'scam-061', group: 'message', title: { cs: '„Mami, mám nové číslo“', en: '“Mum, I’ve got a new number”' }, where: { cs: 'Zpráva', en: 'Message' }, situation: { cs: 'Dítě prý má nový telefon a chce, abyste mu napsali na WhatsApp.', en: 'Your child supposedly has a new phone and wants you to message them on WhatsApp.' } },
+  { id: 'legit-005', group: 'message', title: { cs: 'Pravá zpráva od dopravce', en: 'A genuine courier message' }, where: { cs: 'SMS', en: 'SMS' }, situation: { cs: 'Nenaleť pozná i skutečnou zprávu a zbytečně nestraší.', en: 'Nenaleť also recognises a genuine message and doesn’t scare you for nothing.' } },
 ];
 
 const host = (u) => (u || '').replace(/^https?:\/\//i, '').replace(/\/.*$/, '').toLowerCase();
@@ -43,6 +46,7 @@ function PostForm() {
 }
 
 export default function CaseExplorer({ examples }) {
+  const { t } = useLang();
   const byId = Object.fromEntries(examples.map((e) => [e.id, e]));
   const cases = CASES.filter((c) => byId[c.id]);
   const [index, setIndex] = useState(0);
@@ -106,9 +110,9 @@ export default function CaseExplorer({ examples }) {
                 setIndex(i);
               }}
             >
-              <b>{k.title}</b>
-              <span className="case-sit">{k.situation}</span>
-              <span className="case-where">{k.where}</span>
+              <b>{t(k.title)}</b>
+              <span className="case-sit">{t(k.situation)}</span>
+              <span className="case-where">{t(k.where)}</span>
             </button>
           )
         )}
@@ -119,7 +123,7 @@ export default function CaseExplorer({ examples }) {
   return (
     <div className="cases" ref={root}>
       <div className="case-stage">
-        <div className="device case-device" data-ui aria-label={`Ukázka: ${c.title}`}>
+        <div className="device case-device" data-ui aria-label={`${t({ cs: 'Ukázka', en: 'Example' })}: ${t(c.title)}`}>
           {isPage ? (
             <div className="addr-bar">
               <span className="win-dots" aria-hidden="true"><i /><i /><i /></span>
@@ -127,14 +131,14 @@ export default function CaseExplorer({ examples }) {
                 {ex.url_in_message ? (
                   addrMarked ? <mark className="hl">{host(ex.url_in_message)}</mark> : host(ex.url_in_message)
                 ) : (
-                  <span className="muted">adresa stránky nebyla zveřejněna</span>
+                  <span className="muted">{t({ cs: 'adresa stránky nebyla zveřejněna', en: 'the page address was not published' })}</span>
                 )}
               </span>
             </div>
           ) : (
             <div className="device-bar">
               <b>{ex.channel}</b>
-              <span className="muted">Od: {ex.sender && sFlag >= 0 ? mark(ex.sender, sFlag, 'sender') : ex.sender || 'neznámé číslo'}</span>
+              <span className="muted">{t({ cs: 'Od', en: 'From' })}: {ex.sender && sFlag >= 0 ? mark(ex.sender, sFlag, 'sender') : ex.sender || t({ cs: 'neznámé číslo', en: 'unknown number' })}</span>
             </div>
           )}
 
@@ -156,7 +160,7 @@ export default function CaseExplorer({ examples }) {
             <p className="verdict-headline reveal">{r.headline}</p>
 
             {flags.length > 0 ? (
-              <ul className="flag-list" aria-label="Proč si to myslíme">
+              <ul className="flag-list" aria-label={t({ cs: 'Proč si to myslíme', en: 'Why we think so' })}>
                 {flags.map((f, i) => (
                   <li
                     key={i}
@@ -170,7 +174,7 @@ export default function CaseExplorer({ examples }) {
                 ))}
               </ul>
             ) : (
-              <ul className="flag-list" aria-label="Co působí důvěryhodně">
+              <ul className="flag-list" aria-label={t({ cs: 'Co působí důvěryhodně', en: 'What looks trustworthy' })}>
                 {r.reassuring_signs.slice(0, 3).map((t, i) => (
                   <li key={i} className="reveal">
                     <span className="flag-dot" style={{ background: 'var(--ok)' }} aria-hidden="true" />
@@ -189,13 +193,16 @@ export default function CaseExplorer({ examples }) {
           </div>
         </div>
         <p className="case-source small muted">
-          {ex.text || !isPage ? 'Skutečný případ' : 'Stránka podle popisu v článku, výsledek skutečné kontroly Nenaleť'}, zdroj: <a href={ex.source_url}>{ex.source_name}</a>
+          {ex.text || !isPage
+            ? t({ cs: 'Skutečný případ', en: 'A real case' })
+            : t({ cs: 'Stránka podle popisu v článku, výsledek skutečné kontroly Nenaleť', en: 'Page rebuilt from the article’s description, the result of a real Nenaleť check' })}
+          , {t({ cs: 'zdroj', en: 'source' })}: <a href={ex.source_url}>{ex.source_name}</a>
         </p>
       </div>
 
       <div className="case-picker">
-        {group('page', 'Stránky')}
-        {group('message', 'Zprávy')}
+        {group('page', t({ cs: 'Stránky', en: 'Pages' }))}
+        {group('message', t({ cs: 'Zprávy', en: 'Messages' }))}
       </div>
     </div>
   );

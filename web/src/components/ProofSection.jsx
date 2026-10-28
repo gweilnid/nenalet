@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react';
 import CountUp from './reactbits/CountUp.jsx';
 import SplitText from './reactbits/SplitText.jsx';
 import { NOT_FP_QUERY, Panel, usePanelStep } from './Panel.jsx';
+import { useLang } from '../lib/lang.jsx';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -13,6 +14,7 @@ const INK = '#0d2a1c';
 
 /** Druhá obrazovka: výsledky měření. Žlutá plocha se při příjezdu roztáhne, tečky = jednotlivé zachycené podvody. */
 export default function ProofSection() {
+  const { t, lang } = useLang();
   const root = useRef(null);
   const step = usePanelStep(root); // Infinity = obyčejná stránka
   const fp = step !== Infinity;
@@ -64,7 +66,8 @@ export default function ProofSection() {
       <div className="grid">
         <div className="proof-top" data-step="1">
           <SplitText
-            text="Změřeno na skutečných zprávách"
+            key={lang}
+            text={t({ cs: 'Změřeno na skutečných zprávách', en: 'Measured on real messages' })}
             tag="h2"
             className="proof-h"
             textAlign="left"
@@ -75,26 +78,29 @@ export default function ProofSection() {
             ease="expo.out"
           />
           <p className="proof-lead">
-            Nenaleť jsme otestovali na 107 zprávách: 69 skutečných podvodů z varování policie, bank, dopravců a médií a 38 legitimních zpráv.
+            {t({
+              cs: 'Nenaleť jsme otestovali na 107 zprávách: 69 skutečných podvodů z varování policie, bank, dopravců a médií a 38 legitimních zpráv.',
+              en: 'We tested Nenaleť on 107 messages: 69 real scams from warnings by the police, banks, couriers and the media, and 38 legitimate messages.',
+            })}
           </p>
         </div>
         <div className="proof-figures">
           <div className="figure" data-step="2">
-            <span className="figure-num"><CountUp to={CAUGHT} duration={1.6} startWhen={!fp || step >= 2} /> z 69</span>
-            <p className="figure-text">podvodů Nenaleť zachytil</p>
-            <div className="proof-dots" role="img" aria-label="69 teček, každá je jeden zachycený podvod z testu">
+            <span className="figure-num"><CountUp to={CAUGHT} duration={1.6} startWhen={!fp || step >= 2} /> {t({ cs: 'z', en: 'of' })} 69</span>
+            <p className="figure-text">{t({ cs: 'podvodů Nenaleť zachytil', en: 'scams caught by Nenaleť' })}</p>
+            <div className="proof-dots" role="img" aria-label={t({ cs: '69 teček, každá je jeden zachycený podvod z testu', en: '69 dots, each one a scam caught in the test' })}>
               {Array.from({ length: CAUGHT }, (_, i) => <i key={i} className="proof-dot" />)}
             </div>
-            <p className="proof-dots-note">Každá tečka je jeden skutečný podvod z testu.</p>
+            <p className="proof-dots-note">{t({ cs: 'Každá tečka je jeden skutečný podvod z testu.', en: 'Each dot is one real scam from the test.' })}</p>
           </div>
           <div className="figure" data-step="3">
             <span className="figure-num"><CountUp to={11} duration={1.2} startWhen={!fp || step >= 3} /> s</span>
-            <p className="figure-text">trvá jedna kontrola (medián)</p>
+            <p className="figure-text">{t({ cs: 'trvá jedna kontrola (medián)', en: 'per check (median)' })}</p>
           </div>
         </div>
         <div className="proof-foot" data-step="3">
-          <p>Instrukce pro model vznikly dřív než testová sada a podle výsledků jsme je neladili.</p>
-          <a className="btn btn-ink" href="metodika">Celá metodika i s chybami</a>
+          <p>{t({ cs: 'Instrukce pro model vznikly dřív než testová sada a podle výsledků jsme je neladili.', en: 'The model’s instructions were written before the test set, and we didn’t tune them to the results.' })}</p>
+          <a className="btn btn-ink" href="metodika">{t({ cs: 'Celá metodika i s chybami', en: 'The full method, mistakes included' })}</a>
         </div>
       </div>
     </Panel>
