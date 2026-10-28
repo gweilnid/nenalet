@@ -6,6 +6,7 @@
    "id": "scam-037",
    "title": "SMS od „PPL“: doplatek 15 Kč",
    "label": "scam",
+   "kind": "message",
    "channel": "SMS",
    "sender": "+420604123456",
    "text": "[PPL Czech]\n\nPro doručení Vašeho balíku zbývá doplatit 15 Kč z důvodu vyšší hmotnosti, než bylo uvedeno. Uhraďte prosím bezpečně na:\n\nhttps://ppl-abc.def/K4ljL9/2aM3k/cz",
@@ -64,6 +65,7 @@
    "id": "scam-025",
    "title": "SMS od „České spořitelny“: cizí zařízení",
    "label": "scam",
+   "kind": "message",
    "channel": "SMS",
    "sender": "Info",
    "text": "česká spořitelna UPOZORNĚNÍ : k vašemu online účtu se připojilo neoprávněné zařízení. Pokud jej nepoznáte, okamžitě jej ověřte:https://s.id/1C2FR",
@@ -122,6 +124,7 @@
    "id": "scam-061",
    "title": "„Mami, mám nové číslo“",
    "label": "scam",
+   "kind": "message",
    "channel": "SMS",
    "sender": null,
    "text": "Mami, nefunguje mi telefon a mám nové číslo. Napiš mi na WhatsApp: https://wa.me/...",
@@ -168,6 +171,7 @@
    "id": "scam-023",
    "title": "Telefonát „z banky“: účet napaden",
    "label": "scam",
+   "kind": "message",
    "channel": "Telefonát",
    "sender": null,
    "text": "Váš účet byl napaden, musíme ho hned zablokovat, abychom Vaše peníze zachránili. Sdělte nám své přístupové údaje k bankovnictví…",
@@ -219,6 +223,7 @@
    "id": "scam-059",
    "title": "Reklama: investice do ČEZ",
    "label": "scam",
+   "kind": "message",
    "channel": "Reklama",
    "sender": null,
    "text": "Každý český občan, který investoval do CEZ Group 4500 Kč, již dostává více než 40 000 Kč měsíčně",
@@ -265,6 +270,7 @@
    "id": "scam-042",
    "title": "Bazar: kupec posílá „DPD“ odkaz",
    "label": "scam",
+   "kind": "message",
    "channel": "Zpráva v chatu",
    "sender": null,
    "text": "Bydlím v Uherském Brodě, řekněte mi, je možné u vás nakoupit online ? To znamená, že vám zaplatím předem prostřednictvím transakce z online banky a pošlu vám speciálního kurýra, veškeré náklady na dopravu nesu já. Pokyny k celému procesu najdete také zde: https://eu-orders.site/dpd/cz/info",
@@ -329,6 +335,7 @@
    "id": "scam-053",
    "title": "SMS: nezaplacené mýtné",
    "label": "scam",
+   "kind": "message",
    "channel": "SMS",
    "sender": "Info",
    "text": "Vase vozidlo ma silnicni mytné, ktere nebylo 5. 11. uhrazeno a budou vam uctovany zpozdene pokuty: https://did.li/ItZCN",
@@ -380,6 +387,7 @@
    "id": "legit-005",
    "title": "Skutečná SMS od PPL",
    "label": "legit",
+   "kind": "message",
    "channel": "SMS",
    "sender": "PPL",
    "text": "PPL zasilku 40857329414 s dobirkou 590Kc dorucime dnes 9-11. PIN 123456. 725123456 Nebudete na adrese? ppl.cz/z?id=40857329414&p=123456",
@@ -421,6 +429,7 @@
    "id": "legit-002",
    "title": "Skutečné upozornění datové schránky",
    "label": "legit",
+   "kind": "message",
    "channel": "E-mail",
    "sender": "Datové schránky <notifikace@mojedatovaschranka.cz>",
    "text": "Předmět: Nová datová zpráva do vlastních rukou pro: [jméno]\n\nV datové schránce je nová datová zpráva do vlastních rukou: Re: Žádost o výpis údajů z Registru obyvatel\nOdesílatel: Automat ZR (Digitální a informační agentura) (schránka: 4h8cxph)\nPříjemce: [jméno] (schránka: [ID schránky])\nČíslo této zprávy je 1580747097.\nNotifikace jsou vám zasílány dle vašeho nastavení a mají pouze informativní charakter.\n\nPřejeme vám krásný den,\nDigitální a informační agentura\n\nDatové schránky jsou dostupné na adrese https://mojedatovaschranka.cz\n\nDávejte pozor, na co klikáte, abyste předešli zneužití přístupových údajů. Před kliknutím na odkaz v e-mailu zkontrolujte, zda vede na oficiální adresu naší aplikace. Nejlépe se ochráníte uložením adresy https://mojedatovaschranka.cz jako záložky v prohlížeči. Naše e-maily jsou opatřené el. pečetí DIA, podle které je poznáte.",
@@ -452,6 +461,236 @@
       "status": "ok",
       "detail": "Doména mojedatovaschranka.cz patří společnosti Portál občana / Identita občana.",
       "source": "seznam oficiálních domén Nenaleť"
+     }
+    ],
+    "model": "anthropic/claude-opus-5.5",
+    "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+   }
+  },
+  {
+   "id": "scam-047",
+   "title": "Výprodej šperků se slevou 75 %",
+   "label": "scam",
+   "kind": "page",
+   "channel": "Webová stránka",
+   "sender": null,
+   "text": "UKONČENÍ SBÍRKY VÝPRODEJ!\n75% SLEVA\nDOPRAVA ZDARMA NAD 746 KČ\nNAKUPOVAT NYNÍ\n\nS lítostí vám musím oznámit, že moje sbírka bude brzy uzavřena. V našem výprodeji šperků, které jsou nyní značně zlevněné, je stále několik krásných kousků […] Sladit práci, rodinu a naše malé podnikání bylo náročné a den má zkrátka příliš málo hodin. Proto jsem se rozhodla udělat těžké, ale důležité rozhodnutí - zavřít náš rodinný obchůdek a trávit víc času se svými dcerami, abych byla u toho, jak rostou a objevují svět",
+   "url_in_message": "Simonasperky.cz",
+   "source_url": "https://www.novinky.cz/clanek/ekonomika-vyprodej-sperku-i-bund-podvodne-e-shopy-pribyvaji-kazdy-den-40527347",
+   "source_name": "novinky.cz",
+   "result": {
+    "verdict": "podvod",
+    "verdict_label": "Téměř jistě podvod",
+    "confidence": "vysoka",
+    "headline": "Tento e-shop je na seznamu rizikových e-shopů České obchodní inspekce. Nenakupujte.",
+    "scam_type": "rizikový e-shop",
+    "red_flags": [
+     {
+      "signal": "Varování České obchodní inspekce",
+      "evidence": "Doména simonasperky.cz je na seznamu rizikových e-shopů ČOI (zveřejněno 30. 09. 2025).",
+      "explanation": "Úřad před nákupem na tomto webu výslovně varuje."
+     },
+     {
+      "signal": "Anonymní provozovatel",
+      "evidence": "ČOI: „Jako provozovatel webu není uveden nikdo, stránky jsou tedy zcela anonymní.“",
+      "explanation": "Když něco nepřijde nebo bude vadné, nemáte po kom chtít peníze zpět."
+     },
+     {
+      "signal": "Dojemný příběh o zavírání obchodu",
+      "evidence": "„zavřít náš rodinný obchůdek a trávit víc času se svými dcerami“",
+      "explanation": "Takové příběhy podvodné e-shopy často kopírují, aby vzbudily soucit a důvěru."
+     },
+     {
+      "signal": "Obrovská sleva a tlak na rychlost",
+      "evidence": "„UKONČENÍ SBÍRKY VÝPRODEJ! 75% SLEVA“, „moje sbírka bude brzy uzavřena“",
+      "explanation": "Velká sleva s časovým tlakem má přimět k nákupu bez rozmýšlení."
+     },
+     {
+      "signal": "Mladý web",
+      "evidence": "Doména existuje teprve od 2. 5. 2025.",
+      "explanation": "„Rodinný obchůdek“, který končí, by obvykle neměl web starý jen pár měsíců."
+     }
+    ],
+    "reassuring_signs": [],
+    "what_to_do": [
+     "Na tomto webu nic nekupujte a nezadávejte tam údaje o kartě.",
+     "Pokud jste už zaplatili kartou, hned volejte své bance na číslo ze zadní strany karty a požádejte o zablokování a vrácení platby.",
+     "Pokud jste přišli o peníze, oznamte to Policii ČR na čísle 158.",
+     "Šperky kupujte u ověřených obchodů s uvedeným provozovatelem, ideálně na dobírku."
+    ],
+    "explanation": "Česká obchodní inspekce zařadila tento web mezi rizikové e-shopy, protože na něm není uvedeno, kdo ho provozuje. Smutný příběh a velká sleva jsou běžný trik, jak lidi nalákat. Hrozí, že zaplatíte a zboží nedostanete nebo dostanete levnou napodobeninu.",
+    "checks": [
+     {
+      "name": "Odkaz simonasperky.cz",
+      "status": "nebezpeci",
+      "detail": "Doména je na seznamu rizikových e-shopů České obchodní inspekce (zveřejněno 30. 09. 2025): Jako provozovatel webu není uveden nikdo, stránky jsou tedy zcela anonymní a spotřebitel neví, s kým uzavírá kupní smlouvu a vůči komu může nárokovat svá práva. Před nákupem na těchto stránkách Česká obchodní inspekce varuje.",
+      "source": "ČOI – rizikové e-shopy"
+     },
+     {
+      "name": "Odkaz simonasperky.cz",
+      "status": "info",
+      "detail": "Doména simonasperky.cz existuje od 2025-05-02.",
+      "source": "registr domén (RDAP)"
+     }
+    ],
+    "model": "anthropic/claude-opus-5.5",
+    "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+   }
+  },
+  {
+   "id": "scam-044",
+   "title": "„Zásilkovna“ posílá peníze za zboží z bazaru",
+   "label": "scam",
+   "kind": "page",
+   "channel": "Webová stránka",
+   "sender": null,
+   "text": "Klikněte na tlačítko «Získejte prostředky», poté zadejte podrobnosti, které chcete přijmout. Po obdržení finančních prostředků na vaši kartu odešlete zboží kupujícímu podle zadaných údajů, dostupné položky pro odeslání zboží si můžete prohlédnout na oficiální webové stránce zásilkovna.\n\nPo odeslání zboží uveďte kupujícímu přepravní číslo! Zboží by mělo být odesláno do 3 dnů ode dne přijetí finančních prostředků.\n\n[Získejte prostředky]\n\nInformace o příjemci:\nPříjemce: [jméno]\nProdukt: Běžkařské boty dětské Solomon vel. 29\nCena: 600 CZK.",
+   "url_in_message": "zasilkovna.transaction3dsecure.eu/tracks/952061",
+   "source_url": "https://www.zasilkovna.cz/en/cybersecurity/domains",
+   "source_name": "zasilkovna.cz",
+   "result": {
+    "verdict": "podvod",
+    "verdict_label": "Téměř jistě podvod",
+    "confidence": "vysoka",
+    "headline": "Jde o podvod: falešný kupující chce vaše platební údaje přes falešnou Zásilkovnu.",
+    "scam_type": "falešný kupující",
+    "red_flags": [
+     {
+      "signal": "Falešná adresa Zásilkovny",
+      "evidence": "zasilkovna.transaction3dsecure.eu – podle naší kontroly nepatří k oficiálním doménám Zásilkovny",
+      "explanation": "Stránka se jen vydává za Zásilkovnu, ve skutečnosti patří někomu jinému."
+     },
+     {
+      "signal": "Výzva k zadání údajů pro „přijetí peněz“",
+      "evidence": "«Získejte prostředky», poté zadejte podrobnosti, které chcete přijmout",
+      "explanation": "Abyste peníze dostali, nikdy nemusíte zadávat údaje z karty. Podvodníci tak berou peníze z účtu."
+     },
+     {
+      "signal": "Neobvyklý postup prodeje",
+      "evidence": "Po obdržení finančních prostředků na vaši kartu odešlete zboží kupujícímu",
+      "explanation": "Zásilkovna takto platby mezi kupujícím a prodávajícím nezprostředkovává."
+     },
+     {
+      "signal": "Nátlak a termín",
+      "evidence": "Zboží by mělo být odesláno do 3 dnů",
+      "explanation": "Termín má vyvolat dojem oficiálnosti a spěchu."
+     }
+    ],
+    "reassuring_signs": [],
+    "what_to_do": [
+     "Na odkaz neklikejte a nic do stránky nezadávejte.",
+     "Pokud jste už zadali údaje z karty, ihned volejte své bance na číslo ze zadní strany karty a kartu zablokujte.",
+     "S tímto „kupujícím“ přestaňte komunikovat a nabídněte jen osobní předání nebo dobírku.",
+     "Pokud vám zmizely peníze, kontaktujte banku a nahlaste to Policii ČR na 158."
+    ],
+    "explanation": "Jde o známý podvod na inzertních portálech. Falešný kupující pošle odkaz, který vypadá jako Zásilkovna, ale stránka patří podvodníkům. Kdo tam zadá údaje z karty, přijde o peníze.",
+    "checks": [
+     {
+      "name": "Odkaz zasilkovna.transaction3dsecure.eu",
+      "status": "nebezpeci",
+      "detail": "Napodobenina značky Zásilkovna / Packeta: adresa obsahuje „zasilkovna“, ale nepatří k oficiálním doménám (packeta.com, packeta.cz, packeta.sk, zasielkovna.sk, zasilkovna.cz).",
+      "source": "porovnání s oficiálními doménami"
+     }
+    ],
+    "model": "anthropic/claude-opus-5.5",
+    "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+   }
+  },
+  {
+   "id": "scam-060",
+   "title": "Článek: dividendy z ČEZ pro každého",
+   "label": "scam",
+   "kind": "page",
+   "channel": "Webová stránka",
+   "sender": null,
+   "text": "ČEZ České Energetické Závody vyčlenily přes 129,3 milionu korun na podporu svého nového projektu, který dává každému občanovi možnost stát se spoluvlastníkem společnosti a získat z jejího provozu vysoké dividendy, stačí se zaregistrovat na platformě ČEZ",
+   "url_in_message": null,
+   "source_url": "https://echo24.cz/a/HEcLe/zpravy-domaci-reklama-facebook-podvod-premier-petr-fiala-cez-akcie-investice-urad-vlady",
+   "source_name": "echo24.cz",
+   "result": {
+    "verdict": "podvod",
+    "verdict_label": "Téměř jistě podvod",
+    "confidence": "vysoka",
+    "headline": "Jde o typický investiční podvod zneužívající jméno ČEZ.",
+    "scam_type": "investiční podvod",
+    "red_flags": [
+     {
+      "signal": "Zneužití známé firmy",
+      "evidence": "ČEZ České Energetické Závody vyčlenily přes 129,3 milionu korun",
+      "explanation": "Podvodníci často používají jméno ČEZ, aby nabídka působila důvěryhodně."
+     },
+     {
+      "signal": "Slib vysokého zisku",
+      "evidence": "získat z jejího provozu vysoké dividendy",
+      "explanation": "Nikdo seriózní nezaručuje vysoké výnosy bez rizika."
+     },
+     {
+      "signal": "Nabídka pro každého",
+      "evidence": "dává každému občanovi možnost stát se spoluvlastníkem společnosti",
+      "explanation": "ČEZ žádný takový projekt pro občany nenabízí, akcie se kupují běžně přes burzu a obchodníka s cennými papíry."
+     },
+     {
+      "signal": "Výzva k registraci na neznámé platformě",
+      "evidence": "stačí se zaregistrovat na platformě ČEZ",
+      "explanation": "Po registraci vám obvykle volá „poradce“, který chce peníze nebo přístup do počítače."
+     }
+    ],
+    "reassuring_signs": [],
+    "what_to_do": [
+     "Neregistrujte se a nevyplňujte žádné údaje ani telefonní číslo.",
+     "Pokud vám někdo zavolá jako „finanční poradce“, zavěste a nic neinstalujte.",
+     "Pokud jste už poslali peníze nebo údaje, ihned volejte svou banku a nahlaste to Policii ČR na 158.",
+     "Reklamu nahlaste jako podvod a smažte ji."
+    ],
+    "explanation": "Text slibuje vysoké dividendy každému, kdo se zaregistruje, a zneužívá jméno ČEZ. Takto vypadají běžné falešné investiční reklamy. Lidé, kteří se zaregistrují, často přijdou o velké peníze.",
+    "checks": [],
+    "model": "anthropic/claude-opus-5.5",
+    "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+   }
+  },
+  {
+   "id": "page-ceskaposta",
+   "title": "Stránka „České pošty“: potvrďte adresu",
+   "label": "scam",
+   "kind": "page",
+   "channel": "Webová stránka",
+   "sender": null,
+   "text": null,
+   "url_in_message": "https://ceskapostacz.com.cn/cz",
+   "source_url": "https://www.novinky.cz/clanek/internet-a-pc-bezpecnost-balicek-nemohl-byt-dorucen-cesko-bombarduji-podvodne-sms-40475671",
+   "source_name": "novinky.cz",
+   "result": {
+    "verdict": "podvod",
+    "verdict_label": "Téměř jistě podvod",
+    "confidence": "vysoka",
+    "headline": "Tento odkaz není od České pošty, jde o podvodnou stránku.",
+    "scam_type": "falešný dopravce",
+    "red_flags": [
+     {
+      "signal": "Napodobenina adresy České pošty",
+      "evidence": "Ověřeno: adresa obsahuje „ceskaposta“, ale nepatří k oficiálním doménám České pošty (ceskaposta.cz, balikovna.cz, cpost.cz, postaonline.cz).",
+      "explanation": "Podvodníci používají adresy podobné skutečné firmě, aby vypadaly důvěryhodně."
+     },
+     {
+      "signal": "Zvláštní koncovka adresy",
+      "evidence": "ceskapostacz.com.cn",
+      "explanation": "Koncovka „.com.cn“ patří do Číny, Česká pošta používá adresy končící na „.cz“."
+     }
+    ],
+    "reassuring_signs": [],
+    "what_to_do": [
+     "Na odkaz neklikejte a nic na stránce nevyplňujte.",
+     "Pokud jste už zadali údaje o kartě, ihned volejte svou banku na čísle ze zadní strany karty a nechte kartu zablokovat.",
+     "Čekáte-li zásilku, ověřte ji sami na stránce ceskaposta.cz nebo v aplikaci Pošty.",
+     "Zprávu s odkazem smažte a neodpovídejte na ni."
+    ],
+    "explanation": "Adresa se jen tváří jako Česká pošta, ve skutečnosti jí nepatří. Takové stránky obvykle chtějí zaplatit malý poplatek za balík a ukradnou údaje z platební karty. Skutečná Česká pošta používá jen své oficiální adresy končící na „.cz“.",
+    "checks": [
+     {
+      "name": "Odkaz ceskapostacz.com.cn",
+      "status": "nebezpeci",
+      "detail": "Napodobenina značky Česká pošta: adresa obsahuje „ceskaposta“, ale nepatří k oficiálním doménám (balikovna.cz, ceskaposta.cz, cpost.cz, postaonline.cz).",
+      "source": "porovnání s oficiálními doménami"
      }
     ],
     "model": "anthropic/claude-opus-5.5",

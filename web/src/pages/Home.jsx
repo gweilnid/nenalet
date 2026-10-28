@@ -1,7 +1,8 @@
 import data from '../data/examples.json';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
-import HeroDemo from '../components/HeroDemo.jsx';
+import HeroLoop from '../components/HeroLoop.jsx';
+import CaseExplorer from '../components/CaseExplorer.jsx';
 import Story from '../components/Story.jsx';
 import { Logo } from '../components/Icons.jsx';
 import SplitText from '../components/reactbits/SplitText.jsx';
@@ -79,7 +80,7 @@ export default function Home() {
         <section className="hero grid frame" aria-labelledby="hero-h">
           <div className="hero-copy">
             <SplitText
-              text="Ověřte zprávu, než naletíte"
+              text="Ověřte zprávu i web, než naletíte"
               tag="h1"
               className="hero-h"
               textAlign="left"
@@ -90,8 +91,8 @@ export default function Home() {
               ease="expo.out"
               rootMargin="0px"
             />
-            <p className="lead">
-              Nenaleť v iPhonu i v Chromu během pár sekund řekne, jestli je SMS, e-mail nebo stránka podvod, a poradí, co máte udělat.
+            <p className="lead hero-lead">
+              SMS, e-mail, odkaz i celý e-shop. Nenaleť během pár sekund řekne, jestli jde o podvod, a poradí, co dělat.
             </p>
             <div className="actions">
               <Magnet padding={60} magnetStrength={4}>
@@ -99,9 +100,8 @@ export default function Home() {
               </Magnet>
               <a className="btn btn-quiet" href="#instalace">Přidat do Chromu</a>
             </div>
-            <p className="hero-note">Zdarma. Obsah zpráv neukládáme. Přesnost jsme změřili na 107 skutečných zprávách.</p>
           </div>
-          <HeroDemo examples={examples} />
+          <HeroLoop examples={examples} />
         </section>
 
         <section className="section frame" aria-labelledby="why-h">
@@ -151,6 +151,18 @@ export default function Home() {
               </p>
               <a className="btn btn-ink" href="metodika">Celá metodika i s chybami</a>
             </div>
+          </div>
+        </section>
+
+        <section id="pouziti" className="section frame" aria-labelledby="cases-h">
+          <div className="grid">
+            <div className="cases-head">
+              <h2 id="cases-h">Kdy se Nenaleť hodí</h2>
+              <p className="lead">
+                Ověří zprávu i celou stránku, v počítači i v mobilu. Tady jsou skutečné podvody, na které lidé v Česku narazili.
+              </p>
+            </div>
+            <CaseExplorer examples={examples} />
           </div>
         </section>
 
