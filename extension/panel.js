@@ -1,17 +1,32 @@
+// Postranní panel: vyzvedne požadavek z kontextového menu (chrome.storage.session),
+// nebo ověří vložený text / aktuální stránku. Výsledek zobrazí v panelu.
 import { apiBase } from "./config.js";
+import { isWebUrl, screenshot, shorten } from "./util.js";
 
 const ICONS = { podvod: "🛑", podezrele: "⚠️", bez_varovnych_signalu: "✅", nelze_posoudit: "❔" };
 const CONF = { vysoka: "vysoká", stredni: "střední", nizka: "nízká" };
 const ST = { ok: "✓", info: "i", varovani: "!", nebezpeci: "✕" };
 const PROGRESS = ["Kontroluji odkazy a domény…", "Ověřuji v registrech…", "Posuzuji situaci…", "Ještě chvilku…"];
 const $ = (id) => document.getElementById(id);
+
+let myWindowId = null;
 let checkId = null;
+let current = null; // AbortController běžící kontroly
 
 function el(tag, text, cls) {
   const e = document.createElement(tag);
   if (text != null) e.textContent = text;
   if (cls) e.className = cls;
   return e;
+}
+
+function showState(state) {
+  $("idle").hidden = state !== "idle";
+  $("loading").hidden = state !== "loading";
+  $("result").hidden = state !== "result";
+  $("error").hidden = state !== "error";
+  $("subject").hidden = state === "idle" || !$("subject").textContent;
+  $("again").hidden = state === "idle" || state === "loading";
 }
 
 function render(r) {
@@ -46,32 +61,80 @@ function render(r) {
   );
   $("checks-wrap").hidden = !r.checks.length;
   $("disclaimer").textContent = r.disclaimer;
-  $("loading").hidden = true;
-  $("result").hidden = false;
+  document.querySelectorAll("[data-correct]").forEach((b) => b.setAttribute("aria-pressed", "false"));
+  $("thanks").hidden = true;
+  showState("result");
+  window.scrollTo({ top: 0 });
 }
 
-async function run() {
-  const id = location.hash.slice(1);
-  const stored = await chrome.storage.session.get(id);
-  const payload = stored[id];
-  await chrome.storage.session.remove(id);
-  if (!payload) throw new Error("Nemám co ověřit. Zkuste to prosím znovu.");
+function showError(msg) {
+  $("error").textContent = msg;
+  showState("error");
+}
+
+async function runCheck(payload, label) {
+  current?.abort();
+  const ctrl = new AbortController();
+  current = ctrl;
+  $("subject").textContent = label || "";
+  showState("loading");
   let step = 0;
-  const timer = setInterval(() => ($("progress").textContent = PROGRESS[Math.min(++step, PROGRESS.length - 1)]), 2500);
   $("progress").textContent = PROGRESS[0];
+  const timer = setInterval(() => ($("progress").textContent = PROGRESS[Math.min(++step, PROGRESS.length - 1)]), 2500);
   try {
     const resp = await fetch(`${await apiBase()}/api/check`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...payload, client: "extension" }),
+      signal: ctrl.signal,
     });
     const data = await resp.json().catch(() => ({}));
+    if (ctrl !== current) return; // mezitím přišla novější kontrola
     if (!resp.ok) throw new Error(data.error || "Server teď neodpovídá. Zkuste to prosím za chvíli.");
     render(data);
+  } catch (e) {
+    if (e.name === "AbortError") return;
+    showError(e.message || "Nepodařilo se spojit se serverem.");
   } finally {
     clearInterval(timer);
   }
 }
+
+async function takePending() {
+  const { nenalet_request: req } = await chrome.storage.session.get("nenalet_request");
+  if (!req || req.windowId !== myWindowId || Date.now() - req.ts > 2 * 60 * 1000) return false;
+  await chrome.storage.session.remove("nenalet_request");
+  runCheck(req.payload, req.label);
+  return true;
+}
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "session" && changes.nenalet_request?.newValue) takePending();
+});
+
+$("go").addEventListener("click", () => {
+  const text = $("text").value.trim();
+  if (!text) return $("text").focus();
+  runCheck({ text }, `Vložený text: „${shorten(text)}“`);
+});
+
+$("page").addEventListener("click", async () => {
+  const [tab] = await chrome.tabs.query({ active: true, windowId: myWindowId });
+  const shot = await screenshot(myWindowId);
+  const url = isWebUrl(tab?.url) ? tab.url : null;
+  if (!shot && !url) {
+    $("subject").textContent = "";
+    return showError("K této stránce nemám přístup. Klikněte na ni pravým tlačítkem a zvolte „Ověřit tuto stránku v Nenaleť“.");
+  }
+  runCheck({ url, image_base64: shot }, `Stránka: ${shorten(url || tab?.title || "aktuální stránka")}`);
+});
+
+$("again").addEventListener("click", () => {
+  current?.abort();
+  $("subject").textContent = "";
+  $("text").value = "";
+  showState("idle");
+});
 
 document.querySelectorAll("[data-correct]").forEach((b) =>
   b.addEventListener("click", async () => {
@@ -88,8 +151,5 @@ document.querySelectorAll("[data-correct]").forEach((b) =>
   })
 );
 
-run().catch((e) => {
-  $("loading").hidden = true;
-  $("error").textContent = e.message || "Nepodařilo se spojit se serverem.";
-  $("error").hidden = false;
-});
+myWindowId = (await chrome.windows.getCurrent()).id;
+if (!(await takePending())) showState("idle");

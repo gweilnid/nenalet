@@ -6,7 +6,7 @@ Projekt do soutěže **AI výzva pro Česko 2026** (mesic.ai). Řeší obavu, kt
 
 - Web: https://b2bsaas.cz/nenalet/
 - iPhone: zkratka „Nenaleť“ v nabídce Sdílet
-- Počítač: rozšíření pro Chrome (pravé tlačítko → Ověřit v Nenaleť)
+- Počítač: rozšíření pro Chrome (pravé tlačítko → Ověřit v Nenaleť; výsledek v postranním panelu)
 
 ![Ukázka: falešná SMS od „Zásilkovny“ – verdikt, rada co dělat a ověřená fakta](docs/ukazka-sms-dopravce.gif)
 
@@ -67,7 +67,7 @@ backend/      FastAPI server + webové rozhraní (Python 3.12+)
   nenalet/    urls.py (rozbor odkazů), sources.py (ČOI, ARES, RDAP), netguard.py (bezpečné stahování),
               page.py (rozbor stránky), analyzer.py (fakta + model), prompt.py, app.py, static/
   tests/      testy deterministických částí
-extension/    rozšíření pro Chrome (Manifest V3, jen oprávnění activeTab/contextMenus/storage)
+extension/    rozšíření pro Chrome (Manifest V3, postranní panel; oprávnění activeTab/contextMenus/storage/sidePanel)
 shortcut/     generátor zkratky pro iPhone (podepsaný .shortcut)
 eval/         testová sada, zdroje a skript pro měření přesnosti
 ```

@@ -1,4 +1,6 @@
-// Kontextové menu: text, odkaz, obrázek / celá stránka -> okno s výsledkem.
+// Kontextové menu (text, odkaz, obrázek, celá stránka) -> výsledek v postranním panelu.
+// Panel si požadavek vyzvedne z chrome.storage.session (klíč "nenalet_request").
+import { isWebUrl, screenshot, shorten } from "./util.js";
 
 const MENUS = [
   { id: "nenalet-text", title: "Ověřit označený text v Nenaleť", contexts: ["selection"] },
@@ -7,60 +9,47 @@ const MENUS = [
   { id: "nenalet-page", title: "Ověřit tuto stránku v Nenaleť", contexts: ["page", "frame", "video"] },
 ];
 
-chrome.runtime.onInstalled.addListener(() => {
+function setup() {
   chrome.contextMenus.removeAll(() => MENUS.forEach((m) => chrome.contextMenus.create(m)));
-});
+  // Klik na ikonu rozšíření otevře postranní panel.
+  chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(console.warn);
+}
+chrome.runtime.onInstalled.addListener(setup);
+chrome.runtime.onStartup.addListener(setup);
 
-function isWebUrl(u) {
-  return /^https?:\/\//i.test(u || "");
+async function submit(windowId, payload, label) {
+  await chrome.storage.session.set({
+    nenalet_request: { id: crypto.randomUUID(), windowId, payload, label, ts: Date.now() },
+  });
 }
 
-export async function openResult(payload) {
-  const id = crypto.randomUUID();
-  await chrome.storage.session.set({ [id]: payload });
-  await chrome.windows.create({ url: `result.html#${id}`, type: "popup", width: 480, height: 760 });
-}
-
-async function screenshot(windowId) {
-  try {
-    return await chrome.tabs.captureVisibleTab(windowId, { format: "jpeg", quality: 80 });
-  } catch (e) {
-    console.warn("Snímek obrazovky se nepodařil:", e);
-    return null;
-  }
-}
-
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+async function handleMenu(info, tab) {
+  const windowId = tab?.windowId;
   if (info.menuItemId === "nenalet-text") {
-    await openResult({ text: info.selectionText || "" });
+    await submit(windowId, { text: info.selectionText || "" }, `Označený text: „${shorten(info.selectionText)}“`);
   } else if (info.menuItemId === "nenalet-link") {
-    await openResult({ url: info.linkUrl, text: info.selectionText || null });
-  } else if (info.menuItemId === "nenalet-page" || info.menuItemId === "nenalet-image") {
-    const shot = await screenshot(tab?.windowId);
+    await submit(windowId, { url: info.linkUrl, text: info.selectionText || null }, `Odkaz: ${shorten(info.linkUrl)}`);
+  } else {
+    const shot = await screenshot(windowId);
     const pageUrl = isWebUrl(info.pageUrl || tab?.url) ? info.pageUrl || tab.url : null;
     // U obrázku pošleme i jeho adresu: server stáhne originál a hledá v něm podpis původu (C2PA)
     // a vodoznak SynthID, které se snímkem obrazovky ztrácejí.
-    const imageUrl = isWebUrl(info.srcUrl) ? info.srcUrl : null;
-    await openResult({
-      url: pageUrl,
-      image_base64: shot ? shot.split(",")[1] : null,
-      image_url: imageUrl,
-      text: imageUrl ? "Uživatel chce ověřit tento obrázek na stránce (je na snímku obrazovky)." : null,
-    });
+    const imageUrl = info.menuItemId === "nenalet-image" && isWebUrl(info.srcUrl) ? info.srcUrl : null;
+    await submit(
+      windowId,
+      {
+        url: pageUrl,
+        image_base64: shot,
+        image_url: imageUrl,
+        text: imageUrl ? "Uživatel chce ověřit tento obrázek na stránce (je na snímku obrazovky)." : null,
+      },
+      imageUrl ? `Obrázek na stránce ${shorten(pageUrl || "", 60)}` : `Stránka: ${shorten(pageUrl || "aktuální stránka")}`
+    );
   }
-});
+}
 
-// Zprávy z vyskakovacího okna (ikona rozšíření).
-chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
-  (async () => {
-    if (msg?.type === "check-text") {
-      await openResult({ text: msg.text });
-    } else if (msg?.type === "check-current-page") {
-      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-      const shot = await screenshot(tab?.windowId);
-      await openResult({ url: isWebUrl(tab?.url) ? tab.url : null, image_base64: shot ? shot.split(",")[1] : null });
-    }
-    sendResponse({ ok: true });
-  })();
-  return true;
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  // Panel je nutné otevřít hned - Chrome to dovolí jen jako přímou reakci na klik uživatele.
+  if (tab?.windowId != null) chrome.sidePanel.open({ windowId: tab.windowId }).catch(console.warn);
+  handleMenu(info, tab).catch(console.error);
 });

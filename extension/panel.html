@@ -2,13 +2,23 @@
 <html lang="cs">
 <head>
 <meta charset="utf-8">
-<title>Nenaleť – výsledek</title>
+<title>Nenaleť</title>
 <link rel="stylesheet" href="ui.css">
 </head>
 <body>
 <main class="result-page">
   <h1 class="brand">Nenaleť</h1>
-  <div id="loading" class="loading" role="status" aria-live="polite">
+
+  <section id="idle" class="idle">
+    <p>Na podezřelý text, odkaz, obrázek nebo stránku klikněte <b>pravým tlačítkem</b> a zvolte <b>Ověřit v Nenaleť</b>. Výsledek se ukáže tady.</p>
+    <button id="page" class="btn-primary">Ověřit tuto stránku</button>
+    <label for="text" class="or">nebo vložte text zprávy:</label>
+    <textarea id="text" rows="5" placeholder="Sem vložte SMS, e-mail nebo odkaz…"></textarea>
+    <button id="go" class="btn-secondary">Ověřit text</button>
+  </section>
+
+  <p id="subject" class="subject" hidden></p>
+  <div id="loading" class="loading" role="status" aria-live="polite" hidden>
     <div class="spinner" aria-hidden="true"></div>
     <p id="progress">Kontroluji…</p>
   </div>
@@ -43,7 +53,9 @@
     </div>
     <p class="hint" id="disclaimer"></p>
   </section>
+
+  <button id="again" class="btn-secondary" hidden>Ověřit něco dalšího</button>
 </main>
-<script type="module" src="result.js"></script>
+<script type="module" src="panel.js"></script>
 </body>
 </html>
