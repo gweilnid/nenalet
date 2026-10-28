@@ -88,46 +88,99 @@ function innerScrolls(target, dy, stop) {
 }
 
 /**
- * Krokování: jedno gesto (kolečko, touchpad, klávesa) = jeden krok dolů, nebo rovnou předchozí sekce nahoru.
- * Dojezd touchpadu se nepočítá jako nové gesto; nové gesto začne až po krátké pauze v událostech kolečka.
+ * Krokování kolečkem, touchpadem a klávesami.
+ * Dolů: jedno gesto = jeden krok (nebo další sekce), rychlé švihnutí během animace se zařadí do fronty.
+ * Nahoru: rovnou celé předchozí sekce. Delší nebo opakované švihnutí jich přeskočí víc, jako při běžném skrolování.
  */
 function stepper(panels) {
+  const top = (el) => Math.round(el.getBoundingClientRect().top + window.scrollY);
+  const marksOf = (p) => [...p.querySelectorAll(':scope > .snap-mark')].map(top);
   const points = () => {
-    const marks = panels.flatMap((p) => [...p.querySelectorAll(':scope > .snap-mark')]);
-    const ys = [0, ...marks.map((m) => Math.round(m.getBoundingClientRect().top + window.scrollY))];
-    ys.push(Math.round(document.documentElement.scrollHeight - window.innerHeight)); // patička
+    const ys = [0, ...panels.flatMap(marksOf), Math.round(document.documentElement.scrollHeight - window.innerHeight)]; // + patička
     return [...new Set(ys)].sort((a, b) => a - b);
   };
-  let busy = false;
-  let last = 0;
-  let acc = 0;
-  let used = false;
   // Začátek a poslední krok každé sekce s kroky (úvod kroky nemá).
-  const sections = () =>
-    panels
-      .map((p) => [...p.querySelectorAll(':scope > .snap-mark')].map((m) => Math.round(m.getBoundingClientRect().top + window.scrollY)))
-      .filter((ys) => ys.length)
-      .map((ys) => ({ first: ys[0], last: ys[ys.length - 1] }));
-  const go = (dir) => {
-    const y = window.scrollY;
-    let target;
-    if (dir > 0) {
-      // Dolů: další krok (nebo další sekce).
-      target = points().find((p) => p > y + 4);
-    } else {
-      // Nahoru: rovnou na předchozí sekci, celou (kroky se při návratu neschovávají).
-      const info = sections();
-      let i = -1;
-      info.forEach((sec, idx) => { if (sec.first <= y + 4) i = idx; });
-      if (i === -1) target = 0;
-      else if (y > info[i].last + 4) target = info[i].last; // z patičky na poslední sekci
-      else target = i === 0 ? 0 : info[i - 1].last;
-      if (target >= y - 4) target = undefined;
-    }
-    if (target === undefined) return;
-    busy = true;
-    gsap.to(window, { scrollTo: { y: target, autoKill: false }, duration: 0.85, ease: 'power3.inOut', onComplete: () => { busy = false; } });
+  const sections = () => panels.map(marksOf).filter((ys) => ys.length).map((ys) => ({ first: ys[0], last: ys[ys.length - 1] }));
+
+  const SPEED = 0.4; // s na jednu sekci, když se přeskakuje víc sekcí za sebou
+  let tween = null;
+  let moving = 0; // 1 = jede dolů, -1 = jede nahoru
+  let queueDown = false;
+  let queueUp = 0; // kolik sekcí nahoru ještě zbývá
+  let flowing = false; // běžící skok nahoru skončí v pohybu a naváže na něj další
+
+  const run = (y, duration, ease, done) => {
+    tween?.kill();
+    tween = gsap.to(window, { scrollTo: { y, autoKill: false }, duration, ease, onComplete: () => { tween = null; done(); } });
   };
+  const stop = () => {
+    tween?.kill();
+    tween = null;
+    moving = 0;
+    queueUp = 0;
+    queueDown = false;
+    flowing = false;
+  };
+
+  const stepDown = () => {
+    const target = points().find((p) => p > window.scrollY + 4);
+    if (target === undefined) { moving = 0; return; }
+    moving = 1;
+    run(target, 0.85, 'power3.inOut', () => {
+      moving = 0;
+      if (queueDown) { queueDown = false; stepDown(); }
+    });
+  };
+  const down = () => {
+    if (moving === -1) stop();
+    if (moving === 1) queueDown = true;
+    else stepDown();
+  };
+
+  const hopUp = () => {
+    if (queueUp <= 0) { moving = 0; flowing = false; return; }
+    const info = sections();
+    let y = window.scrollY;
+    let i = -1;
+    info.forEach((sec, idx) => { if (sec.first <= y + 4) i = idx; });
+    let target;
+    if (i === -1) target = 0;
+    else if (y > info[i].last + 4) target = info[i].last; // z patičky nebo z půlky přechodu na celou sekci
+    else {
+      // Uvnitř přišpendlené sekce vypadá každá poloha stejně, takže skok na její začátek není vidět
+      // a cesta nahoru nemá hluchá místa.
+      if (y > info[i].first + 1) {
+        window.scrollTo({ top: info[i].first, behavior: 'instant' });
+        y = window.scrollY;
+      }
+      target = i === 0 ? 0 : info[i - 1].last;
+    }
+    if (target >= y - 4) { stop(); return; }
+    queueUp -= 1;
+    const more = queueUp > 0;
+    const [duration, ease] = flowing ? (more ? [SPEED, 'none'] : [0.8, 'power1.out']) : more ? [0.6, 'power1.in'] : [0.85, 'power3.inOut'];
+    flowing = more;
+    moving = -1;
+    run(target, duration, ease, hopUp);
+  };
+  const up = (n = 1) => {
+    if (moving === 1) stop();
+    const was = queueUp;
+    queueUp = Math.min(queueUp + n, 20);
+    if (moving !== -1) { flowing = false; hopUp(); return; }
+    // Běží poslední skok, který měl zabrzdit: místo brzdění plynule pokračovat do další sekce.
+    if (was === 0 && !flowing && tween) {
+      const target = tween.vars.scrollTo.y;
+      flowing = true;
+      run(target, Math.max(0.12, (Math.abs(window.scrollY - target) / window.innerHeight) * SPEED), 'none', hopUp);
+    }
+  };
+
+  // Gesto: souvislá řada událostí kolečka. Dojezd touchpadu plynule slábne; když síla znovu vzroste
+  // nebo přijde pauza či opačný směr, je to nové švihnutí.
+  let g = null;
+  let last = 0;
+  const recent = [];
   const onWheel = (e) => {
     if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; // zoom, vodorovné skrolování
     const now = performance.now();
@@ -135,24 +188,44 @@ function stepper(panels) {
     last = now;
     if (innerScrolls(e.target, e.deltaY, null)) return;
     e.preventDefault();
-    if (gap > 140) { acc = 0; used = false; } // nové gesto
-    acc += e.deltaY;
-    if (busy || used || Math.abs(acc) < 24) return;
-    used = true;
-    go(Math.sign(acc));
+    const dir = Math.sign(e.deltaY);
+    if (!dir) return;
+    const a = Math.abs(e.deltaY) * (e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? window.innerHeight : 1);
+    recent.push(a);
+    if (recent.length > 3) recent.shift();
+    const avg = recent.reduce((sum, v) => sum + v, 0) / recent.length;
+    let fresh = !g || gap > 140 || dir !== g.dir;
+    if (!fresh && now - g.t0 > 200 && g.low < g.peak * 0.45 && avg > Math.max(g.low * 2.2, 8)) fresh = true;
+    if (fresh) {
+      g = { dir, acc: 0, fired: 0, peak: 0, low: Infinity, t0: now };
+      recent.length = 0;
+      recent.push(a);
+    }
+    if (a >= g.peak) { g.peak = a; g.low = a; } else if (a < g.low) g.low = a;
+    g.acc += a;
+    if (g.acc < 24) return;
+    if (dir > 0) {
+      if (!g.fired) { g.fired = 1; down(); }
+    } else {
+      // Nahoru jako běžné skrolování: první sekce hned, každá další obrazovka pohybu = další sekce.
+      const want = 1 + Math.floor((g.acc - 24) / window.innerHeight);
+      if (want > g.fired) { up(want - g.fired); g.fired = want; }
+    }
   };
   const onKey = (e) => {
     const t = e.target;
     if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || t.closest?.('input, textarea, select, [contenteditable="true"]')) return;
-    const down = ['PageDown', 'ArrowDown'].includes(e.key) || (e.key === ' ' && !e.shiftKey && t.tagName !== 'BUTTON' && t.tagName !== 'A');
-    const up = ['PageUp', 'ArrowUp'].includes(e.key) || (e.key === ' ' && e.shiftKey);
-    if (!down && !up) return;
+    const isDown = ['PageDown', 'ArrowDown'].includes(e.key) || (e.key === ' ' && !e.shiftKey && t.tagName !== 'BUTTON' && t.tagName !== 'A');
+    const isUp = ['PageUp', 'ArrowUp'].includes(e.key) || (e.key === ' ' && e.shiftKey);
+    if (!isDown && !isUp) return;
     e.preventDefault();
-    if (!busy) go(down ? 1 : -1);
+    if (isDown) down();
+    else up();
   };
   window.addEventListener('wheel', onWheel, { passive: false });
   window.addEventListener('keydown', onKey);
   return () => {
+    stop();
     window.removeEventListener('wheel', onWheel);
     window.removeEventListener('keydown', onKey);
   };
@@ -176,7 +249,10 @@ export function setupPanels(scope) {
           end: 'bottom 55%',
           // Dolů: odkrývat po krocích. Zpátky nahoru: celá sekce hned, nic se neschovává.
           onEnter: () => setStep(panel, Math.max(k, Number(panel.dataset.at || 0))),
-          onEnterBack: () => setStep(panel, n),
+          // Při velkém skoku nahoru (Home, odkaz) přeletí ScrollTrigger i sekce pod cílem; ty zůstanou schované.
+          onEnterBack: () => {
+            if (panel.getBoundingClientRect().top < window.innerHeight * 0.9) setStep(panel, n);
+          },
         });
       });
       // Sekce odjela dolů z obrazovky (člověk je nad ní): příště se kroky přehrají znovu.
