@@ -2,84 +2,185 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { Logo, VerdictMark } from './Icons.jsx';
+import recSms from '../assets/rec-sms.webp';
+import recShare from '../assets/rec-share.webp';
+import recResult from '../assets/rec-result.webp';
 
 gsap.registerPlugin(useGSAP);
 
 const reduceMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
-// Texty jsou doslovně ze skutečných případů v testové sadě (zdroje v examples.json).
+/* ---------- iPhone ---------- */
+function Status({ dark }) {
+  return (
+    <div className={`ios-status${dark ? ' is-dark' : ''}`} aria-hidden="true">
+      <b>9:41</b>
+      <i className="ios-island" />
+      <span className="ios-icons"><i className="ios-signal" /><i className="ios-battery" /></span>
+    </div>
+  );
+}
+
+/** Skutečné snímky obrazovky ze záznamu iPhonu: SMS → Sdílet → výsledek Nenaleť. */
+function RealIphone() {
+  return (
+    <div className="iphone loop-object" data-ui>
+      <div className="ip-screen">
+        <img className="rec rec-sms" src={recSms} alt="" />
+        <img className="rec rec-share" src={recShare} alt="" />
+        <i className="rec-ring" />
+        <img className="rec rec-result" src={recResult} alt="" />
+        <span className="rec-fast">zrychleno</span>
+      </div>
+    </div>
+  );
+}
+
+/** Pravá SMS od PPL ve vzhledu Zpráv v iPhonu (tmavý režim jako na záznamu). */
 function PplSms({ ex }) {
-  const url = ex.url_in_message;
-  const [before] = ex.text.split(url);
+  const [before, link] = ex.text.split(/(ppl\.cz\/\S+)/);
   return (
-    <div className="phone loop-object" data-ui>
-      <div className="phone-head"><b>{ex.sender}</b><small>Textová zpráva</small></div>
-      <div className="phone-body">
-        <p className="bubble">
-          {before.trim()}{' '}
-          <mark className="loop-hl">{url}</mark>
+    <div className="iphone loop-object" data-ui>
+      <div className="ip-screen ios-msgs">
+        <Status dark />
+        <div className="msg-head">
+          <span className="msg-back" aria-hidden="true">‹</span>
+          <span className="msg-avatar" aria-hidden="true" />
+          <b>{ex.sender} ›</b>
+        </div>
+        <p className="msg-meta">Textová zpráva · SMS<br />Dnes 9:41</p>
+        <p className="msg-bubble">
+          {before}
+          {link && <u>{link}</u>}
         </p>
+        <div className="msg-input"><i aria-hidden="true">+</i><span>Textová zpráva · SMS</span></div>
       </div>
     </div>
   );
 }
 
-function RealSms({ ex }) {
+/** Falešná stránka „České pošty“ v Safari (rekonstrukce podle Novinek a CNN Prima, jako ve videu). */
+function PostSafari() {
   return (
-    <div className="phone loop-object" data-ui>
-      <div className="phone-head"><b>{ex.sender}</b><small>Textová zpráva</small></div>
-      <div className="phone-body">
-        <p className="bubble">{ex.text}</p>
+    <div className="iphone loop-object" data-ui>
+      <div className="ip-screen safari">
+        <Status />
+        <div className="cp-top"><b>Česká pošta</b><i className="cp-menu" aria-hidden="true" /></div>
+        <div className="cp-body">
+          <p className="cp-h">Vaše zásilka nemohla být doručena</p>
+          <p className="cp-p">Balíček dorazil do skladu, ale nemohl být doručen z důvodu neúplných údajů o adrese.</p>
+          <span className="cp-f">Jméno a příjmení</span>
+          <span className="cp-f">Ulice a číslo domu</span>
+          <p className="cp-p">Za opětovné doručení je nutné uhradit poplatek.</p>
+          <div className="cp-card">
+            <span className="cp-f">Číslo karty</span>
+            <div className="cp-row"><span className="cp-f">Platnost</span><span className="cp-f">CVV</span></div>
+          </div>
+          <span className="cp-btn">Potvrdit a zaplatit</span>
+        </div>
+        <div className="sf-bar"><span className="sf-addr"><mark className="loop-hl">ceskapostacz<span className="cp-tld">.com.cn</span></mark></span></div>
       </div>
     </div>
   );
 }
 
-function ShopPage() {
+/* ---------- Chrome s rozšířením ---------- */
+function ShopChrome({ ex }) {
+  const r = ex.result;
   return (
-    <div className="win loop-object" data-ui>
-      <div className="win-bar">
-        <span className="win-dots" aria-hidden="true"><i /><i /><i /></span>
-        <span className="win-addr"><mark className="loop-hl">simonasperky.cz</mark></span>
+    <div className="chrome loop-object" data-ui>
+      <div className="ch-tabs"><span className="ch-tab"><i className="ch-fav" />Simona Šperky – výprodej</span></div>
+      <div className="ch-bar">
+        <span className="ch-nav" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" /></svg>
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
+          <svg viewBox="0 0 24 24"><path d="M19 12a7 7 0 1 1-2.1-5M19 4v4h-4" /></svg>
+        </span>
+        <span className="ch-omni"><i className="ch-lock" aria-hidden="true" /><mark className="loop-hl">simonasperky.cz</mark></span>
+        <span className="ch-ext"><Logo /></span>
       </div>
-      <div className="shop">
-        <p className="shop-top">UKONČENÍ SBÍRKY VÝPRODEJ!</p>
-        <p className="shop-big"><mark className="loop-hl">75% SLEVA</mark></p>
-        <p className="shop-top">DOPRAVA ZDARMA NAD 746 KČ</p>
-        <span className="shop-btn">NAKUPOVAT NYNÍ</span>
-        <p className="shop-story">S lítostí vám musím oznámit, že moje sbírka bude brzy uzavřena…</p>
-      </div>
-    </div>
-  );
-}
-
-function PostPage() {
-  return (
-    <div className="phone phone-web loop-object" data-ui>
-      <div className="phone-addr"><mark className="loop-hl">ceskapostacz.com.cn</mark></div>
-      <div className="phone-page">
-        <p className="pp-title">Potvrďte svou adresu</p>
-        <p className="pp-text">Balíček dorazil do skladu, ale nemohl být doručen z důvodu neúplných údajů o adrese.</p>
-        <span className="pp-field">Jméno a příjmení</span>
-        <span className="pp-field">Ulice a číslo</span>
-        <span className="pp-field">PSČ a obec</span>
-        <span className="pp-btn">Pokračovat</span>
+      <div className="ch-body">
+        <div className="ch-page">
+          <p className="sh-t">UKONČENÍ SBÍRKY VÝPRODEJ!</p>
+          <p className="sh-big"><mark className="loop-hl">75% SLEVA</mark></p>
+          <p className="sh-t">DOPRAVA ZDARMA NAD 746 KČ</p>
+          <span className="sh-btn">NAKUPOVAT NYNÍ</span>
+          <p className="sh-story">S lítostí vám musím oznámit, že moje sbírka bude brzy uzavřena…</p>
+        </div>
+        <div className="ch-menu">
+          <span>Zpět</span><span>Znovu načíst</span><span>Uložit jako…</span>
+          <span className="is-us">Ověřit tuto stránku v Nenaleť</span><span>Prozkoumat</span>
+        </div>
+        <svg className="ch-cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l17 10-7.5 1.6L9 21z" /></svg>
+        <aside className="ch-panel">
+          <p className="chp-brand"><Logo />Nenaleť</p>
+          <p className="chp-subj">Stránka: https://simonasperky.cz/</p>
+          <div className="chp-v"><b>✕ {r.verdict_label}</b><p>{r.headline}</p></div>
+          <p className="chp-h">Co teď udělat</p>
+          <ol className="chp-todo"><li>{r.what_to_do[0]}</li></ol>
+        </aside>
       </div>
     </div>
   );
 }
 
 const SCENES = [
-  { id: 'scam-037', tab: 'SMS od „PPL“', View: PplSms },
-  { id: 'scam-047', tab: 'E-shop v počítači', View: ShopPage },
-  { id: 'page-ceskaposta', tab: '„Česká pošta“ v mobilu', View: PostPage },
-  { id: 'legit-005', tab: 'Pravá SMS', View: RealSms },
+  { id: 'real-gls', tab: 'SMS od „GLS“ v iPhonu', View: RealIphone, real: true },
+  { id: 'scam-047', tab: 'E-shop v Chromu', View: ShopChrome, chrome: true },
+  { id: 'page-ceskaposta', tab: '„Česká pošta“ v iPhonu', View: PostSafari },
+  { id: 'legit-005', tab: 'Pravá SMS od PPL', View: PplSms },
 ];
 
-/** Úvodní smyčka: skutečné zprávy i stránky, zvýrazňovač a razítko s verdiktem. */
+function timeline(scene, q) {
+  const tl = gsap.timeline();
+  const has = (sel) => q(sel).length > 0;
+  tl.from('.loop-object', { y: 48, opacity: 0, scale: 0.96, duration: 0.9, ease: 'expo.out' });
+  if (scene.real) {
+    tl.to('.rec-share', { opacity: 1, duration: 0.3 }, 1.1)
+      .to('.rec-ring', { opacity: 1, duration: 0.25 }, 1.45)
+      .to('.rec-ring', { opacity: 0, duration: 0.2 }, 2.25)
+      .to('.rec-fast', { opacity: 1, duration: 0.25 }, 2.25)
+      .to('.rec-result', { opacity: 1, duration: 0.35 }, 2.35)
+      .to('.rec-fast', { opacity: 0, duration: 0.25 }, 3.3);
+    return { tl, hold: 2.4 };
+  }
+  if (scene.chrome) {
+    tl.set('.ch-panel', { xPercent: 101 }, 0)
+      .to('.loop-hl', { backgroundSize: '100% 100%', duration: 0.45, stagger: 0.5, ease: 'power2.inOut' }, 0.7)
+      .fromTo('.ch-cursor', { x: 220, y: 140, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 1.15)
+      .fromTo('.ch-menu', { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: 'power2.out' }, 1.5)
+      .to('.ch-cursor', { x: () => menuTarget().x, y: () => menuTarget().y, duration: 0.28, ease: 'power2.inOut' }, 1.65)
+      .to('.ch-menu .is-us', { backgroundColor: '#f6e016', duration: 0.12 }, 1.95)
+      .to(['.ch-menu', '.ch-cursor'], { opacity: 0, duration: 0.15 }, 2.05)
+      .to('.ch-panel', { xPercent: 0, duration: 0.55, ease: 'expo.inOut' }, 2.1)
+      .to('.ch-page', { xPercent: -21, duration: 0.55, ease: 'expo.inOut' }, 2.1)
+      .from('.chp-v', { y: 14, opacity: 0, duration: 0.45, ease: 'expo.out' }, 2.6)
+      .from(['.chp-h', '.chp-todo'], { opacity: 0, duration: 0.4, stagger: 0.1 }, 2.85);
+    return { tl, hold: 2.6 };
+  }
+  if (has('.loop-hl')) tl.to('.loop-hl', { backgroundSize: '100% 100%', duration: 0.5, stagger: 0.18, ease: 'power2.inOut' }, 0.75);
+  if (has('.cp-tld')) tl.to('.cp-tld', { color: '#c4251a', duration: 0.25 }, 1.15);
+  if (has('.cp-card')) tl.to('.cp-card', { outlineColor: 'rgba(246, 224, 22, 1)', duration: 0.25 }, 1.35);
+  tl.from('.loop-verdict', { y: 36, opacity: 0, duration: 0.7, ease: 'expo.out' }, 1.6)
+    .from('.loop-stamp', { scale: 1.9, rotation: -18, opacity: 0, duration: 0.5, ease: 'back.out(2.2)' }, 1.85)
+    .from('.loop-headline', { y: 10, opacity: 0, duration: 0.45, ease: 'expo.out' }, 2.1);
+  return { tl, hold: 2.6 };
+}
+
+/** Kam má kurzor dojet: na položku „Ověřit tuto stránku v Nenaleť“ (vůči výchozí poloze kurzoru). */
+function menuTarget() {
+  const cur = document.querySelector('.ch-cursor');
+  const item = document.querySelector('.ch-menu .is-us');
+  if (!cur || !item) return { x: 0, y: 0 };
+  const a = cur.getBoundingClientRect();
+  const b = item.getBoundingClientRect();
+  return { x: b.left + b.width * 0.35 - a.left, y: b.top + b.height * 0.5 - a.top };
+}
+
+/** Úvodní smyčka: skutečný záznam z iPhonu, ověření e-shopu v Chromu, falešná pošta a pravá SMS. */
 export default function HeroLoop({ examples }) {
   const byId = Object.fromEntries(examples.map((e) => [e.id, e]));
-  const scenes = SCENES.filter((s) => byId[s.id]);
+  const scenes = SCENES.filter((s) => s.real || byId[s.id]);
   const [index, setIndex] = useState(0);
   const [run, setRun] = useState(0);
   const auto = useRef(true);
@@ -88,7 +189,7 @@ export default function HeroLoop({ examples }) {
   const stage = useRef(null);
   const scene = scenes[index];
   const ex = byId[scene.id];
-  const r = ex.result;
+  const r = ex?.result;
 
   useEffect(() => {
     const el = stage.current;
@@ -104,26 +205,27 @@ export default function HeroLoop({ examples }) {
   useGSAP(
     () => {
       if (reduceMotion()) {
+        // Bez animace: hned konečný stav každé scény.
         gsap.set('.loop-hl', { backgroundSize: '100% 100%' });
+        gsap.set('.rec-result', { opacity: 1 });
+        gsap.set('.ch-panel', { xPercent: 0 });
+        gsap.set('.ch-page', { xPercent: -21 });
         return;
       }
-      const tl = gsap.timeline({
-        paused: !visible.current,
-        onComplete: () => auto.current && setIndex((i) => (i + 1) % scenes.length),
-      });
-      tl.from('.loop-object', { y: 48, opacity: 0, scale: 0.96, duration: 0.9, ease: 'expo.out' })
-        .to('.loop-hl', { backgroundSize: '100% 100%', duration: 0.5, stagger: 0.18, ease: 'power2.inOut' }, 0.75)
-        .from('.loop-verdict', { y: 36, opacity: 0, duration: 0.7, ease: 'expo.out' }, 1.35)
-        .from('.loop-stamp', { scale: 1.9, rotation: -18, opacity: 0, duration: 0.5, ease: 'back.out(2.2)' }, 1.6)
-        .from('.loop-headline', { y: 10, opacity: 0, duration: 0.45, ease: 'expo.out' }, 1.85);
+      const { tl, hold } = timeline(scene, gsap.utils.selector(stage));
+      tl.paused(!visible.current);
       // Po kliknutí na ukázku smyčka skončí a výsledek zůstane na místě.
       if (auto.current) {
-        tl.to({}, { duration: 2.6 }).to(['.loop-object', '.loop-verdict'], { y: -28, opacity: 0, duration: 0.45, ease: 'power2.in', stagger: 0.05 });
+        tl.to({}, { duration: hold })
+          .to(['.loop-object', '.loop-verdict'], { y: -28, opacity: 0, duration: 0.45, ease: 'power2.in', stagger: 0.05 })
+          .call(() => auto.current && setIndex((i) => (i + 1) % scenes.length));
       }
       tlRef.current = tl;
     },
     { scope: stage, dependencies: [index, run], revertOnUpdate: true }
   );
+
+  const label = scene.real ? 'Nenaleť: Téměř jistě podvod.' : `Nenaleť: ${r.verdict_label}.`;
 
   return (
     <div className="hero-loop">
@@ -145,15 +247,24 @@ export default function HeroLoop({ examples }) {
             </button>
           ))}
         </div>
-        <div className="loop-scene" key={scene.id} aria-label={`Ukázka: ${scene.tab}. Nenaleť: ${r.verdict_label}.`}>
+        <div className={`loop-scene${scene.chrome || scene.real ? ' is-wide' : ''}`} key={scene.id} aria-label={`Ukázka: ${scene.tab}. ${label}`}>
           <scene.View ex={ex} />
-          <div className="loop-verdict" data-ui>
-            <span className="brand-mini"><Logo />Nenaleť</span>
-            <span className="stamp loop-stamp" data-v={r.verdict}><VerdictMark v={r.verdict} />{r.verdict_label}</span>
-            <p className="loop-headline">{r.headline}</p>
-          </div>
+          {!scene.real && !scene.chrome && (
+            <div className="loop-verdict" data-ui>
+              <span className="brand-mini"><Logo />Nenaleť</span>
+              <span className="stamp loop-stamp" data-v={r.verdict}><VerdictMark v={r.verdict} />{r.verdict_label}</span>
+              <p className="loop-headline">{r.headline}</p>
+            </div>
+          )}
         </div>
       </div>
+      <p className="loop-note">
+        {scene.real
+          ? 'Skutečný záznam obrazovky z iPhonu, čekání na výsledek je zkrácené.'
+          : scene.id === 'page-ceskaposta'
+            ? 'Falešná stránka podle popisu Novinek a CNN Prima, výsledek je skutečná kontrola Nenaleť.'
+            : 'Skutečný případ a skutečný výsledek Nenaleť.'}
+      </p>
     </div>
   );
 }
