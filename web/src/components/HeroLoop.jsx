@@ -126,7 +126,7 @@ function ShopChrome({ ex }) {
 
 const SCENES = [
   { id: 'real-gls', tab: 'SMS od „GLS“ v iPhonu', View: RealIphone, real: true },
-  { id: 'scam-047', tab: 'E-shop v Chromu', View: ShopChrome, chrome: true },
+  { id: 'scam-047', tab: 'Podvodný e-shop', View: ShopChrome, chrome: true },
   { id: 'page-ceskaposta', tab: '„Česká pošta“ v iPhonu', View: PostSafari },
   { id: 'legit-005', tab: 'Pravá SMS od PPL', View: PplSms },
 ];
