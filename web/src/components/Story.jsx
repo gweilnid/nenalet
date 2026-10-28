@@ -87,6 +87,7 @@ function FactsPanel() {
 }
 
 function VerdictPanel({ example }) {
+  const { t } = useLang();
   const r = example.result;
   return (
     <div className="device" data-ui>
@@ -96,7 +97,7 @@ function VerdictPanel({ example }) {
           <span className="stamp" data-v={r.verdict}><VerdictMark v={r.verdict} />{r.verdict_label}</span>
         </div>
         <p className="verdict-headline">{r.headline}</p>
-        <p className="mini-h">Co teď udělat</p>
+        <p className="mini-h">{t({ cs: 'Co teď udělat', en: 'What to do now' })}</p>
         <ol className="todo-mini">
           {r.what_to_do.map((t, i) => <li key={i}>{t}</li>)}
         </ol>

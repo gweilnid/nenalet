@@ -1,0 +1,154 @@
+{
+  "_note": "English translations of the Czech examples in examples.json (by id). Nenaleť itself answers in Czech; the English version of the web shows these translations and says so. Evidence quotes must stay exact substrings of the translated text so the highlighter finds them.",
+  "scam-037": {
+    "text": "[PPL Czech]\n\nTo deliver your parcel, an extra CZK 15 is still due because it weighs more than stated. Please pay securely at:\n\nhttps://ppl-abc.def/K4ljL9/2aM3k/cz",
+    "result": {
+      "verdict_label": "Almost certainly a scam",
+      "headline": "It’s a scam. The message only poses as PPL and wants your card details.",
+      "red_flags": [
+        { "signal": "Fake link address", "evidence": "https://ppl-abc.def/K4ljL9/2aM3k/cz – our check showed it isn’t one of PPL’s official addresses (ppl.cz, pplcz.com)", "explanation": "Scammers use addresses that only resemble a well-known company to lure you to a fake page." },
+        { "signal": "A small extra charge for a parcel", "evidence": "an extra CZK 15 is still due because it weighs more than stated", "explanation": "The small amount is meant to lower your guard; the real goal is your card details and then the money in your account." },
+        { "signal": "A message from an ordinary mobile number", "evidence": "Sender: +420604123456", "explanation": "Couriers don’t usually write from ordinary private mobile numbers." },
+        { "signal": "Reassurance about safety", "evidence": "Please pay securely", "explanation": "The word “securely” is there to build trust, but it guarantees nothing." }
+      ],
+      "what_to_do": [
+        "Don’t click the link and don’t reply to the message. Delete it.",
+        "If you’re expecting a parcel, check it yourself in the PPL app or at ppl.cz.",
+        "If you’ve already entered your card details, call your bank right away on the number on the back of your card and have the card blocked.",
+        "If money has gone missing, contact your bank and report it to the Czech Police (158)."
+      ]
+    }
+  },
+  "scam-047": {
+    "text": "COLLECTION CLOSING SALE!\n75% OFF\nFREE SHIPPING OVER CZK 746\nSHOP NOW\n\nI’m sad to tell you that my collection will soon be closing. Our jewellery sale, now heavily discounted, still has a few beautiful pieces […] Balancing work, family and our little business has been hard, and there just aren’t enough hours in the day. That’s why I’ve made the hard but important decision to close our family shop and spend more time with my daughters, so I can be there as they grow up and discover the world",
+    "result": {
+      "verdict_label": "Almost certainly a scam",
+      "headline": "This online shop is on the Czech Trade Inspection’s list of risky online shops. Don’t buy.",
+      "red_flags": [
+        { "signal": "Czech Trade Inspection warning", "evidence": "The domain simonasperky.cz is on ČOI’s list of risky online shops (published 30 September 2025).", "explanation": "The authority explicitly warns against buying on this site." },
+        { "signal": "Anonymous operator", "evidence": "ČOI: “No one is named as the site’s operator, so the site is completely anonymous.”", "explanation": "If something doesn’t arrive or is faulty, there’s no one to ask for your money back." },
+        { "signal": "A touching story about closing the shop", "evidence": "“close our family shop and spend more time with my daughters”", "explanation": "Scam shops often copy stories like this to win sympathy and trust." },
+        { "signal": "A huge discount and time pressure", "evidence": "“COLLECTION CLOSING SALE! 75% OFF”, “my collection will soon be closing”", "explanation": "A big discount with a deadline is meant to make you buy without thinking." },
+        { "signal": "A young website", "evidence": "The domain has only existed since 2 May 2025.", "explanation": "A “family shop” that is closing down wouldn’t usually have a website only a few months old." }
+      ],
+      "what_to_do": [
+        "Don’t buy anything on this site and don’t enter your card details there.",
+        "If you’ve already paid by card, call your bank right away on the number on the back of your card and ask them to block the card and reverse the payment.",
+        "If you’ve lost money, report it to the Czech Police on 158.",
+        "Buy jewellery from verified shops that name their operator, ideally cash on delivery."
+      ]
+    }
+  },
+  "page-ceskaposta": {
+    "result": {
+      "verdict_label": "Almost certainly a scam",
+      "headline": "It’s a scam. The page poses as Czech Post and wants your card details.",
+      "red_flags": [
+        { "signal": "Fake page address", "evidence": "ceskapostacz.com.cn", "explanation": "Our check found that the address only imitates Czech Post and isn’t one of its official sites (such as ceskaposta.cz)." },
+        { "signal": "Asks for payment card details", "evidence": "The page wants the card number, expiry date and CVV code.", "explanation": "Scammers use these details to take money from your account." },
+        { "signal": "A redelivery fee", "evidence": "“A fee must be paid for redelivery. You pay by card.”", "explanation": "A small fee is common bait to get you to enter your card." },
+        { "signal": "A made-up parcel problem", "evidence": "“Your parcel could not be delivered … because the address details are incomplete”", "explanation": "Worry about the parcel is meant to rush you so you don’t think." },
+        { "signal": "A foreign address ending", "evidence": "The address ends in “.com.cn” (China).", "explanation": "Czech Post doesn’t use an address like that." }
+      ],
+      "what_to_do": [
+        "Don’t fill in or pay anything on the page. Close it.",
+        "If you’ve already entered your card details, call your bank right away on the number on the back of your card and have the card blocked.",
+        "Check the parcel yourself at ceskaposta.cz or in the Pošta Online app.",
+        "Delete the message with the link. If you’ve lost money, report it to the Czech Police on 158."
+      ]
+    }
+  },
+  "legit-005": {
+    "text": "PPL will deliver parcel 40857329414 with cash on delivery CZK 590 today 9-11. PIN 123456. 725123456 Won’t be home? ppl.cz/z?id=40857329414&p=123456",
+    "result": {
+      "verdict_label": "No warning signs found",
+      "headline": "The message looks like an ordinary PPL delivery notice.",
+      "reassuring_signs": [
+        "The link goes to ppl.cz, a domain that our check confirmed really belongs to PPL.",
+        "The message doesn’t ask for a card, a password or a payment through the link.",
+        "The format matches ordinary PPL texts (parcel number, delivery time, collection PIN, the driver’s phone).",
+        "Cash on delivery is only paid when you receive the parcel."
+      ],
+      "what_to_do": [
+        "Check whether you’re really expecting a CZK 590 cash-on-delivery parcel. If not, don’t pay anything and don’t accept it.",
+        "If you want to change the delivery, open ppl.cz or the PPL app yourself and enter the parcel number.",
+        "Give the PIN only to the driver when you collect the parcel, never to anyone over the phone."
+      ]
+    }
+  },
+  "scam-044": {
+    "text": "Click «Get funds», then enter the details you want to receive the money with. Once the funds reach your card, send the goods to the buyer using the details provided. You can see the options for sending goods on the official Zásilkovna website.\n\nAfter sending the goods, give the buyer the tracking number! The goods should be sent within 3 days of receiving the funds.\n\n[Get funds]\n\nRecipient information:\nRecipient: [name]\nProduct: Children’s cross-country ski boots Solomon size 29\nPrice: 600 CZK.",
+    "result": {
+      "verdict_label": "Almost certainly a scam",
+      "headline": "It’s a scam: a fake buyer wants your payment details through a fake Zásilkovna.",
+      "red_flags": [
+        { "signal": "Fake Zásilkovna address", "evidence": "zasilkovna.transaction3dsecure.eu – according to our check it isn’t one of Zásilkovna’s official domains", "explanation": "The page only poses as Zásilkovna; it actually belongs to someone else." },
+        { "signal": "Asked to enter details to “receive money”", "evidence": "«Get funds», then enter the details you want to receive the money with", "explanation": "You never need to enter card details to receive money. This is how scammers take money from your account." },
+        { "signal": "An unusual way of selling", "evidence": "Once the funds reach your card, send the goods to the buyer", "explanation": "Zásilkovna doesn’t handle payments between buyers and sellers like this." },
+        { "signal": "Pressure and a deadline", "evidence": "The goods should be sent within 3 days", "explanation": "The deadline is meant to look official and to rush you." }
+      ],
+      "what_to_do": [
+        "Don’t click the link and don’t enter anything on the page.",
+        "If you’ve already entered your card details, call your bank right away on the number on the back of your card and block the card.",
+        "Stop talking to this “buyer” and offer only a handover in person or cash on delivery.",
+        "If money has gone missing, contact your bank and report it to the Czech Police on 158."
+      ]
+    }
+  },
+  "scam-060": {
+    "text": "ČEZ České Energetické Závody has set aside over CZK 129.3 million to support its new project, which gives every citizen the chance to become a co-owner of the company and earn high dividends from its operations; all you need to do is register on the ČEZ platform",
+    "result": {
+      "verdict_label": "Almost certainly a scam",
+      "headline": "This is a typical investment scam misusing the ČEZ name.",
+      "red_flags": [
+        { "signal": "Misuse of a well-known company", "evidence": "ČEZ České Energetické Závody has set aside over CZK 129.3 million", "explanation": "Scammers often use the ČEZ name to make an offer look trustworthy." },
+        { "signal": "A promise of high profits", "evidence": "earn high dividends from its operations", "explanation": "No serious investment guarantees high returns without risk." },
+        { "signal": "An offer for everyone", "evidence": "gives every citizen the chance to become a co-owner of the company", "explanation": "ČEZ offers no such project for citizens; shares are bought on the stock exchange through a broker." },
+        { "signal": "Asked to register on an unknown platform", "evidence": "register on the ČEZ platform", "explanation": "After you register, a “consultant” usually calls and wants money or access to your computer." }
+      ],
+      "what_to_do": [
+        "Don’t register and don’t fill in any details or your phone number.",
+        "If someone calls you as a “financial adviser”, hang up and don’t install anything.",
+        "If you’ve already sent money or details, call your bank right away and report it to the Czech Police on 158.",
+        "Report the ad as a scam and delete it."
+      ]
+    }
+  },
+  "scam-025": {
+    "text": "česká spořitelna WARNING : an unauthorised device has connected to your online account. If you don’t recognise it, verify it immediately:https://s.id/1C2FR",
+    "result": {
+      "verdict_label": "Almost certainly a scam",
+      "headline": "It’s a scam. Česká spořitelna doesn’t send messages like this with a shortened link.",
+      "red_flags": [
+        { "signal": "A shortened link", "evidence": "https://s.id/1C2FR – our check: a shortened link, you can’t see where it really leads", "explanation": "A bank only sends links to its official address, not hidden shortened links." },
+        { "signal": "Scaring and rushing", "evidence": "“an unauthorised device has connected to your online account… verify it immediately”", "explanation": "Scammers scare you so that you act fast and don’t think." },
+        { "signal": "A vague sender", "evidence": "Sender: Info", "explanation": "A real bank signs its messages clearly and doesn’t write as a generic “Info”." },
+        { "signal": "Asked to verify through a link", "evidence": "“verify it immediately:https://s.id/1C2FR”", "explanation": "Behind the link there is usually a fake page that steals your login or card details." }
+      ],
+      "what_to_do": [
+        "Don’t click the link and don’t reply to the message.",
+        "If you’re worried about your account, call your bank on the number on the back of your card or from the official csas.cz website.",
+        "If you’ve already entered details or a code through the link, call your bank right away and have your access and card blocked.",
+        "Delete the message."
+      ]
+    }
+  },
+  "scam-061": {
+    "text": "Mum, my phone isn’t working and I’ve got a new number. Message me on WhatsApp: https://wa.me/...",
+    "result": {
+      "verdict_label": "Almost certainly a scam",
+      "headline": "This is the well-known “Hi Mum, I’ve got a new number” scam.",
+      "red_flags": [
+        { "signal": "A supposed new number", "evidence": "“Mum, my phone isn’t working and I’ve got a new number.”", "explanation": "This is how scammers pose as your child to win your trust." },
+        { "signal": "Moving you to WhatsApp", "evidence": "“Message me on WhatsApp: https://wa.me/...”", "explanation": "They want to get you into a chat with an unknown number, where they usually ask for money." },
+        { "signal": "No name or details", "evidence": "The message has no name or anything personal.", "explanation": "The same message goes out to thousands of people at once." }
+      ],
+      "what_to_do": [
+        "Don’t reply to the message and don’t open the link.",
+        "Call your child on the old number you already know and check.",
+        "Never send money or codes from texts because of a message like this.",
+        "Delete the message. If you’ve already sent money, call your bank and the police on 158 right away."
+      ]
+    }
+  }
+}

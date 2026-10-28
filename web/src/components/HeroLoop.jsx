@@ -23,15 +23,53 @@ function Status({ dark }) {
 }
 
 /** Skutečné snímky obrazovky ze záznamu iPhonu: SMS → Sdílet → výsledek Nenaleť. */
+const GLS_LINK = 'https://gls-groupecr.cc/cz';
+
+/** Anglický překlad textů na záznamu: SMS, náhled v nabídce Sdílet a odpověď Nenaleť (záznam samotný je skutečný). */
+function RecEnglish({ part }) {
+  if (part === 'sms')
+    return (
+      <div className="rec-en rec-en-sms">
+        Delivery is on hold because your parcel has no house number. Please update as soon as possible: <u>{GLS_LINK}</u>
+      </div>
+    );
+  if (part === 'share') return <div className="rec-en rec-en-preview">Delivery is on hold because…</div>;
+  return (
+    <div className="rec-en rec-en-card">
+      <div className="rec-en-text">
+        <p><i className="rec-stop" aria-hidden="true" />Almost certainly a scam</p>
+        <p>It’s a scam – the message only poses as the courier GLS.</p>
+        <p className="rec-en-gap">Why:</p>
+        <p>• Fake link address: Scammers use addresses that only resemble the real company.</p>
+        <p>• New web address: Scam sites appear shortly before the messages go out and soon disappear.</p>
+        <p>• Urgency and a made-up address problem: It pushes you to act fast so you don’t think.</p>
+        <p>• No parcel number or name: A real courier usually says which parcel it’s about.</p>
+        <p className="rec-en-gap">What to do:</p>
+        <p>1. Don’t click the link or reply.</p>
+      </div>
+      <div className="rec-en-btns" aria-hidden="true"><span>Cancel</span><span className="is-done">Done</span></div>
+    </div>
+  );
+}
+
 function RealIphone() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const layer = (part, src) =>
+    lang === 'en' ? (
+      <div className={`rec rec-${part}`}>
+        <img className="rec-img" src={src} alt="" />
+        <RecEnglish part={part} />
+      </div>
+    ) : (
+      <img className={`rec rec-${part}`} src={src} alt="" />
+    );
   return (
     <div className="iphone loop-object" data-ui>
       <div className="ip-screen">
-        <img className="rec rec-sms" src={recSms} alt="" />
-        <img className="rec rec-share" src={recShare} alt="" />
+        {layer('sms', recSms)}
+        {layer('share', recShare)}
         <i className="rec-ring" />
-        <img className="rec rec-result" src={recResult} alt="" />
+        {layer('result', recResult)}
         <span className="rec-fast">{t({ cs: 'zrychleno', en: 'sped up' })}</span>
       </div>
     </div>
@@ -64,22 +102,23 @@ function PplSms({ ex }) {
 
 /** Falešná stránka „České pošty“ v Safari (rekonstrukce podle Novinek a CNN Prima, jako ve videu). */
 function PostSafari() {
+  const { t } = useLang();
   return (
     <div className="iphone loop-object" data-ui>
       <div className="ip-screen safari">
         <Status />
         <div className="cp-top"><b>Česká pošta</b><i className="cp-menu" aria-hidden="true" /></div>
         <div className="cp-body">
-          <p className="cp-h">Vaše zásilka nemohla být doručena</p>
-          <p className="cp-p">Balíček dorazil do skladu, ale nemohl být doručen z důvodu neúplných údajů o adrese.</p>
-          <span className="cp-f">Jméno a příjmení</span>
-          <span className="cp-f">Ulice a číslo domu</span>
-          <p className="cp-p">Za opětovné doručení je nutné uhradit poplatek.</p>
+          <p className="cp-h">{t({ cs: 'Vaše zásilka nemohla být doručena', en: 'Your parcel could not be delivered' })}</p>
+          <p className="cp-p">{t({ cs: 'Balíček dorazil do skladu, ale nemohl být doručen z důvodu neúplných údajů o adrese.', en: 'The parcel arrived at our warehouse but could not be delivered because the address details are incomplete.' })}</p>
+          <span className="cp-f">{t({ cs: 'Jméno a příjmení', en: 'Full name' })}</span>
+          <span className="cp-f">{t({ cs: 'Ulice a číslo domu', en: 'Street and house number' })}</span>
+          <p className="cp-p">{t({ cs: 'Za opětovné doručení je nutné uhradit poplatek.', en: 'A fee must be paid for redelivery.' })}</p>
           <div className="cp-card">
-            <span className="cp-f">Číslo karty</span>
-            <div className="cp-row"><span className="cp-f">Platnost</span><span className="cp-f">CVV</span></div>
+            <span className="cp-f">{t({ cs: 'Číslo karty', en: 'Card number' })}</span>
+            <div className="cp-row"><span className="cp-f">{t({ cs: 'Platnost', en: 'Expiry' })}</span><span className="cp-f">CVV</span></div>
           </div>
-          <span className="cp-btn">Potvrdit a zaplatit</span>
+          <span className="cp-btn">{t({ cs: 'Potvrdit a zaplatit', en: 'Confirm and pay' })}</span>
         </div>
         <div className="sf-bar"><span className="sf-addr"><mark className="loop-hl">ceskapostacz<span className="cp-tld">.com.cn</span></mark></span></div>
       </div>
@@ -93,7 +132,7 @@ function ShopChrome({ ex }) {
   const r = ex.result;
   return (
     <div className="chrome loop-object" data-ui>
-      <div className="ch-tabs"><span className="ch-tab"><i className="ch-fav" />Simona Šperky – výprodej</span></div>
+      <div className="ch-tabs"><span className="ch-tab"><i className="ch-fav" />Simona Šperky – {t({ cs: 'výprodej', en: 'sale' })}</span></div>
       <div className="ch-bar">
         <span className="ch-nav" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" /></svg>
@@ -105,22 +144,22 @@ function ShopChrome({ ex }) {
       </div>
       <div className="ch-body">
         <div className="ch-page">
-          <p className="sh-t">UKONČENÍ SBÍRKY VÝPRODEJ!</p>
-          <p className="sh-big"><mark className="loop-hl">75% SLEVA</mark></p>
-          <p className="sh-t">DOPRAVA ZDARMA NAD 746 KČ</p>
-          <span className="sh-btn">NAKUPOVAT NYNÍ</span>
-          <p className="sh-story">S lítostí vám musím oznámit, že moje sbírka bude brzy uzavřena…</p>
+          <p className="sh-t">{t({ cs: 'UKONČENÍ SBÍRKY VÝPRODEJ!', en: 'COLLECTION CLOSING SALE!' })}</p>
+          <p className="sh-big"><mark className="loop-hl">{t({ cs: '75% SLEVA', en: '75% OFF' })}</mark></p>
+          <p className="sh-t">{t({ cs: 'DOPRAVA ZDARMA NAD 746 KČ', en: 'FREE SHIPPING OVER CZK 746' })}</p>
+          <span className="sh-btn">{t({ cs: 'NAKUPOVAT NYNÍ', en: 'SHOP NOW' })}</span>
+          <p className="sh-story">{t({ cs: 'S lítostí vám musím oznámit, že moje sbírka bude brzy uzavřena…', en: 'I’m sad to tell you that my collection will soon be closing…' })}</p>
         </div>
         <div className="ch-menu">
           <span>{t({ cs: 'Zpět', en: 'Back' })}</span><span>{t({ cs: 'Znovu načíst', en: 'Reload' })}</span><span>{t({ cs: 'Uložit jako…', en: 'Save as…' })}</span>
-          <span className="is-us">Ověřit tuto stránku v Nenaleť</span><span>{t({ cs: 'Prozkoumat', en: 'Inspect' })}</span>
+          <span className="is-us">{t({ cs: 'Ověřit tuto stránku v Nenaleť', en: 'Check this page in Nenaleť' })}</span><span>{t({ cs: 'Prozkoumat', en: 'Inspect' })}</span>
         </div>
         <svg className="ch-cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l17 10-7.5 1.6L9 21z" /></svg>
         <aside className="ch-panel">
           <p className="chp-brand"><Logo />Nenaleť</p>
-          <p className="chp-subj">Stránka: https://simonasperky.cz/</p>
+          <p className="chp-subj">{t({ cs: 'Stránka', en: 'Page' })}: https://simonasperky.cz/</p>
           <div className="chp-v"><b>✕ {r.verdict_label}</b><p>{r.headline}</p></div>
-          <p className="chp-h">Co teď udělat</p>
+          <p className="chp-h">{t({ cs: 'Co teď udělat', en: 'What to do now' })}</p>
           <ol className="chp-todo"><li>{r.what_to_do[0]}</li></ol>
         </aside>
       </div>
@@ -266,11 +305,10 @@ export default function HeroLoop({ examples }) {
       </div>
       <p className="loop-note">
         {scene.real
-          ? t({ cs: 'Skutečný záznam obrazovky z iPhonu, čekání na výsledek je zkrácené.', en: 'A real iPhone screen recording, with the wait for the result shortened.' })
+          ? t({ cs: 'Skutečný záznam obrazovky z iPhonu, čekání na výsledek je zkrácené.', en: 'A real iPhone screen recording with the wait shortened. The text message and Nenaleť’s answer are translated from Czech.' })
           : scene.id === 'page-ceskaposta'
-            ? t({ cs: 'Falešná stránka podle popisu Novinek a CNN Prima, výsledek je skutečná kontrola Nenaleť.', en: 'A fake page rebuilt from reports by Novinky and CNN Prima; the result is a real Nenaleť check.' })
-            : t({ cs: 'Skutečný případ a skutečný výsledek Nenaleť.', en: 'A real case and a real Nenaleť result.' })}
-        {lang === 'en' && ' Nenaleť answers in Czech.'}
+            ? t({ cs: 'Falešná stránka podle popisu Novinek a CNN Prima, výsledek je skutečná kontrola Nenaleť.', en: 'A fake page rebuilt from reports by Novinky and CNN Prima; the result is a real Nenaleť check, translated from Czech.' })
+            : t({ cs: 'Skutečný případ a skutečný výsledek Nenaleť.', en: 'A real case and a real Nenaleť result, translated from Czech.' })}
       </p>
     </div>
   );

@@ -1,6 +1,7 @@
 // Napáruje citované „důkazy“ z výsledku Nenaleť na text zprávy, aby je šlo vyznačit zvýrazňovačem.
 
-const QUOTES = /^[\s„“"'‚‘»«]+|[\s„“"'‚‘»«.,]+$/g;
+// české i anglické uvozovky (anglický překlad ukázek používá “ ” a ‘ ’)
+const QUOTES = /^[\s„“”"'‚‘’»«]+|[\s„“”"'‚‘’»«.,]+$/g;
 
 function parts(evidence) {
   // „citace“ – vysvětlení  ->  jen citace; „začátek… konec“ -> dvě části
@@ -39,7 +40,7 @@ export function segment(text, redFlags) {
   return out;
 }
 
-/** Který signál se týká odesílatele („Odesílatel: …“). */
+/** Který signál se týká odesílatele („Odesílatel: …“, v anglickém překladu „Sender: …“). */
 export function senderFlag(redFlags) {
-  return redFlags.findIndex((f) => /^\s*Odesílatel:/i.test(f.evidence || ''));
+  return redFlags.findIndex((f) => /^\s*(Odesílatel|Sender):/i.test(f.evidence || ''));
 }

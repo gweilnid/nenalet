@@ -14,10 +14,8 @@ import ScrollReveal from '../components/reactbits/ScrollReveal.jsx';
 import AnimatedContent from '../components/reactbits/AnimatedContent.jsx';
 import Magnet from '../components/reactbits/Magnet.jsx';
 import '../components/reactbits/ScrollReveal.css';
-import { useLang } from '../lib/lang.jsx';
+import { useExamples, useLang } from '../lib/lang.jsx';
 
-const examples = data.examples;
-const ppl = examples.find((e) => e.id === 'scam-037') || examples[0];
 
 const WATCH = [
   [{ cs: 'Spěch a výhrůžky', en: 'Urgency and threats' }, { cs: '„Do 24 hodin“, zablokovaný účet, pokuta, vrácený balík.', en: '“Within 24 hours”, a blocked account, a fine, a returned parcel.' }],
@@ -39,20 +37,20 @@ function BrowserFragment() {
   return (
     <div className="browser" data-ui aria-label={t({ cs: 'Ukázka rozšíření v Chromu', en: 'The extension in Chrome' })}>
       <div className="browser-page">
-        <p><b>Webmail · Doručená pošta</b></p>
-        <p>Vážený zákazníku, na vašem účtu jsme zaznamenali neobvyklou aktivitu.</p>
-        <p><span className="browser-sel">Pro ověření se přihlaste do 24 hodin, jinak bude účet zablokován.</span></p>
+        <p><b>{t({ cs: 'Webmail · Doručená pošta', en: 'Webmail · Inbox' })}</b></p>
+        <p>{t({ cs: 'Vážený zákazníku, na vašem účtu jsme zaznamenali neobvyklou aktivitu.', en: 'Dear customer, we have detected unusual activity on your account.' })}</p>
+        <p><span className="browser-sel">{t({ cs: 'Pro ověření se přihlaste do 24 hodin, jinak bude účet zablokován.', en: 'To verify it, sign in within 24 hours, otherwise your account will be blocked.' })}</span></p>
         <div className="ctx-menu" aria-hidden="true">
           <span>{t({ cs: 'Kopírovat', en: 'Copy' })}</span>
           <span>{t({ cs: 'Hledat na Googlu', en: 'Search Google' })}</span>
-          <span className="is-us">Ověřit označený text v Nenaleť</span>
+          <span className="is-us">{t({ cs: 'Ověřit označený text v Nenaleť', en: 'Check selected text in Nenaleť' })}</span>
           <span>{t({ cs: 'Prozkoumat', en: 'Inspect' })}</span>
         </div>
       </div>
       <div className="browser-panel">
         <span className="brand-mini"><Logo />Nenaleť</span>
-        <span className="stamp" data-v="podvod" style={{ fontSize: '1rem', justifySelf: 'start' }}>Téměř jistě podvod</span>
-        <p className="small">Banka vás nikdy nežádá o přihlášení přes odkaz v e-mailu s lhůtou 24 hodin.</p>
+        <span className="stamp" data-v="podvod" style={{ fontSize: '1rem', justifySelf: 'start' }}>{t({ cs: 'Téměř jistě podvod', en: 'Almost certainly a scam' })}</span>
+        <p className="small">{t({ cs: 'Banka vás nikdy nežádá o přihlášení přes odkaz v e-mailu s lhůtou 24 hodin.', en: 'Your bank never asks you to sign in through a link in an e-mail with a 24-hour deadline.' })}</p>
       </div>
     </div>
   );
@@ -80,6 +78,8 @@ function ShareFragment() {
 
 export default function Home() {
   const { t, lang } = useLang();
+  const examples = useExamples(data.examples);
+  const ppl = examples.find((e) => e.id === 'scam-037') || examples[0];
   const main = useRef(null);
   useGSAP(() => {
     const mm = setupPanels(main.current);
@@ -161,7 +161,7 @@ export default function Home() {
               <p className="lead">
                 {t({
                   cs: 'Ověří zprávu i celou stránku, v počítači i v mobilu. Tady jsou skutečné podvody, na které lidé v Česku narazili.',
-                  en: 'It checks a message or a whole page, on a computer or a phone. These are real scams people in Czechia ran into, with Nenaleť’s real answers, which are in Czech.',
+                  en: 'It checks a message or a whole page, on a computer or a phone. These are real scams people in Czechia ran into, with Nenaleť’s real answers translated from Czech.',
                 })}
               </p>
             </div>

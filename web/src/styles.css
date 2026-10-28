@@ -532,3 +532,18 @@ tr.pick td { background: #fffbd1; font-weight: 700; }
 /* kroky se odkrývají jen když běží skript (bez něj je vše vidět) */
 html.fp [data-step] { opacity: 0; visibility: hidden; transform: translateY(36px); transition: opacity 600ms var(--ease-out), transform 800ms var(--ease-out), visibility 0s linear 600ms; }
 html.fp .s1 [data-step="1"], html.fp .s2 [data-step="2"], html.fp .s3 [data-step="3"], html.fp .s4 [data-step="4"] { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+
+/* Anglická verze: překlad textů přes skutečný záznam z iPhonu (SMS, náhled ve Sdílet, odpověď Nenaleť) */
+.rec-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.rec-en { position: absolute; color: #fff; font-family: -apple-system, "SF Pro Text", var(--font); }
+.rec-en-sms { left: 4.3%; top: 23.4%; width: 68.3%; min-height: 14.6%; padding: 2.2cqw 3.2cqw; border-radius: 4.6cqw; background: #222126; font-size: 3.85cqw; line-height: 1.3; }
+.rec-en-sms u { color: #3d8bfd; overflow-wrap: anywhere; }
+.rec-en-preview { left: 27%; top: 13.2%; width: 56%; height: 3%; display: flex; align-items: center; overflow: hidden; white-space: nowrap; background: #222124; color: #8e8e93; font-size: 3.2cqw; }
+.rec-en-card { left: 2.3%; right: 2.1%; top: 7.2%; height: 69.2%; padding: 5.2cqw 6cqw 0; border-radius: 7cqw; background: #232226; font-size: 4.75cqw; line-height: 1.3; overflow: hidden; }
+.rec-en-text { height: calc(100% - 20cqw); overflow: hidden; }
+.rec-en-text p { margin: 0; }
+.rec-en-text .rec-en-gap { margin-top: 1.3em; }
+.rec-stop { display: inline-block; width: 1em; height: 1em; margin-right: 0.3em; vertical-align: -0.14em; background: #e5352b; clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%); }
+.rec-en-btns { position: absolute; left: 3.6cqw; right: 3.6cqw; bottom: 3.6cqw; display: flex; gap: 3.2cqw; }
+.rec-en-btns span { flex: 1; height: 13.2cqw; display: grid; place-items: center; border-radius: 99px; background: #3a3a3c; font-size: 4.9cqw; }
+.rec-en-btns .is-done { background: #0a84ff; }

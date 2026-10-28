@@ -1,4 +1,5 @@
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import EN_EXAMPLES from '../data/examples.en.json';
 
 // Čeština je výchozí (soutěž i uživatelé jsou čeští), angličtina po přepnutí.
 // Volba se ukládá do localStorage 'site-lang', stejně jako na yasinsezgin.dev, takže platí na celém webu.
@@ -38,3 +39,16 @@ export const VERDICT_EN = {
   podezrele: 'Suspicious',
   bez_varovnych_signalu: 'No warning signs found',
 };
+
+/** Ukázky v aktuálním jazyce: v angličtině přeložené texty (data/examples.en.json), jinak beze změny. */
+export function useExamples(examples) {
+  const { lang } = useLang();
+  return useMemo(() => {
+    if (lang !== 'en') return examples;
+    return examples.map((ex) => {
+      const en = EN_EXAMPLES[ex.id];
+      if (!en) return ex;
+      return { ...ex, ...en, result: { ...ex.result, ...en.result } };
+    });
+  }, [examples, lang]);
+}

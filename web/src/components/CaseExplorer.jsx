@@ -31,22 +31,23 @@ function linkFlagged(ex) {
 
 /** Falešná stránka „České pošty“: rekonstrukce podle popisu v článcích (eval/fake_posta/page.html). */
 function PostForm() {
+  const { t } = useLang();
   return (
     <div className="post-form">
       <p className="fp-bar">Česká pošta</p>
-      <p className="pp-title">Vaše zásilka nemohla být doručena</p>
-      <p>Balíček dorazil do skladu, ale nemohl být doručen z důvodu neúplných údajů o adrese. Potvrďte prosím svou adresu.</p>
-      <span className="pp-field">Jméno a příjmení</span>
-      <p>Za opětovné doručení je nutné uhradit poplatek. Platbu provedete kartou.</p>
-      <span className="pp-field"><mark className="hl">Číslo karty</mark></span>
-      <span className="pp-field"><mark className="hl">Platnost · CVV</mark></span>
-      <span className="pp-btn">Potvrdit a zaplatit</span>
+      <p className="pp-title">{t({ cs: 'Vaše zásilka nemohla být doručena', en: 'Your parcel could not be delivered' })}</p>
+      <p>{t({ cs: 'Balíček dorazil do skladu, ale nemohl být doručen z důvodu neúplných údajů o adrese. Potvrďte prosím svou adresu.', en: 'The parcel arrived at our warehouse but could not be delivered because the address details are incomplete. Please confirm your address.' })}</p>
+      <span className="pp-field">{t({ cs: 'Jméno a příjmení', en: 'Full name' })}</span>
+      <p>{t({ cs: 'Za opětovné doručení je nutné uhradit poplatek. Platbu provedete kartou.', en: 'A fee must be paid for redelivery. You pay by card.' })}</p>
+      <span className="pp-field"><mark className="hl">{t({ cs: 'Číslo karty', en: 'Card number' })}</mark></span>
+      <span className="pp-field"><mark className="hl">{t({ cs: 'Platnost · CVV', en: 'Expiry · CVV' })}</mark></span>
+      <span className="pp-btn">{t({ cs: 'Potvrdit a zaplatit', en: 'Confirm and pay' })}</span>
     </div>
   );
 }
 
 export default function CaseExplorer({ examples }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const byId = Object.fromEntries(examples.map((e) => [e.id, e]));
   const cases = CASES.filter((c) => byId[c.id]);
   const [index, setIndex] = useState(0);
@@ -58,7 +59,7 @@ export default function CaseExplorer({ examples }) {
   const isPage = ex.kind === 'page';
 
   const flags = r.red_flags.slice(0, 3);
-  const segments = useMemo(() => segment(ex.text || '', flags), [ex.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  const segments = useMemo(() => segment(ex.text || '', flags), [ex.id, lang]); // eslint-disable-line react-hooks/exhaustive-deps
   const sFlag = senderFlag(flags);
   const addrMarked = isPage && linkFlagged(ex);
 
@@ -77,7 +78,7 @@ export default function CaseExplorer({ examples }) {
         .from('.case-device .stamp', { scale: 1.8, rotation: -16, opacity: 0, duration: 0.4 }, '-=0.3')
         .from('.case-device .reveal', { y: 12, opacity: 0, duration: 0.45, stagger: 0.06 }, '-=0.2');
     },
-    { scope: root, dependencies: [ex.id], revertOnUpdate: true }
+    { scope: root, dependencies: [ex.id, lang], revertOnUpdate: true }
   );
 
   const mark = (text, flag, key) => (
@@ -185,7 +186,7 @@ export default function CaseExplorer({ examples }) {
             )}
 
             <div className="reveal">
-              <p className="mini-h">Co teď udělat</p>
+              <p className="mini-h">{t({ cs: 'Co teď udělat', en: 'What to do now' })}</p>
               <ol className="todo-mini">
                 {r.what_to_do.slice(0, 2).map((t, i) => <li key={i}>{t}</li>)}
               </ol>
@@ -194,8 +195,8 @@ export default function CaseExplorer({ examples }) {
         </div>
         <p className="case-source small muted">
           {ex.text || !isPage
-            ? t({ cs: 'Skutečný případ', en: 'A real case' })
-            : t({ cs: 'Stránka podle popisu v článku, výsledek skutečné kontroly Nenaleť', en: 'Page rebuilt from the article’s description, the result of a real Nenaleť check' })}
+            ? t({ cs: 'Skutečný případ', en: 'A real case, translated from Czech' })
+            : t({ cs: 'Stránka podle popisu v článku, výsledek skutečné kontroly Nenaleť', en: 'Page rebuilt from the article’s description, the result of a real Nenaleť check, translated from Czech' })}
           , {t({ cs: 'zdroj', en: 'source' })}: <a href={ex.source_url}>{ex.source_name}</a>
         </p>
       </div>
