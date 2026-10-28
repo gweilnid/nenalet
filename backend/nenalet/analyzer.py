@@ -10,7 +10,9 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import date
 
+import copy
 import io
+import json
 import os
 
 import anthropic
@@ -18,7 +20,8 @@ import httpx
 from PIL import Image, ImageOps, UnidentifiedImageError
 from pillow_heif import register_heif_opener
 
-from .config import OPENROUTER_BASE_URL, Settings, openrouter_model_id, settings as default_settings
+from .config import CLAUDE_PRICES, OPENROUTER_BASE_URL, Settings, is_claude, openrouter_model_id, settings as default_settings
+from . import jev
 from .netguard import BlockedTarget, safe_fetch
 from .page import PageInfo, ico_checksum_ok, parse_page
 from .prompt import SYSTEM_PROMPT
@@ -261,6 +264,63 @@ def summary_text(resp_verdict: str, mv: ModelVerdict) -> str:
     return "\n".join(out)
 
 
+def strict_schema(model: type) -> dict:
+    """JSON schéma Pydantic modelu ve tvaru pro strukturovaný výstup (bez $ref, bez dalších klíčů, vše povinné)."""
+    schema = model.model_json_schema()
+    defs = schema.pop("$defs", {})
+
+    def fix(node):
+        if isinstance(node, list):
+            return [fix(v) for v in node]
+        if not isinstance(node, dict):
+            return node
+        if "$ref" in node:
+            return fix(copy.deepcopy(defs[node["$ref"].rsplit("/", 1)[-1]]))
+        out = {k: (v if k == "properties" else fix(v)) for k, v in node.items() if k not in ("title", "default")}
+        if "properties" in out:
+            out["properties"] = {name: fix(v) for name, v in out["properties"].items()}
+            out["additionalProperties"] = False
+            out["required"] = list(out["properties"])
+        return out
+
+    return fix(schema)
+
+
+VERDICT_SCHEMA = strict_schema(ModelVerdict)
+
+
+def to_chat_content(parts: list[dict]) -> list[dict]:
+    """Bloky ve formátu Anthropic -> formát chat/completions (obrázek jako data URL)."""
+    out = []
+    for p in parts:
+        if p["type"] == "image":
+            src = p["source"]
+            out.append({"type": "image_url", "image_url": {"url": f"data:{src['media_type']};base64,{src['data']}"}})
+        else:
+            out.append({"type": "text", "text": p["text"]})
+    return out
+
+
+def parse_verdict(text: str) -> ModelVerdict:
+    text = text.strip()
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1].rsplit("```", 1)[0]
+    return ModelVerdict.model_validate_json(text)
+
+
+def needs_second_opinion(mv: ModelVerdict | None) -> bool:
+    """Hlavní model si není jistý: odmítl, neví, váhá mezi podvodem a pravou zprávou, nebo nemá vysokou jistotu."""
+    return mv is None or mv.verdict in ("podezrele", "nelze_posoudit") or mv.confidence != "vysoka"
+
+
+def merge_usage(a: dict | None, b: dict | None) -> dict | None:
+    if not a or not b:
+        return a or b
+    out = {k: (a.get(k) or 0) + (b.get(k) or 0) for k in ("input", "output", "cache_read", "cache_write")}
+    out["cost"] = a["cost"] + b["cost"] if a.get("cost") is not None and b.get("cost") is not None else None
+    return out
+
+
 def make_client(cfg: Settings) -> anthropic.AsyncAnthropic:
     if cfg.provider == "openrouter":
         # OpenRouter nabízí rozhraní kompatibilní s Anthropic Messages API.
@@ -279,8 +339,77 @@ class Analyzer:
         self.coi = coi
         self.cfg = cfg
         self.client = client or make_client(cfg)
+        self.http = httpx.AsyncClient(timeout=60.0)
 
-    async def _ask_model(self, content: list[dict]) -> tuple[ModelVerdict | None, str, dict | None]:
+    async def _ask(self, model: str, content: list[dict]) -> tuple[ModelVerdict | None, str, dict | None]:
+        if self.cfg.provider == "openrouter" and not is_claude(model):
+            return await self._ask_openrouter_chat(model, content)
+        return await self._ask_claude(model, content)
+
+    async def _decide(self, req: CheckRequest, facts: Facts, content: list[dict]) -> tuple[ModelVerdict | None, str, dict | None]:
+        if self.cfg.decider == "jev":
+            return await self._decide_with_jev(req, facts, content)
+        return await self._decide_by_model(content)
+
+    async def _second_opinion(self, content: list[dict], fallback: tuple) -> tuple[ModelVerdict | None, str, dict | None]:
+        """Silnější model posoudí vstup znovu a jeho odpověď platí. Když selže, zůstane `fallback`."""
+        mv, used, usage = fallback
+        try:
+            mv2, used2, usage2 = await self._ask(self.cfg.second_model, content)
+        except Exception as e:  # noqa: BLE001
+            log.warning("druhý názor selhal: %r", e)
+            return fallback
+        if mv2 is None:
+            return fallback
+        return mv2, f"{used} → {used2}" if used else used2, merge_usage(usage, usage2)
+
+    async def _decide_with_jev(self, req: CheckRequest, facts: Facts, content: list[dict]) -> tuple[ModelVerdict | None, str, dict | None]:
+        """Jazykový model připraví podklady, Jev rozhodne. Váhání, neshoda nebo výpadek → druhý model."""
+        second = self.cfg.second_model
+        try:
+            mv, used, usage = await self._ask(self.cfg.model, content)
+        except Exception as e:  # noqa: BLE001
+            if not second:
+                raise
+            log.warning("model pro podklady selhal, posoudí %s: %r", second, e)
+            return await self._ask(second, content)
+        if mv is None:
+            return await self._second_opinion(content, (mv, used, usage)) if second else (mv, used, usage)
+        try:
+            d = await jev.decide(self.http, jev.state_for(req.text, req.url, _facts_block(facts), mv))
+        except jev.JevError as e:
+            log.warning("Jev nerozhodl: %r", e)
+            d = None
+        if d is not None:
+            used = f"{used} + {jev.JEV_MODEL}"
+            usage = merge_usage(usage, {"cost": d.cost})
+            agrees = (d.choice in jev.RISKY) == (mv.verdict in jev.RISKY)
+            if d.choice in ("podvod", "bez_varovnych_signalu") and agrees:
+                mv.verdict = d.choice
+                mv.confidence = jev.conf_label(d.confidence)
+                return mv, used, usage
+            if not second:
+                mv.verdict, mv.confidence = d.choice, jev.conf_label(d.confidence)
+                return mv, used, usage
+        elif not second:
+            return mv, used, usage
+        return await self._second_opinion(content, (mv, used, usage))
+
+    async def _decide_by_model(self, content: list[dict]) -> tuple[ModelVerdict | None, str, dict | None]:
+        """Bez rozhodovacího modelu: hlavní model rozhodne, nejisté případy a výpadky posoudí ještě druhý model."""
+        second = self.cfg.second_model
+        try:
+            mv, used, usage = await self._ask(self.cfg.model, content)
+        except Exception as e:  # noqa: BLE001
+            if not second:
+                raise
+            log.warning("hlavní model selhal, zkouším %s: %r", second, e)
+            return await self._ask(second, content)
+        if not second or not needs_second_opinion(mv):
+            return mv, used, usage
+        return await self._second_opinion(content, (mv, used, usage))
+
+    async def _ask_claude(self, model: str, content: list[dict]) -> tuple[ModelVerdict | None, str, dict | None]:
         kwargs: dict = dict(
             max_tokens=4000,
             system=[{"type": "text", "text": SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}],
@@ -289,20 +418,68 @@ class Analyzer:
             output_format=ModelVerdict,
         )
         if self.cfg.provider == "openrouter":
-            resp = await self.client.messages.parse(model=openrouter_model_id(self.cfg.model), **kwargs)
+            resp = await self.client.messages.parse(model=openrouter_model_id(model), **kwargs)
         else:
-            if self.cfg.model in FALLBACK_MODELS:
+            if model in FALLBACK_MODELS:
                 kwargs.update(betas=["server-side-fallback-2026-07-01"], fallbacks="default")
-            resp = await self.client.beta.messages.parse(model=self.cfg.model, **kwargs)
+            resp = await self.client.beta.messages.parse(model=model, **kwargs)
         u = resp.usage
         usage = {
             "input": u.input_tokens, "output": u.output_tokens,
             "cache_read": u.cache_read_input_tokens or 0, "cache_write": u.cache_creation_input_tokens or 0,
         }
+        price = CLAUDE_PRICES.get(model.removeprefix("anthropic/").replace(".", "-"))
+        usage["cost"] = (
+            sum(usage[k] * p for k, p in zip(("input", "output", "cache_read", "cache_write"), price)) / 1e6 if price else None
+        )
         if resp.stop_reason == "refusal":
             log.warning("model odmítl: %s", getattr(resp, "stop_details", None))
             return None, resp.model, usage
         return resp.parsed_output, resp.model, usage
+
+    async def _ask_openrouter_chat(self, model: str, content: list[dict]) -> tuple[ModelVerdict | None, str, dict | None]:
+        """Ostatní modely a routery (např. Jev) přes OpenRouter chat/completions se strukturovaným výstupem."""
+        body = {
+            "model": model,
+            "max_tokens": 6000,
+            "messages": [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": to_chat_content(content)},
+            ],
+            "reasoning": {"effort": self.cfg.effort},
+            "response_format": {"type": "json_schema", "json_schema": {"name": "verdikt", "strict": True, "schema": VERDICT_SCHEMA}},
+            # Zprávy lidí smějí jen k poskytovatelům, kteří data neukládají ani na nich netrénují.
+            "provider": {"data_collection": "deny", "require_parameters": True},
+            "usage": {"include": True},
+        }
+        headers = {"Authorization": f"Bearer {os.environ['OPENROUTER_API_KEY']}", "X-Title": "Nenalet"}
+        last_err: Exception | None = None
+        for attempt in range(3):
+            try:
+                r = await self.http.post(f"{OPENROUTER_BASE_URL}/v1/chat/completions", json=body, headers=headers)
+                if r.status_code in (429, 500, 502, 503, 504):
+                    raise httpx.HTTPStatusError(f"HTTP {r.status_code}", request=r.request, response=r)
+                r.raise_for_status()
+                data = r.json()
+                if "error" in data:
+                    raise RuntimeError(str(data["error"])[:300])
+                msg = data["choices"][0]["message"]
+                u = data.get("usage") or {}
+                usage = {
+                    "input": u.get("prompt_tokens", 0), "output": u.get("completion_tokens", 0),
+                    "cache_read": (u.get("prompt_tokens_details") or {}).get("cached_tokens", 0) or 0, "cache_write": 0,
+                    "cost": u.get("cost"),
+                }
+                model_used = data.get("model", model)
+                if msg.get("refusal"):
+                    log.warning("model odmítl: %s", msg["refusal"][:200])
+                    return None, model_used, usage
+                return parse_verdict(msg.get("content") or ""), model_used, usage
+            except (httpx.HTTPError, ValueError, KeyError, RuntimeError) as e:
+                last_err = e
+                log.warning("OpenRouter pokus %d selhal: %r", attempt + 1, e)
+                await asyncio.sleep(1.5 * (attempt + 1))
+        raise RuntimeError(f"Model neodpověděl: {last_err!r}")
 
     async def check(self, req: CheckRequest) -> CheckResponse:
         t0 = time.monotonic()
@@ -321,7 +498,7 @@ class Analyzer:
             raise InputError("Vložte prosím text zprávy, odkaz nebo obrázek.")
 
         facts = await gather_facts(req, self.coi, self.cfg)
-        mv, model_used, usage = await self._ask_model(build_user_content(req, facts, image))
+        mv, model_used, usage = await self._decide(req, facts, build_user_content(req, facts, image))
         if mv is None:
             mv = ModelVerdict(
                 verdict="nelze_posoudit",

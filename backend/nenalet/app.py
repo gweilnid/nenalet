@@ -131,7 +131,10 @@ async def stats(request: Request):
 
 @app.get("/api/health")
 async def health(request: Request):
-    return {"ok": True, "model": settings.model, "coi_domains": len(request.app.state.coi.entries)}
+    return {
+        "ok": True, "model": settings.model, "decider": settings.decider or None, "second_model": settings.second_model or None,
+        "coi_domains": len(request.app.state.coi.entries),
+    }
 
 
 # Web (React, sestavený do nenalet/web) - jedna stránka pro úvod, metodiku i zkratku.

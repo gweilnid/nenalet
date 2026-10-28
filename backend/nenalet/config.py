@@ -28,9 +28,22 @@ def _provider() -> str:
     return "anthropic"
 
 
+def is_claude(model: str) -> bool:
+    return model.startswith(("claude-", "anthropic/"))
+
+
+# USD za milion tokenů (vstup, výstup, čtení cache, zápis cache) - pro odhad ceny u modelů Claude,
+# u ostatních posílá cenu přímo OpenRouter.
+CLAUDE_PRICES = {
+    "claude-opus-5-5": (4.0, 20.0, 0.20, 5.0),
+    "claude-sonnet-5-5": (2.0, 10.0, 0.20, 2.5),
+    "claude-haiku-5-5": (0.10, 0.50, 0.01, 0.125),
+}
+
+
 def openrouter_model_id(model: str) -> str:
-    """claude-opus-5-5 -> anthropic/claude-opus-5.5 (pojmenování na OpenRouteru)."""
-    if model.startswith("anthropic/"):
+    """claude-opus-5-5 -> anthropic/claude-opus-5.5 (pojmenování na OpenRouteru). Id s lomítkem se nemění."""
+    if "/" in model:
         return model
     head, _, tail = model.rpartition("-")
     if tail.isdigit() and head and head[-1].isdigit():
@@ -41,7 +54,11 @@ def openrouter_model_id(model: str) -> str:
 @dataclass(frozen=True)
 class Settings:
     provider: str = field(default_factory=_provider)
-    model: str = field(default_factory=lambda: os.environ.get("NENALET_MODEL", "claude-opus-5-5"))
+    # Jazykový model připraví podklady a texty pro člověka, rozhodovací model Jev vybere verdikt.
+    # Když Jev váhá („podezřelé“), nesouhlasí s podklady nebo něco selže, posoudí to silnější druhý model.
+    model: str = field(default_factory=lambda: os.environ.get("NENALET_MODEL", "openai/gpt-5.6-luna"))
+    decider: str = field(default_factory=lambda: os.environ.get("NENALET_DECIDER", "jev"))  # "jev" nebo "" (rozhoduje model)
+    second_model: str = field(default_factory=lambda: os.environ.get("NENALET_SECOND_MODEL", "google/gemini-3.8-flash"))
     effort: str = field(default_factory=lambda: os.environ.get("NENALET_EFFORT", "low"))
     data_dir: Path = field(default_factory=lambda: Path(os.environ.get("NENALET_DATA_DIR", BACKEND_DIR / "data")))
     # Ochrana nákladů: limit na IP za hodinu a celkový denní strop.

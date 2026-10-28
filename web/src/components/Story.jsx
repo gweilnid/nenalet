@@ -104,7 +104,7 @@ const STEPS = [
   },
   {
     h: 'Dostanete verdikt a radu',
-    p: 'Jazykový model Claude posoudí celou situaci a česky řekne, jestli jde o podvod, proč, a co máte udělat hned teď. Fakta z registrů nesmí popřít.',
+    p: 'Jazykový model sepíše varovné signály a rozhodovací model Jev z nich vybere verdikt. Česky se dozvíte, jestli jde o podvod, proč, a co udělat hned teď. Fakta z registrů nesmí popřít.',
   },
 ];
 

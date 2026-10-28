@@ -67,7 +67,7 @@ async def run(args) -> None:
     items = load(Path(args.dataset))
     if args.limit:
         items = items[: args.limit]
-    cfg = dataclasses.replace(Settings(), model=args.model, effort=args.effort, fetch_pages=False)
+    cfg = dataclasses.replace(Settings(), model=args.model, second_model=args.second, decider=args.decider, effort=args.effort, fetch_pages=False)
     coi = CoiList(cfg.data_dir / "coi.json")
     await coi.refresh()
     analyzer = Analyzer(coi, cfg)
@@ -83,17 +83,19 @@ async def run(args) -> None:
                     facts = await gather_facts(req, coi, cfg)
                     danger = any(c.status == "nebezpeci" for c in facts.checks)
                     verdict, conf, usage, checks = ("podezrele" if danger else "bez_varovnych_signalu"), None, None, facts.checks
+                    model_used = None
                 else:
                     r = await analyzer.check(req)
                     verdict, conf, usage, checks = r.verdict, r.confidence, r.usage, r.checks
+                    model_used = r.model
                 err = None
             except Exception as e:  # noqa: BLE001
-                verdict, conf, usage, checks, err = "chyba", None, None, [], repr(e)[:300]
+                verdict, conf, usage, checks, err, model_used = "chyba", None, None, [], repr(e)[:300], None
             results.append({
                 "id": item["id"], "label": item["label"], "channel": item["channel"], "category": item["category"],
                 "synthetic": item.get("synthetic", False), "verdict": verdict, "confidence": conf,
                 "flagged": verdict in FLAGGED, "latency_ms": int((time.monotonic() - t0) * 1000),
-                "usage": usage, "n_danger_checks": sum(c.status == "nebezpeci" for c in checks), "error": err,
+                "usage": usage, "model": model_used, "n_danger_checks": sum(c.status == "nebezpeci" for c in checks), "error": err,
             })
             print(f"{item['id']:>12} {item['label']:>5} -> {verdict}", flush=True)
 
@@ -103,7 +105,7 @@ async def run(args) -> None:
 
 
 def report(results: list[dict], args) -> None:
-    name = "facts-only" if args.facts_only else f"{args.model}-{args.effort}"
+    name = "facts-only" if args.facts_only else f"{args.model.replace('/', '_')}{'+jev' if getattr(args, 'decider', '') == 'jev' else ''}{'+' + args.second.replace('/', '_') if args.second else ''}-{args.effort}"
     stamp = datetime.now().strftime("%Y-%m-%d_%H%M")
     out_dir = HERE / "results"
     out_dir.mkdir(exist_ok=True)
@@ -140,7 +142,13 @@ def report(results: list[dict], args) -> None:
     if lat:
         lines.append(f"| Doba odpovědi (medián / 90. percentil) | {lat[len(lat) // 2] / 1000:.1f} s / {lat[int(len(lat) * 0.9)] / 1000:.1f} s |")
     usages = [r["usage"] for r in ok if r["usage"]]
-    if usages and args.model in PRICES:
+    if usages and all(u.get("cost") is not None for u in usages):
+        cost = sum(u["cost"] for u in usages)
+        lines.append(f"| Cena za jednu kontrolu (průměr; OpenRouter, u Claude podle ceníku) | {cost / len(usages) * 25:.2f} Kč (${cost / len(usages):.4f}) |")
+        routed = Counter(r["model"] for r in ok if r.get("model"))
+        if len(routed) > 1 or args.model not in routed or args.second or getattr(args, "decider", ""):
+            lines.append(f"| Skutečně použité modely | {', '.join(f'{m} ×{n}' for m, n in routed.most_common())} |")
+    elif usages and args.model in PRICES:
         pi, po, pr, pw = PRICES[args.model]
         cost = sum(u["input"] * pi + u["output"] * po + u["cache_read"] * pr + u["cache_write"] * pw for u in usages) / 1e6
         lines.append(f"| Cena za jednu kontrolu (průměr) | {cost / len(usages) * 25:.2f} Kč (${cost / len(usages):.4f}) |")
@@ -171,6 +179,8 @@ def main() -> None:
     ap.add_argument("--dataset", default=str(HERE / "dataset.jsonl"))
     ap.add_argument("--model", default="claude-opus-5-5")
     ap.add_argument("--effort", default="low")
+    ap.add_argument("--decider", default="", help="rozhodovací model: jev (jako v provozu), prázdné = rozhoduje jazykový model")
+    ap.add_argument("--second", default="", help="model pro druhý názor u nejistých případů (jako v provozu: claude-opus-5-5)")
     ap.add_argument("--facts-only", action="store_true")
     ap.add_argument("--concurrency", type=int, default=4)
     ap.add_argument("--limit", type=int, default=0)

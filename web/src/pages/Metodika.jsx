@@ -63,7 +63,7 @@ export default function Metodika() {
 
           <h2>Soukromí a provoz</h2>
           <ul>
-            <li>Obsah zpráv neukládáme. Jednorázově ho posoudí model Claude (Anthropic, přes OpenRouter). Ukládáme jen anonymní statistiku a dobrovolné hodnocení.</li>
+            <li>Obsah zpráv neukládáme. Jednorázově ho přes OpenRouter posoudí GPT-5.6 Luna (OpenAI), rozhodovací model Jev (TypeSafe) a u nejasných případů Gemini 3.8 Flash (Google). Jazykové modely voláme jen u poskytovatelů, kteří podle zásad na OpenRouteru data neukládají ani na nich netrénují. Ukládáme jen anonymní statistiku a dobrovolné hodnocení.</li>
             <li>Odkazované stránky stahujeme bezpečně: bez JavaScriptu, s limitem velikosti a bez přístupu k interním adresám serveru.</li>
             <li>Ochrana proti zneužití: nejvýš 30 kontrol z jedné adresy za hodinu a denní strop.</li>
             <li>Zdrojový kód je otevřený: <a href="https://github.com/gweilnid/nenalet">github.com/gweilnid/nenalet</a>.</li>

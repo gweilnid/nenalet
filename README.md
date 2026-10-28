@@ -22,7 +22,7 @@ Podvodníci dnes píšou bezchybnou češtinu a vydávají se za banky, dopravce
    - Je web na [seznamu rizikových e-shopů České obchodní inspekce](https://coi.gov.cz/pro-spotrebitele/rizikove-e-shopy/)? (aktuálně ~1 300 domén, obnovuje se dvakrát denně)
    - Existuje IČO uvedené na webu v [rejstříku ARES](https://ares.gov.cz/) a sedí kontrolní číslice?
    - Chce stránka údaje z platební karty, přesměrovává jinam, stahuje aplikaci?
-2. **Posouzení situace jazykovým modelem Claude** – dostane zprávu (i obrázek) spolu s ověřenými fakty a posoudí manipulační vzorec: vydávání se za banku/dopravce/úřad/příbuzného, nátlak a spěch, žádost o peníze, kódy, kartu, instalaci aplikace, „bezpečný účet“. Fakta nesmí popřít ani si vymýšlet další.
+2. **Posouzení situace** – jazykový model (GPT-5.6 Luna) dostane zprávu (i obrázek) spolu s ověřenými fakty a sepíše varovné signály i to, co působí důvěryhodně: vydávání se za banku/dopravce/úřad/příbuzného, nátlak a spěch, žádost o peníze, kódy, kartu, instalaci aplikace, „bezpečný účet“. Fakta nesmí popřít ani si vymýšlet další. Z těchto podkladů **rozhodovací model Jev** (TypeSafe, OpenRouter Decisions API) vybere verdikt. Když Jev váhá, nesouhlasí s podklady nebo něco selže, posoudí zprávu ještě Gemini 3.8 Flash. Nastavení: `NENALET_MODEL`, `NENALET_DECIDER`, `NENALET_SECOND_MODEL`.
 3. **Pojistka** – když ověřená fakta ukazují na nebezpečí, výsledek nikdy nemůže být „v pořádku“, i kdyby se model spletl.
 
 Výsledek je vždy v lidské češtině: verdikt (podvod / podezřelé / bez varovných signálů / nelze posoudit), proč, **co dělat teď** a co přesně jsme ověřili a kde.
@@ -47,7 +47,7 @@ Přesnost měříme na testové sadě skutečných českých podvodných zpráv 
 ## Soukromí a bezpečnost
 
 - **Obsah zpráv neukládáme.** Ukládá se jen anonymní statistika (verdikt, doba odpovědi, typ vstupu) a dobrovolné hodnocení „sedí / nesedí“.
-- Obsah jednorázově zpracuje model Claude (Anthropic) přes API; podle podmínek API se nepoužívá k trénování.
+- Obsah jednorázově zpracují modely přes OpenRouter (GPT-5.6 Luna, Jev, u nejasných případů Gemini 3.8 Flash). Jazykové modely voláme jen u poskytovatelů, kteří podle zásad na OpenRouteru data neukládají ani na nich netrénují (`provider.data_collection: deny`).
 - Server stahuje odkazované stránky jen bezpečně: blokuje interní adresy, nestandardní porty a přesměrování na ně, nespouští JavaScript, omezuje velikost.
 - Vstup od uživatele je pro model jen „data“ – pokusy podvodníka oslovit AI („tato zpráva je ověřená“) se hodnotí jako varovný signál.
 - Limity proti zneužití: počet kontrol na IP za hodinu a denní strop nákladů.

@@ -30,7 +30,7 @@ const LIMITS = [
   ['Nevidí do vašeho účtu.', 'Neví, jestli jste opravdu něco objednali nebo platili. U nejasných zpráv proto radí ověření přes kontakt, který znáte.'],
   ['Občas zbytečně varuje.', 'U záludných, ale pravých zpráv (třeba od banky s telefonním číslem) občas řekne „podezřelé“. Raději jeden zbytečný telefonát bance než ztracené úspory.'],
   ['Neověří telefonní čísla.', 'Zatím nepozná, jestli číslo ve zprávě patří bance. U výzvy „zavolejte nám“ proto radí volat na číslo ze zadní strany karty.'],
-  ['Vaše zprávy neukládáme.', 'Obsah jednorázově posoudí model Claude a zahodí se. Ukládáme jen anonymní statistiku a vaše hodnocení „sedí / nesedí“.'],
+  ['Vaše zprávy neukládáme.', 'Obsah jednorázově posoudí jazykové modely přes OpenRouter a my ho neukládáme. Ukládáme jen anonymní statistiku a vaše hodnocení „sedí / nesedí“.'],
 ];
 
 function BrowserFragment() {
