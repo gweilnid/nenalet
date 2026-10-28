@@ -24,7 +24,7 @@ const WATCH = [
 
 const LIMITS = [
   ['Nevidí do vašeho účtu.', 'Neví, jestli jste opravdu něco objednali nebo platili. U nejasných zpráv proto radí ověření přes kontakt, který znáte.'],
-  ['Občas zbytečně varuje.', 'U 2 z 38 legitimních zpráv řekl „podezřelé“. Raději jeden zbytečný telefonát bance než ztracené úspory.'],
+  ['Občas zbytečně varuje.', 'U 5 % běžných zpráv v testu řekl „podezřelé“. Raději jeden zbytečný telefonát bance než ztracené úspory.'],
   ['Neověří telefonní čísla.', 'Zatím nepozná, jestli číslo ve zprávě patří bance. U výzvy „zavolejte nám“ proto radí volat na číslo ze zadní strany karty.'],
   ['Vaše zprávy neukládáme.', 'Obsah jednorázově posoudí model Claude a zahodí se. Ukládáme jen anonymní statistiku a vaše hodnocení „sedí / nesedí“.'],
 ];
@@ -141,8 +141,8 @@ export default function Home() {
                 <p className="figure-text">podvodů Nenaleť zachytil</p>
               </div>
               <div className="figure">
-                <span className="figure-num"><CountUp to={2} duration={1} /> z 38</span>
-                <p className="figure-text">legitimních zpráv označil zbytečně za podezřelé</p>
+                <span className="figure-num"><CountUp to={5} duration={1} />&nbsp;%</span>
+                <p className="figure-text">běžných zpráv označil zbytečně za podezřelé</p>
               </div>
               <div className="figure">
                 <span className="figure-num"><CountUp to={11} duration={1.2} /> s</span>

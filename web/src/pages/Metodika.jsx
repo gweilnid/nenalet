@@ -18,7 +18,7 @@ export default function Metodika() {
 
         <section className="kpis" aria-label="Hlavní výsledky">
           <div><p className="kpi-num"><CountUp to={69} duration={1.2} /> z 69</p><p>podvodů zachyceno (95% CI 95–100 %)</p></div>
-          <div><p className="kpi-num"><CountUp to={2} duration={0.8} /> z 38</p><p>planých poplachů u legitimních zpráv (5 %, 95% CI 1–17 %)</p></div>
+          <div><p className="kpi-num"><CountUp to={5} duration={0.8} />&nbsp;%</p><p>planých poplachů u legitimních zpráv (2 z 38, 95% CI 1–17 %)</p></div>
           <div><p className="kpi-num">0,39 Kč</p><p>stojí jedna kontrola, medián odpovědi 11 s</p></div>
         </section>
 
