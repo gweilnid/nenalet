@@ -23,3 +23,5 @@ backend/nenalet/web/
 brag-output/
 backend/nenalet/static/video.mp4
 backend/nenalet/static/video.jpg
+# kandidáti loga (ip-as-logo), vybraný je brand/nenalet-axolotl.png
+brand/logo-kandidati/

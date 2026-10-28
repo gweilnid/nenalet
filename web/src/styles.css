@@ -79,7 +79,8 @@ h3 { font-size: 1.375rem; line-height: 1.25; letter-spacing: -0.01em; }
 /* Navigace: prostý pruh */
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; }
 .wordmark { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.03em; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
-.wordmark svg { width: 34px; height: 34px; flex: none; }
+.logo-img { display: block; flex: none; border-radius: 24%; object-fit: cover; }
+.wordmark .logo-img { width: 42px; height: 42px; }
 .nav-links { display: flex; align-items: center; gap: clamp(14px, 2.2vw, 32px); }
 .nav-links a:not(.btn) { text-decoration: none; font-weight: 700; font-size: 1.05rem; }
 .nav-links a:not(.btn):hover { text-decoration: underline; }
@@ -191,7 +192,7 @@ h3 { font-size: 1.375rem; line-height: 1.25; letter-spacing: -0.01em; }
 .verdict-card { padding: 18px; display: grid; gap: 14px; border-top: 1px solid var(--ui-line); background: #fbfbfa; }
 .verdict-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .brand-mini { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: 0.95rem; }
-.brand-mini svg { width: 22px; height: 22px; }
+.brand-mini .logo-img { width: 28px; height: 28px; }
 .stamp {
   --c: var(--danger);
   display: inline-flex; align-items: center; gap: 8px;
@@ -253,8 +254,8 @@ h3 { font-size: 1.375rem; line-height: 1.25; letter-spacing: -0.01em; }
 .share-apps { display: flex; gap: 16px; overflow: hidden; }
 .share-app { display: grid; justify-items: center; gap: 6px; font-size: 0.85rem; min-width: 64px; }
 .share-app i { width: 56px; height: 56px; border-radius: 14px; background: #d9dbe0; display: block; }
-.share-app.is-us i { background: var(--ink); display: grid; place-items: center; }
-.share-app.is-us svg { width: 34px; height: 34px; }
+.share-app.is-us i { background: none; overflow: hidden; }
+.share-app.is-us .logo-img { width: 56px; height: 56px; border-radius: 14px; }
 .share-actions { background: var(--paper); border-radius: 14px; display: grid; }
 .share-actions > span { padding: 13px 16px; border-bottom: 1px solid #e6e6ea; font-size: 1rem; display: flex; justify-content: space-between; }
 .share-actions > span:last-child { border-bottom: 0; }

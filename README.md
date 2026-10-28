@@ -1,3 +1,5 @@
+<img src="brand/nenalet-axolotl-512.png" alt="Logo Nenaleť: žlutý axolotl" width="140" align="right">
+
 # Nenaleť
 
 **Ověřte si podezřelou zprávu dřív, než naletíte.** Nenaleť je bezplatný pomocník pro lidi v Česku – hlavně pro seniory a jejich rodiny. V iPhonu jedním klepnutím nasdílíte SMS, e-mail, odkaz, webovou stránku nebo snímek obrazovky (v Chromu pravým tlačítkem) a během pár sekund dostanete srozumitelnou odpověď: jde o podvod? Proč? Co máte teď udělat?

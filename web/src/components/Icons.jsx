@@ -1,10 +1,8 @@
-export function Logo({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 64 64" aria-hidden="true">
-      <circle cx="32" cy="32" r="32" fill="#0d2a1c" />
-      <path d="M19 33l9 9 17-19" stroke="#f6e016" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
+import logoUrl from '../assets/logo.webp';
+
+/** Logo Nenaleť: axolotl (vygenerováno skillem ip-as-logo, brand/nenalet-axolotl.png). */
+export function Logo({ className = '' }) {
+  return <img className={`logo-img ${className}`.trim()} src={logoUrl} alt="" width="64" height="64" decoding="async" />;
 }
 
 /** Značka verdiktu kreslená v kódu (místo emoji). */
