@@ -5,7 +5,7 @@ set -euo pipefail
 
 SERVER="root@134.209.247.219"
 APP="/opt/nenalet"
-BASE="https://b2bsaas.cz/nenalet"
+BASE="https://yasinsezgin.dev/nenalet"
 PORT=8011
 
 cd "$(dirname "$0")"

@@ -4,7 +4,7 @@
 
 Projekt do soutěže **AI výzva pro Česko 2026** (mesic.ai). Řeší obavu, kterou má v [Českém barometru obav z AI 2026](https://asociace.ai/cesky-barometr-obav-z-ai-2026/) nejvíc lidí: **podvody s pomocí AI (77,5 %)**.
 
-- Web: https://b2bsaas.cz/nenalet/ – ukázky na skutečných podvodech (výsledky předem spočítané, web sám nevolá AI)
+- Web: https://yasinsezgin.dev/nenalet/ – ukázky na skutečných podvodech (výsledky předem spočítané, web sám nevolá AI)
 - iPhone: zkratka „Nenaleť“ v nabídce Sdílet
 - Počítač: rozšíření pro Chrome (pravé tlačítko → Ověřit v Nenaleť; výsledek v postranním panelu)
 
@@ -27,7 +27,7 @@ Výsledek je vždy v lidské češtině: verdikt (podvod / podezřelé / bez var
 
 ## Jak přesné to je
 
-Přesnost měříme na testové sadě skutečných českých podvodných zpráv z veřejných zdrojů (Policie ČR, banky, dopravci, hoax.cz, zpravodajství) a legitimních zpráv – viz [`eval/`](eval/) a stránku [Metodika](https://b2bsaas.cz/nenalet/metodika). Výsledky včetně chyb zveřejňujeme.
+Přesnost měříme na testové sadě skutečných českých podvodných zpráv z veřejných zdrojů (Policie ČR, banky, dopravci, hoax.cz, zpravodajství) a legitimních zpráv – viz [`eval/`](eval/) a stránku [Metodika](https://yasinsezgin.dev/nenalet/metodika). Výsledky včetně chyb zveřejňujeme.
 
 ### Výsledky (28. 10. 2026, 107 zpráv: 69 podvodů, 38 legitimních)
 
@@ -40,7 +40,7 @@ Přesnost měříme na testové sadě skutečných českých podvodných zpráv 
 - „Zachycený podvod“ = verdikt *podvod* nebo *podezřelé* (obojí člověka zastaví a poradí ověření); jednoznačně „podvod“ u 86 % podvodů.
 - Oba plané poplachy jsou skutečné zprávy (bezpečnostní SMS České spořitelny s telefonním číslem; reklamní SMS „každá vstupenka vyhrává“) – na ověřeně skutečných legitimních zprávách je to **2/15 (13 %)**. Obě dopadly jako „podezřelé“ s radou ověřit si to přes známý kontakt.
 - Instrukce pro model vznikly před sestavením testové sady a podle výsledků se neladily.
-- Podrobnosti: [`eval/results/`](eval/results/), [stránka Metodika](https://b2bsaas.cz/nenalet/metodika).
+- Podrobnosti: [`eval/results/`](eval/results/), [stránka Metodika](https://yasinsezgin.dev/nenalet/metodika).
 
 ## Soukromí a bezpečnost
 

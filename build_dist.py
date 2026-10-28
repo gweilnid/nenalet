@@ -2,7 +2,7 @@
 - backend/nenalet/static/nenalet-chrome.zip  (rozšíření s nastavenou adresou)
 - backend/nenalet/static/Nenalet.shortcut    (podepsaná zkratka pro iPhone)
 
-Použití:  python3 build_dist.py https://b2bsaas.cz/nenalet
+Použití:  python3 build_dist.py https://yasinsezgin.dev/nenalet
 """
 
 from __future__ import annotations
