@@ -1,8 +1,9 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { Logo, VerdictMark, STATUS_MARK } from './Icons.jsx';
+import { NOT_FP_QUERY, Panel, usePanelStep } from './Panel.jsx';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -111,17 +112,28 @@ export default function Story({ example }) {
   const root = useRef(null);
   const [active, setActive] = useState(0);
   const panels = [<SharePanel example={example} />, <FactsPanel />, <VerdictPanel example={example} />];
+  const step = usePanelStep(root);
 
+  // Celoobrazovkový režim: krok sekce = aktivní krok příběhu.
+  useEffect(() => {
+    if (step !== Infinity) setActive(Math.min(2, Math.max(0, step - 1)));
+  }, [step]);
+
+  // Obyčejná stránka: aktivní krok podle toho, kam člověk doskroloval.
   useGSAP(
     () => {
-      gsap.utils.toArray('.story-step').forEach((step, i) => {
-        ScrollTrigger.create({
-          trigger: step,
-          start: 'top 55%',
-          end: 'bottom 55%',
-          onToggle: (self) => self.isActive && setActive(i),
+      const mm = gsap.matchMedia();
+      mm.add(NOT_FP_QUERY, () => {
+        gsap.utils.toArray('.story-step').forEach((el, i) => {
+          ScrollTrigger.create({
+            trigger: el,
+            start: 'top 55%',
+            end: 'bottom 55%',
+            onToggle: (self) => self.isActive && setActive(i),
+          });
         });
       });
+      return () => mm.revert();
     },
     { scope: root }
   );
@@ -141,7 +153,7 @@ export default function Story({ example }) {
   );
 
   return (
-    <section id="jak" className="band band-story frame" aria-labelledby="jak-h" ref={root}>
+    <Panel id="jak" className="band band-story" steps={3} labelledBy="jak-h" sectionRef={root}>
       <div className="grid">
         <h2 id="jak-h" className="story-head">Tři kroky, jedenáct sekund</h2>
         <ol className="story-steps" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
@@ -163,6 +175,6 @@ export default function Story({ example }) {
           </div>
         </div>
       </div>
-    </section>
+    </Panel>
   );
 }

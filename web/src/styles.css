@@ -357,7 +357,9 @@ h3 { font-size: 1.375rem; line-height: 1.25; letter-spacing: -0.01em; }
 
 /* ---------- Přesnost (celá žlutá plocha) ---------- */
 .proof { background: var(--accent); color: var(--accent-ink); margin-top: 0; padding-block: clamp(80px, 10vw, 160px); }
-.proof .proof-h { grid-column: 1 / span 8; margin: 0; font-size: var(--size-h2); line-height: 1; letter-spacing: -0.03em; font-weight: 800; }
+.proof-top { grid-column: 1 / span 8; display: grid; gap: 24px; }
+.proof-top .proof-lead { margin-top: 0; max-width: 46ch; }
+.proof .proof-h { margin: 0; font-size: var(--size-h2); line-height: 1; letter-spacing: -0.03em; font-weight: 800; }
 .proof-dots { display: grid; grid-template-columns: repeat(23, minmax(0, 1fr)); gap: clamp(4px, 0.6vw, 8px); max-width: 560px; margin-top: 18px; }
 .proof-dot { display: block; aspect-ratio: 1; border-radius: 50%; border: 2px solid var(--accent-ink); transform: scale(0.8); }
 .proof-dots-note { font-size: var(--size-small); }
@@ -367,9 +369,10 @@ h3 { font-size: 1.375rem; line-height: 1.25; letter-spacing: -0.01em; }
 .figure-num { font-size: var(--size-display); font-weight: 800; line-height: 0.9; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .figure-text { font-size: 1.2rem; max-width: 24ch; }
 .proof-foot { grid-column: 1 / span 7; margin-top: clamp(40px, 5vw, 72px); display: grid; gap: 18px; justify-items: start; }
-@media (max-width: 900px) { .proof .proof-h, .proof-lead, .proof-foot { grid-column: 1 / -1; } .proof-figures { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .proof-top, .proof .proof-h, .proof-lead, .proof-foot { grid-column: 1 / -1; } .proof-figures { grid-template-columns: 1fr; } }
 
 /* ---------- Kdy se Nenaleť hodí (skutečné případy) ---------- */
+.cases-wrap { grid-column: 1 / -1; min-width: 0; }
 .cases-head { grid-column: 1 / span 7; display: grid; gap: 20px; margin-bottom: clamp(32px, 4vw, 56px); }
 .cases { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 32px; align-items: start; }
 .case-stage { grid-column: 1 / span 7; position: sticky; top: 24px; display: grid; gap: 10px; min-width: 0; }
@@ -409,7 +412,7 @@ h3 { font-size: 1.375rem; line-height: 1.25; letter-spacing: -0.01em; }
 }
 
 /* ---------- Kde se může mýlit ---------- */
-.limits-head { grid-column: 1 / span 5; display: grid; gap: 24px; align-content: start; }
+.limits-head { grid-column: 1 / span 6; display: grid; gap: 24px; align-content: start; }
 .limits-list { grid-column: 7 / span 6; list-style: none; margin: 0; padding: 0; display: grid; gap: 28px; }
 .limits-list > div { display: grid; gap: 6px; }
 .limits-list b { font-size: 1.3rem; line-height: 1.3; }
@@ -472,3 +475,41 @@ tr.pick td { background: #fffbd1; font-weight: 700; }
 .usage { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px var(--gap); }
 .usage h3 { margin-bottom: 6px; }
 @media (max-width: 760px) { .usage { grid-template-columns: 1fr; } }
+
+/* ---------- Celoobrazovkové sekce (počítač s dost vysokým oknem) ----------
+   Každá sekce = jedna obrazovka. Jedno gesto skrolování odkryje další krok sekce (.s1, .s2 …),
+   po posledním kroku stránka přejede na další sekci (krokování řídí Panel.jsx). Na telefonu a při omezení pohybu je stránka obyčejná. */
+.snap-mark { display: none; }
+@media (min-width: 1080px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  :root { --nav-h: 84px; }
+  html { scroll-behavior: auto; }
+  .nav { height: var(--nav-h); padding-block: 0; }
+  section.panel { position: relative; height: calc(var(--steps) * 100svh); padding-block: 0; margin-top: 0; }
+  section.panel-hero { height: calc(100svh - var(--nav-h)); }
+  .panel-inner { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding-block: clamp(28px, 6.5vh, 80px); }
+  .panel-hero .panel-inner { height: calc(100svh - var(--nav-h)); padding-block: 0 clamp(16px, 3vh, 32px); }
+  .panel-fit { width: 100%; flex: none; transform-origin: 50% 50%; }
+  .snap-mark { display: block; position: absolute; left: 0; width: 1px; height: 100svh; pointer-events: none; }
+  .hero { padding-block: 0; }
+  .loop-stage { height: clamp(520px, calc(100svh - var(--nav-h) - 80px), 700px); }
+
+  /* tři kroky: všechny kroky vlevo, aktivní zvýrazněný, telefon vpravo */
+  .story-head { margin-bottom: clamp(24px, 4vh, 48px); }
+  .story-step { min-height: 0; padding-block: 14px; opacity: 0.35; transition: opacity 400ms ease; }
+  .story-step[aria-current="step"] { opacity: 1; }
+  .story-sticky { position: static; }
+
+  /* případy: seznam kratší, zařízení se vejde do výšky */
+  .cases-head { margin-bottom: clamp(20px, 3vh, 40px); }
+  .case-stage { position: static; }
+  .case-sit { display: none; }
+  .case-btn { padding: 12px 16px; }
+  .case-picker { gap: 20px; }
+  .page-body { max-height: 9rem; }
+  .install-head { margin-bottom: clamp(20px, 3vh, 40px); }
+  .install-col { gap: 16px; }
+  .browser { min-height: 260px; }
+}
+/* kroky se odkrývají jen když běží skript (bez něj je vše vidět) */
+html.fp [data-step] { opacity: 0; visibility: hidden; transform: translateY(36px); transition: opacity 600ms var(--ease-out), transform 800ms var(--ease-out), visibility 0s linear 600ms; }
+html.fp .s1 [data-step="1"], html.fp .s2 [data-step="2"], html.fp .s3 [data-step="3"], html.fp .s4 [data-step="4"] { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }

@@ -4,6 +4,9 @@ import Footer from '../components/Footer.jsx';
 import HeroLoop from '../components/HeroLoop.jsx';
 import CaseExplorer from '../components/CaseExplorer.jsx';
 import ProofSection from '../components/ProofSection.jsx';
+import { Panel, setupPanels } from '../components/Panel.jsx';
+import { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
 import Story from '../components/Story.jsx';
 import { Logo } from '../components/Icons.jsx';
 import SplitText from '../components/reactbits/SplitText.jsx';
@@ -73,11 +76,18 @@ function ShareFragment() {
 }
 
 export default function Home() {
+  const main = useRef(null);
+  useGSAP(() => {
+    const mm = setupPanels(main.current);
+    return () => mm.revert();
+  }, { scope: main });
+
   return (
     <>
       <Nav />
-      <main>
-        <section className="hero grid frame" aria-labelledby="hero-h">
+      <main ref={main}>
+        <Panel className="panel-hero s1" steps={1} labelledBy="hero-h" marks={false}>
+          <div className="hero grid">
           <div className="hero-copy">
             <SplitText
               text="Ověřte zprávu i web, než naletíte"
@@ -102,14 +112,15 @@ export default function Home() {
             </div>
           </div>
           <HeroLoop examples={examples} />
-        </section>
+          </div>
+        </Panel>
 
         <ProofSection />
 
-        <section className="band band-why frame" aria-labelledby="why-h">
+        <Panel className="band band-why" steps={2} labelledBy="why-h">
           <div className="grid why">
-            <h2 id="why-h" style={{ gridColumn: '1 / -1' }}>Hlídá, co po vás zpráva chce</h2>
-            <div className="why-statement">
+            <h2 id="why-h" data-step="1" style={{ gridColumn: '1 / -1' }}>Hlídá, co po vás zpráva chce</h2>
+            <div className="why-statement" data-step="1">
               <ScrollReveal as="p" enableBlur={false} baseOpacity={0.18} baseRotation={0} stagger={0.04}>
                 Podvodník dnes píše bezchybně česky a vydává se za banku, dopravce i vnuka. Nenaleť proto nehodnotí, jak zpráva vypadá, ale co po vás chce.
               </ScrollReveal>
@@ -118,7 +129,7 @@ export default function Home() {
                 <a href="https://asociace.ai/cesky-barometr-obav-z-ai-2026/">Český barometr obav z AI 2026</a>).
               </p>
             </div>
-            <AnimatedContent className="why-list" distance={28} direction="horizontal" duration={0.7} stagger={0.08} ease="expo.out">
+            <AnimatedContent data-step="2" className="why-list" distance={28} direction="horizontal" duration={0.7} stagger={0.08} ease="expo.out">
               {WATCH.map(([b, t]) => (
                 <div key={b}>
                   <b>{b}</b>
@@ -127,32 +138,34 @@ export default function Home() {
               ))}
             </AnimatedContent>
           </div>
-        </section>
+        </Panel>
 
         <Story example={ppl} />
 
 
-        <section id="pouziti" className="band band-cases frame" aria-labelledby="cases-h">
+        <Panel id="pouziti" className="band band-cases" steps={2} labelledBy="cases-h">
           <div className="grid">
-            <div className="cases-head">
+            <div className="cases-head" data-step="1">
               <h2 id="cases-h">Kdy se Nenaleť hodí</h2>
               <p className="lead">
                 Ověří zprávu i celou stránku, v počítači i v mobilu. Tady jsou skutečné podvody, na které lidé v Česku narazili.
               </p>
             </div>
-            <CaseExplorer examples={examples} />
+            <div className="cases-wrap" data-step="2">
+              <CaseExplorer examples={examples} />
+            </div>
           </div>
-        </section>
+        </Panel>
 
-        <section className="band band-limits frame" aria-labelledby="limits-h">
+        <Panel className="band band-limits" steps={2} labelledBy="limits-h">
           <div className="grid limits">
-            <div className="limits-head">
+            <div className="limits-head" data-step="1">
               <h2 id="limits-h">Kde se může mýlit</h2>
               <p className="lead">
                 Nenaleť je pomocník, ne záruka. Když jde o peníze, vždy si to ověřte sami na čísle, které znáte.
               </p>
             </div>
-            <AnimatedContent className="limits-list" distance={22} duration={0.7} stagger={0.09} ease="expo.out">
+            <AnimatedContent data-step="2" className="limits-list" distance={22} duration={0.7} stagger={0.09} ease="expo.out">
               {LIMITS.map(([b, t]) => (
                 <div key={b}>
                   <b>{b}</b>
@@ -161,15 +174,15 @@ export default function Home() {
               ))}
             </AnimatedContent>
           </div>
-        </section>
+        </Panel>
 
-        <section id="instalace" className="band band-install frame" aria-labelledby="install-h">
+        <Panel id="instalace" className="band band-install" steps={3} labelledBy="install-h">
           <div className="grid">
-            <div className="install-head">
+            <div className="install-head" data-step="1">
               <h2 id="install-h">Přidejte si Nenaleť</h2>
               <p className="lead">Ověřujte tam, kde podvod potkáte. Obojí je zdarma.</p>
             </div>
-            <div className="install-col">
+            <div className="install-col" data-step="2">
               <AnimatedContent distance={0} scale={0.96} duration={0.9} ease="expo.out">
                 <ShareFragment />
               </AnimatedContent>
@@ -183,7 +196,7 @@ export default function Home() {
                 <a className="btn btn-primary" href="zkratka">Přidat do iPhonu</a>
               </div>
             </div>
-            <div className="install-col">
+            <div className="install-col" data-step="3">
               <AnimatedContent distance={0} scale={0.96} duration={0.9} delay={0.1} ease="expo.out">
                 <BrowserFragment />
               </AnimatedContent>
@@ -198,12 +211,12 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </Panel>
 
-        <section className="urgent frame" aria-labelledby="urgent-h">
+        <Panel className="urgent" steps={2} labelledBy="urgent-h">
           <div className="grid">
-            <h2 id="urgent-h">Už se to stalo?</h2>
-            <AnimatedContent className="urgent-list" distance={24} duration={0.7} stagger={0.12} ease="expo.out">
+            <h2 id="urgent-h" data-step="1">Už se to stalo?</h2>
+            <AnimatedContent data-step="2" className="urgent-list" distance={24} duration={0.7} stagger={0.12} ease="expo.out">
               <div>
                 <span className="urgent-big">Volejte bance</span>
                 <p>Zadali jste údaje z karty nebo kód? Hned volejte na číslo ze zadní strany karty a kartu zablokujte.</p>
@@ -214,7 +227,7 @@ export default function Home() {
               </div>
             </AnimatedContent>
           </div>
-        </section>
+        </Panel>
       </main>
       <Footer />
     </>
