@@ -30,6 +30,7 @@ ssh "$SERVER" "set -e
 
 echo "== server: sestavené soubory"
 scp -q backend/nenalet/static/Nenalet.shortcut backend/nenalet/static/nenalet-chrome.zip "$SERVER:$APP/backend/nenalet/static/"
+[ -f backend/nenalet/static/video.mp4 ] && scp -q backend/nenalet/static/video.mp4 backend/nenalet/static/video.jpg "$SERVER:$APP/backend/nenalet/static/"
 rsync -a --delete backend/nenalet/web/ "$SERVER:$APP/backend/nenalet/web/"
 
 if ! ssh "$SERVER" "test -f $APP/backend/.env"; then

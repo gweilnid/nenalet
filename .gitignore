@@ -18,3 +18,8 @@ docs/prihlaska-formular.md
 web/node_modules/
 backend/nenalet/web/
 .taste-skill/
+
+# Video (brag) – pracovní soubory a výstup
+brag-output/
+backend/nenalet/static/video.mp4
+backend/nenalet/static/video.jpg
