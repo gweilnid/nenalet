@@ -141,7 +141,7 @@ export default function Story({ example }) {
   );
 
   return (
-    <section id="jak" className="section frame" aria-labelledby="jak-h" ref={root}>
+    <section id="jak" className="band band-story frame" aria-labelledby="jak-h" ref={root}>
       <div className="grid">
         <h2 id="jak-h" className="story-head">Tři kroky, jedenáct sekund</h2>
         <ol className="story-steps" style={{ listStyle: 'none', margin: 0, padding: 0 }}>

@@ -106,7 +106,7 @@ export default function Home() {
 
         <ProofSection />
 
-        <section className="section frame" aria-labelledby="why-h">
+        <section className="band band-why frame" aria-labelledby="why-h">
           <div className="grid why">
             <h2 id="why-h" style={{ gridColumn: '1 / -1' }}>Hlídá, co po vás zpráva chce</h2>
             <div className="why-statement">
@@ -132,7 +132,7 @@ export default function Home() {
         <Story example={ppl} />
 
 
-        <section id="pouziti" className="section frame" aria-labelledby="cases-h">
+        <section id="pouziti" className="band band-cases frame" aria-labelledby="cases-h">
           <div className="grid">
             <div className="cases-head">
               <h2 id="cases-h">Kdy se Nenaleť hodí</h2>
@@ -144,7 +144,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section frame" aria-labelledby="limits-h">
+        <section className="band band-limits frame" aria-labelledby="limits-h">
           <div className="grid limits">
             <div className="limits-head">
               <h2 id="limits-h">Kde se může mýlit</h2>
@@ -163,7 +163,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="instalace" className="section frame" aria-labelledby="install-h">
+        <section id="instalace" className="band band-install frame" aria-labelledby="install-h">
           <div className="grid">
             <div className="install-head">
               <h2 id="install-h">Přidejte si Nenaleť</h2>
