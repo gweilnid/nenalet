@@ -12,8 +12,7 @@ from pathlib import Path
 import anthropic
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-import segno
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse
+from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 
 from .analyzer import Analyzer, InputError
@@ -26,6 +25,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name
 log = logging.getLogger("nenalet")
 
 STATIC = Path(__file__).resolve().parent / "static"
+WEB = Path(__file__).resolve().parent / "web"
 
 
 async def _coi_refresher(coi: CoiList) -> None:
@@ -135,24 +135,30 @@ async def health(request: Request):
     return {"ok": True, "model": settings.model, "coi_domains": len(request.app.state.coi.entries)}
 
 
+# Web (React, sestavený do nenalet/web) - jedna stránka pro úvod, metodiku i zkratku.
+def _web_index() -> FileResponse:
+    return FileResponse(WEB / "index.html", headers={"Cache-Control": "no-cache"})
+
+
 @app.get("/")
 async def index():
-    return FileResponse(STATIC / "index.html")
+    return _web_index()
 
 
 @app.get("/metodika")
 async def methodology():
-    return FileResponse(STATIC / "metodika.html")
+    return _web_index()
 
 
-@app.get("/zkratka", response_class=HTMLResponse)
-async def shortcut_page(request: Request):
-    """Stránka s návodem a tlačítkem ke stažení (nestahuje se automaticky)."""
-    icloud = os.environ.get("NENALET_SHORTCUT_ICLOUD")
-    public = os.environ.get("NENALET_PUBLIC_URL") or str(request.base_url).rstrip("/")
-    qr = segno.make(f"{public}/zkratka", error="m").svg_inline(scale=5, dark="#16244f", light="#ffffff", border=2)
-    html = (STATIC / "zkratka.html").read_text(encoding="utf-8")
-    return html.replace("{{DOWNLOAD_URL}}", icloud or "zkratka/stahnout").replace("{{QR_SVG}}", qr)
+@app.get("/zkratka")
+async def shortcut_page():
+    return _web_index()
+
+
+@app.get("/api/config")
+async def public_config():
+    """Odkaz ke stažení zkratky - po nahrání do iCloudu stačí nastavit NENALET_SHORTCUT_ICLOUD."""
+    return {"shortcut_url": os.environ.get("NENALET_SHORTCUT_ICLOUD") or "zkratka/stahnout"}
 
 
 @app.api_route("/zkratka/stahnout", methods=["GET", "HEAD"])
@@ -160,4 +166,5 @@ async def shortcut_file():
     return FileResponse(STATIC / "Nenalet.shortcut", media_type="application/octet-stream", filename="Nenalet.shortcut")
 
 
+app.mount("/assets", StaticFiles(directory=WEB / "assets", check_dir=False), name="web-assets")
 app.mount("/", StaticFiles(directory=STATIC, html=True), name="static")

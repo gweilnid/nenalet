@@ -1,0 +1,300 @@
+/*
+  Nenaleť – směr „The product performs“ (taste skill), paleta „Bottle ink, yellow“.
+  Jedna rodina písma: Atkinson Hyperlegible Next (navržena pro lidi se slabším zrakem).
+  Žlutá = zvýrazňovač: označuje varovné signály a jedinou hlavní akci.
+*/
+:root {
+  --bg: #f7f7f7;
+  --surface: #ebebeb;
+  --ink: #0d2a1c;
+  --muted: #4f5c55;
+  --accent: #f6e016;
+  --accent-ink: #0d2a1c;
+  --paper: #ffffff;
+  --ui-line: #d6dcd8;
+  --danger: #c4251a;
+  --warn: #a85400;
+  --ok: #1c7543;
+
+  --font: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --size-display: clamp(3rem, 7.4vw, 7.6rem);
+  --size-hero: clamp(2.6rem, 4.6vw, 5.4rem);
+  --size-h2: clamp(2.3rem, 4.8vw, 4.75rem);
+  --size-statement: clamp(1.45rem, 2.3vw, 2.25rem);
+  --size-body: 1.1875rem;
+  --size-small: 0.95rem;
+
+  --margin: max(20px, min(3vw, 40px));
+  --gap: clamp(16px, 2vw, 32px);
+  --section: clamp(96px, 13vw, 200px);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 var(--size-body)/1.55 var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { max-width: 100%; }
+a { color: inherit; text-underline-offset: 0.18em; text-decoration-thickness: 2px; }
+p { margin: 0; }
+h1, h2, h3 { margin: 0; font-weight: 800; text-wrap: balance; }
+h1 { font-size: var(--size-hero); line-height: 1; letter-spacing: -0.035em; }
+h2 { font-size: var(--size-h2); line-height: 1; letter-spacing: -0.03em; }
+h3 { font-size: 1.375rem; line-height: 1.25; letter-spacing: -0.01em; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 6px; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+.frame { padding-inline: max(var(--margin), env(safe-area-inset-left, 0px)) max(var(--margin), env(safe-area-inset-right, 0px)); }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); }
+.section { padding-block: var(--section) 0; }
+.lead { font-size: 1.3rem; line-height: 1.5; max-width: 34ch; }
+.muted { color: var(--muted); }
+.small { font-size: var(--size-small); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Tlačítka: ploché, plně kulaté. Jedna hlavní akce ve žluté. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 58px; padding: 0 28px; border-radius: 999px; border: 0;
+  font: 700 1.125rem/1 var(--font); text-decoration: none; cursor: pointer;
+  transition: transform 240ms var(--ease-out), background-color 240ms ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: #ffe92e; }
+.btn-quiet { background: var(--surface); color: var(--ink); }
+.btn-quiet:hover { background: #e0e2e1; }
+.btn-ink { background: var(--ink); color: var(--bg); }
+.btn-ink:hover { background: #163b29; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+/* Navigace: prostý pruh */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; }
+.wordmark { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.03em; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
+.wordmark svg { width: 34px; height: 34px; flex: none; }
+.nav-links { display: flex; align-items: center; gap: clamp(14px, 2.2vw, 32px); }
+.nav-links a:not(.btn) { text-decoration: none; font-weight: 700; font-size: 1.05rem; }
+.nav-links a:not(.btn):hover { text-decoration: underline; }
+.nav .btn { min-height: 48px; padding: 0 20px; font-size: 1rem; }
+@media (max-width: 860px) { .nav-links a.hide-sm { display: none; } }
+
+/* ---------- Úvod ---------- */
+.hero { padding-block: clamp(24px, 4vw, 56px) 0; align-items: start; row-gap: 40px; grid-template-rows: auto 1fr; }
+.hero-copy { grid-column: 1 / span 5; display: grid; gap: 28px; padding-top: clamp(8px, 3vw, 48px); align-content: start; }
+.hero-copy h1 { max-width: none; }
+.hero-stage { grid-column: 6 / span 7; grid-row: 1 / span 2; display: grid; gap: 18px; min-width: 0; }
+.hero-switcher { grid-column: 1 / span 5; grid-row: 2; align-self: start; }
+.hero-note { font-size: var(--size-small); color: var(--muted); max-width: 36ch; }
+@media (max-width: 1080px) {
+  .hero-copy, .hero-stage, .hero-switcher { grid-column: 1 / -1; grid-row: auto; }
+  .hero-copy h1 { font-size: clamp(2.6rem, 7vw, 4.6rem); }
+}
+
+/* Přepínač skutečných zpráv (živá ukázka) */
+.switcher { display: grid; gap: 10px; }
+.switcher-label { font-weight: 700; }
+.switcher-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font: 700 1rem/1.2 var(--font); color: var(--ink); background: var(--surface);
+  border: 0; border-radius: 999px; padding: 11px 16px; cursor: pointer; text-align: left;
+  transition: background-color 200ms ease, transform 240ms var(--ease-out);
+}
+.chip:hover { background: #dfe2e0; }
+.chip:active { transform: scale(0.97); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.chip .kind { font-weight: 400; opacity: 0.75; }
+@media (max-width: 640px) {
+  .switcher-list { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; margin-inline: calc(-1 * var(--margin)); padding-inline: var(--margin); scroll-snap-type: x mandatory; }
+  .chip { flex: 0 0 auto; scroll-snap-align: start; }
+}
+
+/* ---------- Fragmenty rozhraní (data-ui: vlastní konvence produktu) ---------- */
+[data-ui] { font-family: var(--font); color: var(--ink); }
+.device {
+  background: var(--paper); border: 1px solid var(--ui-line); border-radius: 22px;
+  overflow: hidden; display: grid;
+}
+.device-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 18px; background: #f2f4f3; border-bottom: 1px solid var(--ui-line); font-size: 0.95rem; }
+.device-bar b { font-weight: 700; }
+.thread { padding: 18px; display: grid; gap: 10px; background: var(--paper); }
+.thread-sender { font-size: 0.9rem; color: var(--muted); }
+.bubble {
+  justify-self: start; max-width: 100%; background: #ececec; border-radius: 20px 20px 20px 6px;
+  padding: 12px 16px; font-size: 1.0625rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere;
+  max-height: 12.5rem; overflow-y: auto;
+}
+.hl {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat; background-size: 0% 100%; background-position: 0 0;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  color: inherit; padding: 0 2px; border-radius: 3px;
+}
+.hl.is-on { background-size: 100% 100%; }
+.hl.is-active { outline: 2px solid var(--ink); outline-offset: 1px; }
+
+.verdict-card { padding: 18px; display: grid; gap: 14px; border-top: 1px solid var(--ui-line); background: #fbfbfa; }
+.verdict-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.brand-mini { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: 0.95rem; }
+.brand-mini svg { width: 22px; height: 22px; }
+.stamp {
+  --c: var(--danger);
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--c); border: 3px solid var(--c); border-radius: 8px;
+  padding: 6px 12px; font-weight: 800; font-size: 1.25rem; letter-spacing: -0.01em;
+  transform: rotate(-4deg); transform-origin: 50% 50%;
+}
+.stamp[data-v="podezrele"] { --c: var(--warn); }
+.stamp[data-v="bez_varovnych_signalu"] { --c: var(--ok); }
+.stamp[data-v="nelze_posoudit"] { --c: var(--muted); }
+.stamp svg { width: 22px; height: 22px; flex: none; }
+.verdict-headline { font-weight: 700; font-size: 1.125rem; line-height: 1.4; }
+.flag-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.flag-list li {
+  display: grid; grid-template-columns: 14px 1fr; gap: 10px; align-items: start; font-size: 1rem; line-height: 1.45;
+  padding: 6px 8px; border-radius: 10px; cursor: default;
+}
+.flag-list li:hover, .flag-list li.is-active { background: #f4f1cf; }
+.flag-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--danger); margin-top: 6px; }
+.flag-list b { font-weight: 700; }
+.todo-mini { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; font-size: 1rem; }
+.todo-mini li::marker { font-weight: 800; }
+.mini-h { font-weight: 800; font-size: 1rem; }
+.facts-mini { display: grid; gap: 6px; font-size: 0.95rem; color: var(--muted); }
+.facts-mini b { color: var(--ink); }
+
+/* ---------- Proč to funguje ---------- */
+.why { row-gap: 56px; }
+.why-statement { grid-column: 1 / span 7; }
+.why-statement .scroll-reveal { margin: 0; }
+.why-statement .scroll-reveal-text { font-size: var(--size-statement); line-height: 1.3; font-weight: 700; letter-spacing: -0.01em; }
+.why-source { margin-top: 20px; color: var(--muted); }
+.why-list { grid-column: 9 / span 4; list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; align-content: start; }
+.why-list > div { display: grid; gap: 2px; }
+.why-list b { font-size: 1.25rem; }
+@media (max-width: 1080px) { .why-statement, .why-list { grid-column: 1 / -1; } .why-list { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); } }
+
+/* ---------- Jak to funguje (příběh s připnutou ukázkou) ---------- */
+.story-head { grid-column: 1 / -1; margin-bottom: clamp(32px, 5vw, 72px); }
+.story-steps { grid-column: 1 / span 5; display: grid; }
+.story-step { min-height: 56vh; display: grid; align-content: center; gap: 16px; padding-block: 24px; }
+.story-step h3 { font-size: clamp(1.8rem, 2.8vw, 2.6rem); line-height: 1.05; letter-spacing: -0.025em; }
+.story-step p { max-width: 36ch; font-size: 1.3rem; line-height: 1.5; }
+.story-stage { grid-column: 7 / span 6; position: relative; }
+.story-sticky { position: sticky; top: max(12vh, 80px); display: grid; }
+.story-sticky > * { grid-area: 1 / 1; }
+.story-panel { transition: opacity 400ms ease; }
+@media (max-width: 1080px) {
+  .story-steps, .story-stage { grid-column: 1 / -1; }
+  .story-stage { display: none; }
+  .story-step { min-height: 0; padding-block: 28px; }
+  .story-inline { display: block !important; margin-top: 12px; }
+}
+.story-inline { display: none; }
+
+.share-sheet { background: #f2f2f6; padding: 18px; display: grid; gap: 14px; }
+.share-preview { display: grid; grid-template-columns: 56px 1fr; gap: 12px; align-items: center; background: var(--paper); border-radius: 14px; padding: 10px; }
+.share-thumb { width: 56px; height: 56px; border-radius: 10px; background: #ececec; display: grid; place-items: center; font-weight: 800; color: var(--muted); }
+.share-apps { display: flex; gap: 16px; overflow: hidden; }
+.share-app { display: grid; justify-items: center; gap: 6px; font-size: 0.85rem; min-width: 64px; }
+.share-app i { width: 56px; height: 56px; border-radius: 14px; background: #d9dbe0; display: block; }
+.share-app.is-us i { background: var(--ink); display: grid; place-items: center; }
+.share-app.is-us svg { width: 34px; height: 34px; }
+.share-actions { background: var(--paper); border-radius: 14px; display: grid; }
+.share-actions > span { padding: 13px 16px; border-bottom: 1px solid #e6e6ea; font-size: 1rem; display: flex; justify-content: space-between; }
+.share-actions > span:last-child { border-bottom: 0; }
+.share-actions .is-us { font-weight: 700; background: #fffbd1; }
+
+.facts-panel { padding: 18px; display: grid; gap: 12px; background: var(--paper); }
+.fact-row { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; padding: 10px 0; border-bottom: 1px solid #edf0ee; }
+.fact-row:last-child { border-bottom: 0; }
+.fact-mark { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 0.95rem; }
+.fact-mark[data-s="nebezpeci"] { background: #fbe5e3; color: var(--danger); }
+.fact-mark[data-s="varovani"] { background: #fdeccc; color: var(--warn); }
+.fact-mark[data-s="info"] { background: #e9eeeb; color: var(--muted); }
+.fact-mark[data-s="ok"] { background: #e1f1e7; color: var(--ok); }
+.fact-row b { display: block; }
+.fact-row small { color: var(--muted); font-size: 0.875rem; }
+
+/* ---------- Přesnost (celá žlutá plocha) ---------- */
+.proof { background: var(--accent); color: var(--accent-ink); margin-top: var(--section); padding-block: clamp(80px, 10vw, 160px); }
+.proof h2 { grid-column: 1 / span 8; }
+.proof-lead { grid-column: 1 / span 6; margin-top: 24px; font-size: 1.3rem; }
+.proof-figures { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); margin-top: clamp(48px, 7vw, 96px); }
+.figure { display: grid; gap: 10px; align-content: start; }
+.figure-num { font-size: var(--size-display); font-weight: 800; line-height: 0.9; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.figure-text { font-size: 1.2rem; max-width: 24ch; }
+.proof-foot { grid-column: 1 / span 7; margin-top: clamp(40px, 5vw, 72px); display: grid; gap: 18px; justify-items: start; }
+@media (max-width: 900px) { .proof h2, .proof-lead, .proof-foot { grid-column: 1 / -1; } .proof-figures { grid-template-columns: 1fr; } }
+
+/* ---------- Kde se může mýlit ---------- */
+.limits-head { grid-column: 1 / span 5; display: grid; gap: 24px; align-content: start; }
+.limits-list { grid-column: 7 / span 6; list-style: none; margin: 0; padding: 0; display: grid; gap: 28px; }
+.limits-list > div { display: grid; gap: 6px; }
+.limits-list b { font-size: 1.3rem; line-height: 1.3; }
+@media (max-width: 1080px) { .limits-head, .limits-list { grid-column: 1 / -1; } .limits-list { margin-top: 40px; } }
+
+/* ---------- Instalace ---------- */
+.install-head { grid-column: 1 / -1; margin-bottom: clamp(32px, 4vw, 56px); display: grid; gap: 16px; }
+.install-col { grid-column: span 6; display: grid; gap: 22px; align-content: start; }
+.install-col h3 { font-size: clamp(1.6rem, 2.4vw, 2.2rem); letter-spacing: -0.02em; }
+.install-col ol { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; }
+@media (max-width: 900px) { .install-col { grid-column: 1 / -1; } .install-col + .install-col { margin-top: 56px; } }
+
+.browser { background: var(--paper); border: 1px solid var(--ui-line); border-radius: 16px; overflow: hidden; display: grid; grid-template-columns: 1fr minmax(0, 0.9fr); min-height: 340px; }
+.browser-page { padding: 18px; display: grid; gap: 10px; align-content: start; position: relative; background: #fafafa; }
+.browser-page p { font-size: 0.95rem; }
+.browser-sel { background: #b8d4ff; }
+.ctx-menu { position: absolute; left: 30%; top: 46%; background: var(--paper); border: 1px solid var(--ui-line); border-radius: 10px; box-shadow: 0 10px 30px rgba(13, 42, 28, 0.18); padding: 6px 0; min-width: 230px; font-size: 0.92rem; }
+.ctx-menu span { display: block; padding: 7px 14px; }
+.ctx-menu .is-us { background: #fffbd1; font-weight: 700; }
+.browser-panel { border-left: 1px solid var(--ui-line); padding: 14px; display: grid; gap: 10px; align-content: start; background: var(--paper); }
+@media (max-width: 640px) { .browser { grid-template-columns: 1fr; } .browser-panel { border-left: 0; border-top: 1px solid var(--ui-line); } .ctx-menu { position: static; margin-top: 4px; min-width: 0; } }
+
+/* ---------- Už se to stalo? (tmavá plocha) ---------- */
+.urgent { background: var(--ink); color: var(--bg); margin-top: var(--section); padding-block: clamp(80px, 10vw, 150px); }
+.urgent h2 { grid-column: 1 / span 5; }
+.urgent-list { grid-column: 7 / span 6; display: grid; gap: 36px; list-style: none; margin: 0; padding: 0; }
+.urgent-list > div { display: grid; gap: 6px; }
+.urgent-big { font-size: clamp(2.6rem, 5vw, 4.5rem); font-weight: 800; line-height: 1; letter-spacing: -0.03em; color: var(--accent); }
+.urgent-list p { font-size: 1.2rem; max-width: 36ch; }
+@media (max-width: 900px) { .urgent h2, .urgent-list { grid-column: 1 / -1; } .urgent-list { margin-top: 40px; } }
+
+/* ---------- Patička ---------- */
+.footer { background: var(--ink); color: var(--bg); padding-block: 24px 28px; }
+.footer-word { font-size: clamp(5rem, 23vw, 24rem); font-weight: 800; line-height: 0.8; letter-spacing: -0.06em; margin-left: -0.04em; white-space: nowrap; overflow: hidden; }
+.footer-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 32px; margin-top: 28px; font-size: 1rem; }
+.footer-row nav { display: flex; flex-wrap: wrap; gap: 12px 28px; }
+.footer a { text-decoration: none; font-weight: 700; }
+.footer a:hover { text-decoration: underline; }
+.footer .muted { color: #a9bab0; }
+
+/* ---------- Podstránky (metodika, zkratka) ---------- */
+.page-head { padding-block: clamp(32px, 6vw, 96px) clamp(32px, 4vw, 56px); display: grid; gap: 24px; }
+.page-head h1 { font-size: clamp(2.8rem, 6.4vw, 6.4rem); max-width: 14ch; }
+.prose { display: grid; gap: 18px; max-width: 70ch; }
+.prose h2 { font-size: clamp(1.9rem, 3.2vw, 3rem); margin-top: 48px; }
+.prose ul { margin: 0; padding-left: 1.2em; display: grid; gap: 12px; }
+.table-wrap { overflow-x: auto; background: var(--paper); border-radius: 16px; }
+table { border-collapse: collapse; width: 100%; min-width: 680px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid #e3e7e4; vertical-align: top; font-size: 1.05rem; }
+th { font-size: 0.95rem; color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+tr.pick td { background: #fffbd1; font-weight: 700; }
+.kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.kpi-num { font-size: clamp(2.6rem, 5vw, 4.6rem); font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+@media (max-width: 760px) { .kpis { grid-template-columns: 1fr; } }
+.qr-box { background: var(--paper); border-radius: 16px; padding: 14px; justify-self: start; line-height: 0; }
+.qr-box img { width: 200px; height: 200px; image-rendering: pixelated; }
+.two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 5vw, 80px); align-items: start; }
+@media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+.usage { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px var(--gap); }
+.usage h3 { margin-bottom: 6px; }
+@media (max-width: 760px) { .usage { grid-template-columns: 1fr; } }

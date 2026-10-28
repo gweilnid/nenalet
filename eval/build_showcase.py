@@ -67,7 +67,7 @@ async def main() -> None:
 
     examples = await asyncio.gather(*(one(i, t) for i, t in SHOWCASE))
     out = {"generated": date.today().isoformat(), "model": cfg.model, "examples": examples}
-    target = HERE.parent / "backend" / "nenalet" / "static" / "examples.json"
+    target = HERE.parent / "web" / "src" / "data" / "examples.json"
     target.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     for e in examples:
         print(f"{e['id']:10} {e['label']:5} -> {e['result']['verdict']:22} {e['result']['headline']}")

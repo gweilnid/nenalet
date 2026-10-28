@@ -16,6 +16,9 @@ git push -q origin main
 echo "== build (rozšíření + podepsaná zkratka pro $BASE)"
 python3 build_dist.py "$BASE" >/dev/null
 
+echo "== build webu (React)"
+(cd web && npm ci --silent && npx vite build --logLevel error)
+
 echo "== server: kód a závislosti"
 ssh "$SERVER" "set -e
   if [ ! -d $APP/.git ]; then git clone -q https://github.com/gweilnid/nenalet.git $APP; fi
@@ -27,6 +30,7 @@ ssh "$SERVER" "set -e
 
 echo "== server: sestavené soubory"
 scp -q backend/nenalet/static/Nenalet.shortcut backend/nenalet/static/nenalet-chrome.zip "$SERVER:$APP/backend/nenalet/static/"
+rsync -a --delete backend/nenalet/web/ "$SERVER:$APP/backend/nenalet/web/"
 
 if ! ssh "$SERVER" "test -f $APP/backend/.env"; then
   echo "== server: .env (jen poprvé)"
