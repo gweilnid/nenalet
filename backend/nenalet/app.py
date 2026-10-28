@@ -12,7 +12,8 @@ from pathlib import Path
 import anthropic
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, RedirectResponse
+import segno
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 
 from .analyzer import Analyzer, InputError
@@ -144,12 +145,18 @@ async def methodology():
     return FileResponse(STATIC / "metodika.html")
 
 
-@app.get("/zkratka")
-async def shortcut():
-    # Po nahrání zkratky do iCloudu stačí nastavit odkaz a web přesměruje tam.
+@app.get("/zkratka", response_class=HTMLResponse)
+async def shortcut_page(request: Request):
+    """Stránka s návodem a tlačítkem ke stažení (nestahuje se automaticky)."""
     icloud = os.environ.get("NENALET_SHORTCUT_ICLOUD")
-    if icloud:
-        return RedirectResponse(icloud)
+    public = os.environ.get("NENALET_PUBLIC_URL") or str(request.base_url).rstrip("/")
+    qr = segno.make(f"{public}/zkratka", error="m").svg_inline(scale=5, dark="#16244f", light="#ffffff", border=2)
+    html = (STATIC / "zkratka.html").read_text(encoding="utf-8")
+    return html.replace("{{DOWNLOAD_URL}}", icloud or "zkratka/stahnout").replace("{{QR_SVG}}", qr)
+
+
+@app.api_route("/zkratka/stahnout", methods=["GET", "HEAD"])
+async def shortcut_file():
     return FileResponse(STATIC / "Nenalet.shortcut", media_type="application/octet-stream", filename="Nenalet.shortcut")
 
 
