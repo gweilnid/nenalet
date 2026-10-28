@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Nenaleť – ověřte si podezřelou zprávu</title>
-<meta name="description" content="Vložte SMS, e-mail, odkaz nebo snímek obrazovky. Nenaleť ověří fakta v registrech a srozumitelně řekne, jestli jde o podvod a co dělat.">
+<meta name="description" content="Nenaleť ověří podezřelou SMS, e-mail, odkaz nebo snímek obrazovky přímo v iPhonu nebo v Chromu. Vyzkoušejte, jak posuzuje skutečné podvody.">
 <meta name="theme-color" content="#16244f">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316244f'/%3E%3Cpath d='M20 33l8 8 16-18' stroke='%23ffb020' stroke-width='7' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,6 +20,7 @@
       <span>Nenaleť</span>
     </a>
     <nav class="top-nav">
+      <a href="#ukazky">Ukázky</a>
       <a href="#instalace">Do mobilu a Chromu</a>
       <a href="#jak">Jak to funguje</a>
     </nav>
@@ -28,74 +29,52 @@
 
 <main>
   <section class="hero wrap">
-    <h1>Přišlo vám něco podezřelého?</h1>
-    <p class="lede">Vložte SMS, e-mail, odkaz nebo snímek obrazovky. Ověříme fakta ve veřejných registrech a lidsky vám řekneme, jestli jde o podvod a co máte udělat.</p>
-
-    <form id="form" class="checker" autocomplete="off">
-      <label for="text" class="field-label">Text zprávy nebo odkaz</label>
-      <textarea id="text" name="text" rows="5" placeholder="Sem vložte zprávu (dlouze podržte prstem → Vložit)…"></textarea>
-
-      <div class="image-row">
-        <label class="btn-secondary" for="image">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
-          Přidat snímek obrazovky
-        </label>
-        <input id="image" name="image" type="file" accept="image/*" hidden>
-        <div id="preview" class="preview" hidden>
-          <img id="preview-img" alt="Náhled přiloženého obrázku">
-          <button type="button" id="remove-image" class="link-btn">Odebrat</button>
-        </div>
-      </div>
-
-      <button id="submit" class="btn-primary" type="submit">Ověřit</button>
-      <p id="status" class="status" role="status" aria-live="polite"></p>
-
-      <div class="samples">
-        <span>Vyzkoušejte ukázku:</span>
-        <button type="button" class="chip" data-sample="0">SMS od „dopravce“</button>
-        <button type="button" class="chip" data-sample="1">„Mami, mám nové číslo“</button>
-        <button type="button" class="chip" data-sample="2">Kód z banky</button>
-      </div>
-    </form>
+    <h1>Ověřte podezřelou zprávu dřív, než naletíte</h1>
+    <p class="lede">Nenaleť ověří SMS, e-mail, odkaz, webovou stránku nebo snímek obrazovky přímo v iPhonu nebo v Chromu. Zkontroluje fakta ve veřejných registrech a lidsky řekne, jestli jde o podvod a co máte udělat.</p>
+    <div class="cta-row">
+      <a class="btn-primary cta" href="zkratka">Přidat do iPhonu</a>
+      <a class="btn-secondary cta" href="#instalace">Přidat do Chromu</a>
+    </div>
   </section>
 
-  <section id="result" class="result wrap" hidden tabindex="-1" aria-live="polite">
-    <div class="verdict" id="verdict">
-      <div class="verdict-badge"><span id="v-icon" aria-hidden="true"></span><span id="v-label"></span></div>
-      <p class="verdict-headline" id="v-headline"></p>
-      <p class="verdict-expl" id="v-expl"></p>
-      <p class="verdict-meta" id="v-meta"></p>
-    </div>
+  <section id="ukazky" class="showcase wrap" aria-labelledby="ukazky-h">
+    <h2 id="ukazky-h">Vyzkoušejte na skutečných podvodech</h2>
+    <p class="section-lede">Všechny zprávy jsou skutečné. Zveřejnila je policie, banky, dopravci a média jako varování. Pod každou je odpověď, kterou na ni Nenaleť dal.</p>
+    <div class="showcase-grid">
+      <div class="example-list" role="tablist" aria-label="Ukázky zpráv" id="example-list"></div>
+      <div class="example-view" role="tabpanel" id="example-view" aria-live="polite">
+        <figure class="message" id="message">
+          <figcaption class="message-head"><span id="m-channel"></span><span id="m-sender"></span></figcaption>
+          <p class="message-text" id="m-text">Načítám ukázku…</p>
+          <p class="message-source">Zdroj: <a id="m-source" href="#" target="_blank" rel="noopener"></a></p>
+        </figure>
 
-    <div class="result-grid">
-      <div class="panel" id="todo-panel">
-        <h2>Co teď udělat</h2>
-        <ol id="todo" class="todo"></ol>
+        <div id="result" class="result" hidden>
+          <div class="verdict" id="verdict">
+            <div class="verdict-badge"><span id="v-icon" aria-hidden="true"></span><span id="v-label"></span></div>
+            <p class="verdict-headline" id="v-headline"></p>
+            <p class="verdict-expl" id="v-expl"></p>
+            <p class="verdict-meta" id="v-meta"></p>
+          </div>
+          <div class="result-grid">
+            <div class="panel" id="todo-panel">
+              <h3>Co teď udělat</h3>
+              <ol id="todo" class="todo"></ol>
+            </div>
+            <div class="panel" id="flags-panel">
+              <h3>Proč si to myslíme</h3>
+              <ul id="flags" class="flags"></ul>
+              <ul id="good" class="good"></ul>
+            </div>
+          </div>
+          <details class="panel checks-panel" id="checks-panel">
+            <summary><h3>Co jsme ověřili v registrech</h3></summary>
+            <ul id="checks" class="checks"></ul>
+          </details>
+          <p class="disclaimer" id="disclaimer"></p>
+        </div>
       </div>
-      <div class="panel" id="flags-panel">
-        <h2>Proč si to myslíme</h2>
-        <ul id="flags" class="flags"></ul>
-        <ul id="good" class="good"></ul>
-      </div>
     </div>
-
-    <details class="panel checks-panel" id="checks-panel" open>
-      <summary><h2>Co jsme ověřili v registrech</h2></summary>
-      <ul id="checks" class="checks"></ul>
-    </details>
-
-    <div class="feedback" id="feedback">
-      <p>Sedí podle vás tohle hodnocení?</p>
-      <div class="feedback-btns">
-        <button type="button" class="chip" data-correct="ano">Ano, sedí</button>
-        <button type="button" class="chip" data-correct="ne">Ne, mýlí se</button>
-        <button type="button" class="chip" data-correct="nevim">Nevím</button>
-      </div>
-      <p id="feedback-thanks" class="muted" hidden>Děkujeme, pomůže nám to měřit přesnost.</p>
-    </div>
-
-    <p class="disclaimer" id="disclaimer"></p>
-    <button type="button" class="btn-secondary again" id="again">Ověřit něco dalšího</button>
   </section>
 
   <section id="instalace" class="install wrap">

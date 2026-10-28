@@ -1,10 +1,10 @@
 # Nenaleť
 
-**Ověřte si podezřelou zprávu dřív, než naletíte.** Nenaleť je bezplatný pomocník pro lidi v Česku – hlavně pro seniory a jejich rodiny. Vložíte (nebo jedním klepnutím nasdílíte) SMS, e-mail, odkaz, webovou stránku nebo snímek obrazovky a během pár sekund dostanete srozumitelnou odpověď: jde o podvod? Proč? Co máte teď udělat?
+**Ověřte si podezřelou zprávu dřív, než naletíte.** Nenaleť je bezplatný pomocník pro lidi v Česku – hlavně pro seniory a jejich rodiny. V iPhonu jedním klepnutím nasdílíte SMS, e-mail, odkaz, webovou stránku nebo snímek obrazovky (v Chromu pravým tlačítkem) a během pár sekund dostanete srozumitelnou odpověď: jde o podvod? Proč? Co máte teď udělat?
 
 Projekt do soutěže **AI výzva pro Česko 2026** (mesic.ai). Řeší obavu, kterou má v [Českém barometru obav z AI 2026](https://asociace.ai/cesky-barometr-obav-z-ai-2026/) nejvíc lidí: **podvody s pomocí AI (77,5 %)** a **deepfaky (72,3 %)**. Jen 26,4 % lidí si věří, že by přesvědčivý deepfake poznalo.
 
-- Web: https://b2bsaas.cz/nenalet/
+- Web: https://b2bsaas.cz/nenalet/ – ukázky na skutečných podvodech (výsledky předem spočítané, web sám nevolá AI)
 - iPhone: zkratka „Nenaleť“ v nabídce Sdílet
 - Počítač: rozšíření pro Chrome (pravé tlačítko → Ověřit v Nenaleť; výsledek v postranním panelu)
 

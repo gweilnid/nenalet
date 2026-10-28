@@ -1,5 +1,5 @@
 // Postranní panel: vyzvedne požadavek z kontextového menu (chrome.storage.session),
-// nebo ověří vložený text / aktuální stránku. Výsledek zobrazí v panelu.
+// nebo ověří aktuální stránku. Vlastní text vkládat nejde (šetříme volání API). Výsledek zobrazí v panelu.
 import { apiBase } from "./config.js";
 import { isWebUrl, screenshot, shorten } from "./util.js";
 
@@ -112,12 +112,6 @@ chrome.storage.onChanged.addListener((changes, area) => {
   if (area === "session" && changes.nenalet_request?.newValue) takePending();
 });
 
-$("go").addEventListener("click", () => {
-  const text = $("text").value.trim();
-  if (!text) return $("text").focus();
-  runCheck({ text }, `Vložený text: „${shorten(text)}“`);
-});
-
 $("page").addEventListener("click", async () => {
   const [tab] = await chrome.tabs.query({ active: true, windowId: myWindowId });
   const shot = await screenshot(myWindowId);
@@ -132,7 +126,6 @@ $("page").addEventListener("click", async () => {
 $("again").addEventListener("click", () => {
   current?.abort();
   $("subject").textContent = "";
-  $("text").value = "";
   showState("idle");
 });
 

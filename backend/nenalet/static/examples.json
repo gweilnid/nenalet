@@ -1,0 +1,462 @@
+{
+ "generated": "2026-10-28",
+ "model": "claude-opus-5-5",
+ "examples": [
+  {
+   "id": "scam-037",
+   "title": "SMS od „PPL“: doplatek 15 Kč",
+   "label": "scam",
+   "channel": "SMS",
+   "sender": "+420604123456",
+   "text": "[PPL Czech]\n\nPro doručení Vašeho balíku zbývá doplatit 15 Kč z důvodu vyšší hmotnosti, než bylo uvedeno. Uhraďte prosím bezpečně na:\n\nhttps://ppl-abc.def/K4ljL9/2aM3k/cz",
+   "url_in_message": "https://ppl-abc.def/K4ljL9/2aM3k/cz",
+   "source_url": "https://www.ppl.cz/w/podvodne-sms",
+   "source_name": "ppl.cz",
+   "result": {
+    "verdict": "podvod",
+    "verdict_label": "Téměř jistě podvod",
+    "confidence": "vysoka",
+    "headline": "Jde o podvod. Zpráva se jen vydává za PPL a chce údaje z vaší karty.",
+    "scam_type": "falešný dopravce",
+    "red_flags": [
+     {
+      "signal": "Falešná adresa odkazu",
+      "evidence": "https://ppl-abc.def/K4ljL9/2aM3k/cz – kontrola ukázala, že nepatří k oficiálním adresám PPL (ppl.cz, pplcz.com)",
+      "explanation": "Podvodníci používají adresy, které jen připomínají známou firmu, aby vás nalákali na falešnou stránku."
+     },
+     {
+      "signal": "Malý doplatek za balík",
+      "evidence": "zbývá doplatit 15 Kč z důvodu vyšší hmotnosti",
+      "explanation": "Malá částka má uspat vaši ostražitost, ve skutečnosti jde o získání údajů z karty a následné vybrání peněz z účtu."
+     },
+     {
+      "signal": "Zpráva z běžného mobilního čísla",
+      "evidence": "Odesílatel: +420604123456",
+      "explanation": "Dopravci obvykle nepíší z obyčejných soukromých mobilních čísel."
+     },
+     {
+      "signal": "Ujišťování o bezpečí",
+      "evidence": "Uhraďte prosím bezpečně",
+      "explanation": "Slovo „bezpečně“ má vzbudit důvěru, skutečná bezpečnost tím ale nic není zaručena."
+     }
+    ],
+    "reassuring_signs": [],
+    "what_to_do": [
+     "Na odkaz neklikejte a na zprávu neodpovídejte. Zprávu smažte.",
+     "Pokud čekáte balík, ověřte ho sami v aplikaci PPL nebo na stránce ppl.cz.",
+     "Pokud jste už zadali údaje z karty, ihned volejte své bance na číslo ze zadní strany karty a nechte kartu zablokovat.",
+     "Pokud vám zmizely peníze, kontaktujte banku a nahlaste to na Policii ČR (158)."
+    ],
+    "explanation": "Odkaz nevede na skutečné stránky PPL, jen napodobuje jejich název. Podvodníci tak lákají lidi k zadání údajů z karty pod záminkou drobného doplatku. Skutečné PPL by vás odkázalo na svou oficiální adresu.",
+    "checks": [
+     {
+      "name": "Odkaz ppl-abc.def",
+      "status": "nebezpeci",
+      "detail": "Napodobenina značky PPL: adresa obsahuje „ppl“, ale nepatří k oficiálním doménám (ppl.cz, pplcz.com).",
+      "source": "porovnání s oficiálními doménami"
+     }
+    ],
+    "model": "anthropic/claude-opus-5.5",
+    "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+   }
+  },
+  {
+   "id": "scam-025",
+   "title": "SMS od „České spořitelny“: cizí zařízení",
+   "label": "scam",
+   "channel": "SMS",
+   "sender": "Info",
+   "text": "česká spořitelna UPOZORNĚNÍ : k vašemu online účtu se připojilo neoprávněné zařízení. Pokud jej nepoznáte, okamžitě jej ověřte:https://s.id/1C2FR",
+   "url_in_message": "https://s.id/1C2FR",
+   "source_url": "https://www.csas.cz/cs/zpravy-z-banky/2023/03/09/podvodnici-posilaji-sms-jmenem-ceske-sporitelny",
+   "source_name": "csas.cz",
+   "result": {
+    "verdict": "podvod",
+    "verdict_label": "Téměř jistě podvod",
+    "confidence": "vysoka",
+    "headline": "Jde o podvod. Česká spořitelna takové zprávy se zkráceným odkazem neposílá.",
+    "scam_type": "podvodný bankéř (falešná SMS banky)",
+    "red_flags": [
+     {
+      "signal": "Zkrácený odkaz",
+      "evidence": "https://s.id/1C2FR – naše kontrola: zkrácený odkaz, není vidět, kam doopravdy vede",
+      "explanation": "Banka posílá jen odkazy na svou oficiální adresu, ne skryté zkrácené odkazy."
+     },
+     {
+      "signal": "Strašení a spěch",
+      "evidence": "„k vašemu online účtu se připojilo neoprávněné zařízení… okamžitě jej ověřte“",
+      "explanation": "Podvodníci vás vystraší, abyste jednali rychle a nepřemýšleli."
+     },
+     {
+      "signal": "Neurčitý odesílatel",
+      "evidence": "Odesílatel: Info",
+      "explanation": "Skutečná banka se jasně podepíše a nepíše od obecného jména „Info“."
+     },
+     {
+      "signal": "Žádost o ověření přes odkaz",
+      "evidence": "„okamžitě jej ověřte:https://s.id/1C2FR“",
+      "explanation": "Za odkazem bývá falešná stránka, která ukradne přihlašovací údaje nebo kartu."
+     }
+    ],
+    "reassuring_signs": [],
+    "what_to_do": [
+     "Na odkaz neklikejte a na zprávu neodpovídejte.",
+     "Pokud se bojíte o účet, zavolejte bance na číslo ze zadní strany karty nebo z oficiálního webu csas.cz.",
+     "Pokud jste už na odkazu zadali údaje nebo kód, ihned volejte banku a nechte zablokovat přístup i kartu.",
+     "Zprávu smažte."
+    ],
+    "explanation": "Zpráva se vydává za Českou spořitelnu, straší vás cizím zařízením a tlačí vás kliknout na skrytý zkrácený odkaz. Takto banky nekomunikují. Cílem je získat vaše přihlašovací údaje a peníze.",
+    "checks": [
+     {
+      "name": "Odkaz s.id",
+      "status": "varovani",
+      "detail": "Zkrácený odkaz – není vidět, kam doopravdy vede.",
+      "source": null
+     }
+    ],
+    "model": "anthropic/claude-opus-5.5",
+    "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+   }
+  },
+  {
+   "id": "scam-061",
+   "title": "„Mami, mám nové číslo“",
+   "label": "scam",
+   "channel": "SMS",
+   "sender": null,
+   "text": "Mami, nefunguje mi telefon a mám nové číslo. Napiš mi na WhatsApp: https://wa.me/...",
+   "url_in_message": "https://wa.me/...",
+   "source_url": "https://policie.gov.cz/clanek/podvody-na-whatsappu-pozor.aspx",
+   "source_name": "policie.gov.cz",
+   "result": {
+    "verdict": "podvod",
+    "verdict_label": "Téměř jistě podvod",
+    "confidence": "vysoka",
+    "headline": "Toto je známý podvod „Ahoj mami, mám nové číslo“.",
+    "scam_type": "vnuk v nouzi (falešné dítě s novým číslem)",
+    "red_flags": [
+     {
+      "signal": "Údajné nové číslo",
+      "evidence": "„Mami, nefunguje mi telefon a mám nové číslo.“",
+      "explanation": "Podvodníci se takto vydávají za vaše dítě, aby získali vaši důvěru."
+     },
+     {
+      "signal": "Přesun na WhatsApp",
+      "evidence": "„Napiš mi na WhatsApp: https://wa.me/...“",
+      "explanation": "Chtějí vás dostat do chatu s cizím číslem, kde pak obvykle žádají o peníze."
+     },
+     {
+      "signal": "Bez jména a podrobností",
+      "evidence": "Zpráva neobsahuje jméno ani nic osobního.",
+      "explanation": "Stejná zpráva se rozesílá tisícům lidí naráz."
+     }
+    ],
+    "reassuring_signs": [],
+    "what_to_do": [
+     "Na zprávu neodpovídejte a odkaz neotevírejte.",
+     "Zavolejte svému dítěti na staré číslo, které už znáte, a ověřte si to.",
+     "Nikdy neposílejte peníze ani kódy z SMS na základě takové zprávy.",
+     "Zprávu smažte. Pokud jste už peníze poslali, ihned volejte bance a policii na 158."
+    ],
+    "explanation": "Zpráva přesně odpovídá rozšířenému podvodu, kdy se cizí člověk vydává za vaše dítě. Po přesunu na WhatsApp obvykle přijde naléhavá prosba o zaplacení nějaké platby. Ověřte si vše telefonátem na číslo, které znáte.",
+    "checks": [],
+    "model": "anthropic/claude-opus-5.5",
+    "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+   }
+  },
+  {
+   "id": "scam-023",
+   "title": "Telefonát „z banky“: účet napaden",
+   "label": "scam",
+   "channel": "Telefonát",
+   "sender": null,
+   "text": "Váš účet byl napaden, musíme ho hned zablokovat, abychom Vaše peníze zachránili. Sdělte nám své přístupové údaje k bankovnictví…",
+   "url_in_message": null,
+   "source_url": "https://www.csas.cz/cs/zpravy-z-banky/2024/09/03/podvodnici-mohou-zavolat-i-vam-naucte-se-jak-poznat-falesny-telefonat",
+   "source_name": "csas.cz",
+   "result": {
+    "verdict": "podvod",
+    "verdict_label": "Téměř jistě podvod",
+    "confidence": "vysoka",
+    "headline": "Jde o podvod. Banka nikdy nežádá vaše přihlašovací údaje.",
+    "scam_type": "podvodný bankéř",
+    "red_flags": [
+     {
+      "signal": "Žádost o přihlašovací údaje",
+      "evidence": "Sdělte nám své přístupové údaje k bankovnictví",
+      "explanation": "Skutečná banka po vás nikdy nechce přihlašovací jméno, heslo, PIN ani kódy z SMS."
+     },
+     {
+      "signal": "Strašení a spěch",
+      "evidence": "Váš účet byl napaden, musíme ho hned zablokovat",
+      "explanation": "Podvodníci vás vyděsí, abyste jednali rychle a nepřemýšleli."
+     },
+     {
+      "signal": "Falešná záchrana peněz",
+      "evidence": "abychom Vaše peníze zachránili",
+      "explanation": "Slib, že vám někdo „zachrání“ peníze, je typický trik, jak se k nim dostat."
+     },
+     {
+      "signal": "Neznámý odesílatel",
+      "evidence": "Zpráva neuvádí název banky ani jméno pracovníka.",
+      "explanation": "Skutečná banka se jasně představí a nic takového po vás nechce."
+     }
+    ],
+    "reassuring_signs": [],
+    "what_to_do": [
+     "Nesdělujte žádné údaje a na zprávu neodpovídejte.",
+     "Pokud máte obavy o účet, zavolejte své bance na číslo ze zadní strany karty nebo z jejího oficiálního webu.",
+     "Pokud jste už údaje sdělili, ihned volejte bance a nechte zablokovat přístup i kartu. Pak to nahlaste Policii ČR na 158.",
+     "Zprávu smažte, případně číslo odesílatele zablokujte."
+    ],
+    "explanation": "Zpráva vás straší napadeným účtem a chce vaše přihlašovací údaje. Žádná banka o ně nikdy nežádá. S těmito údaji by vám podvodník mohl vybrat peníze z účtu.",
+    "checks": [],
+    "model": "anthropic/claude-opus-5.5",
+    "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+   }
+  },
+  {
+   "id": "scam-059",
+   "title": "Reklama: investice do ČEZ",
+   "label": "scam",
+   "channel": "Reklama",
+   "sender": null,
+   "text": "Každý český občan, který investoval do CEZ Group 4500 Kč, již dostává více než 40 000 Kč měsíčně",
+   "url_in_message": null,
+   "source_url": "https://www.seznamzpravy.cz/clanek/domaci-zivot-v-cesku-podvodnici-se-zastitili-prezidentovym-jmenem-seniorsky-par-prisel-o-vsechno-229909",
+   "source_name": "seznamzpravy.cz",
+   "result": {
+    "verdict": "podvod",
+    "verdict_label": "Téměř jistě podvod",
+    "confidence": "vysoka",
+    "headline": "Jde o typický investiční podvod zneužívající jméno ČEZ.",
+    "scam_type": "investiční podvod",
+    "red_flags": [
+     {
+      "signal": "Nereálný zisk",
+      "evidence": "investoval ... 4500 Kč, již dostává více než 40 000 Kč měsíčně",
+      "explanation": "Žádná poctivá investice nevydělá měsíčně téměř desetinásobek vkladu."
+     },
+     {
+      "signal": "Zneužití známé firmy",
+      "evidence": "CEZ Group",
+      "explanation": "Podvodníci používají jména velkých firem, aby působili důvěryhodně. ČEZ takové investice nenabízí."
+     },
+     {
+      "signal": "Lákání na „každého občana“",
+      "evidence": "Každý český občan",
+      "explanation": "Slib zisku pro každého je běžný trik reklam na falešné investiční platformy."
+     }
+    ],
+    "reassuring_signs": [],
+    "what_to_do": [
+     "Na reklamu neklikejte a nevyplňujte žádný formulář s telefonem ani e-mailem.",
+     "Pokud vám zavolá „investiční poradce“, zavěste a nic neinstalujte ani neplaťte.",
+     "Pokud jste už poslali peníze nebo údaje o kartě, ihned volejte své bance a oznamte to Policii ČR na čísle 158.",
+     "Reklamu můžete nahlásit na sociální síti jako podvod."
+    ],
+    "explanation": "Zpráva slibuje obrovský a jistý zisk z malého vkladu, což je znak podvodu. Jméno ČEZ je zneužito, aby vzbudilo důvěru. Po registraci by vás kontaktovali podvodníci a postupně z vás vylákali peníze.",
+    "checks": [],
+    "model": "anthropic/claude-opus-5.5",
+    "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+   }
+  },
+  {
+   "id": "scam-042",
+   "title": "Bazar: kupec posílá „DPD“ odkaz",
+   "label": "scam",
+   "channel": "Zpráva v chatu",
+   "sender": null,
+   "text": "Bydlím v Uherském Brodě, řekněte mi, je možné u vás nakoupit online ? To znamená, že vám zaplatím předem prostřednictvím transakce z online banky a pošlu vám speciálního kurýra, veškeré náklady na dopravu nesu já. Pokyny k celému procesu najdete také zde: https://eu-orders.site/dpd/cz/info",
+   "url_in_message": "https://eu-orders.site/dpd/cz/info",
+   "source_url": "https://www.dpd.com/cz/cs/bezpecnostni-informace/",
+   "source_name": "dpd.com",
+   "result": {
+    "verdict": "podvod",
+    "verdict_label": "Téměř jistě podvod",
+    "confidence": "vysoka",
+    "headline": "Jde o podvod s falešným kupujícím a falešným kurýrem DPD.",
+    "scam_type": "falešný kupující",
+    "red_flags": [
+     {
+      "signal": "Kupující posílá vlastního „kurýra“",
+      "evidence": "„pošlu vám speciálního kurýra, veškeré náklady na dopravu nesu já“",
+      "explanation": "Podvodníci tak vytvoří záminku poslat vám falešný odkaz na „doručení“ nebo „přijetí platby“."
+     },
+     {
+      "signal": "Odkaz nepatří firmě DPD",
+      "evidence": "https://eu-orders.site/dpd/cz/info",
+      "explanation": "Skutečná DPD používá svou vlastní webovou adresu, ne cizí web s koncovkou .site."
+     },
+     {
+      "signal": "Web vznikl teprve nedávno",
+      "evidence": "Podle registru domén existuje eu-orders.site od 8. 3. 2026.",
+      "explanation": "Podvodné weby bývají nové a po pár týdnech zmizí."
+     },
+     {
+      "signal": "Neobvyklá ochota zaplatit předem",
+      "evidence": "„zaplatím předem prostřednictvím transakce z online banky“",
+      "explanation": "Ochota zaplatit vše předem i s dopravou má vás nalákat, abyste na odkazu zadali údaje z karty."
+     }
+    ],
+    "reassuring_signs": [],
+    "what_to_do": [
+     "Na odkaz neklikejte a nezadávejte tam žádné údaje z karty ani přihlášení do banky.",
+     "Kupujícímu neodpovídejte, nebo nabídněte jen osobní předání a platbu na místě.",
+     "Pokud jste už na odkazu zadali údaje z karty, ihned volejte svou banku na čísle ze zadní strany karty a kartu zablokujte.",
+     "Zprávu nahlaste na inzertním portálu a smažte ji."
+    ],
+    "explanation": "Toto je známý podvod: „kupující“ pošle odkaz, který vypadá jako stránka DPD pro přijetí peněz. Ve skutečnosti tam vyplníte údaje z karty a podvodníci vám peníze z účtu vyberou. Odkaz vede na nový web, který s DPD nemá nic společného.",
+    "checks": [
+     {
+      "name": "Odkaz eu-orders.site",
+      "status": "info",
+      "detail": "Koncovka .site je u podvodných webů častá (sama o sobě ale nic nedokazuje).",
+      "source": null
+     },
+     {
+      "name": "Odkaz eu-orders.site",
+      "status": "info",
+      "detail": "Doména eu-orders.site existuje od 2026-03-08.",
+      "source": "registr domén (RDAP)"
+     }
+    ],
+    "model": "anthropic/claude-opus-5.5",
+    "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+   }
+  },
+  {
+   "id": "scam-053",
+   "title": "SMS: nezaplacené mýtné",
+   "label": "scam",
+   "channel": "SMS",
+   "sender": "Info",
+   "text": "Vase vozidlo ma silnicni mytné, ktere nebylo 5. 11. uhrazeno a budou vam uctovany zpozdene pokuty: https://did.li/ItZCN",
+   "url_in_message": "https://did.li/ItZCN",
+   "source_url": "https://md.gov.cz/Media/Media-a-tiskove-zpravy/Pozor-na-podvodne-SMS-vyzyvajici-k-zaplaceni-pokut",
+   "source_name": "md.gov.cz",
+   "result": {
+    "verdict": "podvod",
+    "verdict_label": "Téměř jistě podvod",
+    "confidence": "vysoka",
+    "headline": "Jde o podvodnou SMS o nezaplaceném mýtu, na odkaz neklikejte.",
+    "scam_type": "falešná výzva k úhradě mýtného",
+    "red_flags": [
+     {
+      "signal": "Zkrácený neznámý odkaz",
+      "evidence": "https://did.li/ItZCN",
+      "explanation": "Skutečné úřady ani správce mýta neposílají zkrácené odkazy, které skrývají, kam vás ve skutečnosti zavedou."
+     },
+     {
+      "signal": "Strašení pokutou",
+      "evidence": "budou vam uctovany zpozdene pokuty",
+      "explanation": "Hrozba pokutou má vyvolat strach, abyste jednali rychle a bez přemýšlení."
+     },
+     {
+      "signal": "Neurčitý odesílatel",
+      "evidence": "Odesílatel: Info",
+      "explanation": "Zpráva neuvádí žádný konkrétní úřad ani firmu, se kterou byste měli smlouvu."
+     },
+     {
+      "signal": "Obecný text bez údajů",
+      "evidence": "Vase vozidlo ma silnicni mytné",
+      "explanation": "Chybí SPZ, místo i částka, což skutečné upozornění vždy obsahuje."
+     }
+    ],
+    "reassuring_signs": [],
+    "what_to_do": [
+     "Na odkaz neklikejte a na zprávu neodpovídejte, SMS smažte.",
+     "Pokud jste už zadali údaje o kartě, ihned volejte své bance na číslo ze zadní strany karty a kartu zablokujte.",
+     "Pokud máte o mýtu pochybnost, ověřte si to sami na oficiálních stránkách mytocz.cz nebo edalnice.cz, nikdy přes odkaz ze zprávy.",
+     "Pokud jste přišli o peníze, oznamte to bance a Policii ČR na čísle 158."
+    ],
+    "explanation": "Toto je známý typ podvodné SMS, která rozesílá výzvy k zaplacení mýta hromadně. Odkaz obvykle vede na falešnou platební stránku, kde podvodníci chtějí údaje o vaší kartě. Skutečné dlužné mýto vám nikdo neoznamuje takto anonymní SMS se zkráceným odkazem.",
+    "checks": [],
+    "model": "anthropic/claude-opus-5.5",
+    "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+   }
+  },
+  {
+   "id": "legit-005",
+   "title": "Skutečná SMS od PPL",
+   "label": "legit",
+   "channel": "SMS",
+   "sender": "PPL",
+   "text": "PPL zasilku 40857329414 s dobirkou 590Kc dorucime dnes 9-11. PIN 123456. 725123456 Nebudete na adrese? ppl.cz/z?id=40857329414&p=123456",
+   "url_in_message": "ppl.cz/z?id=40857329414&p=123456",
+   "source_url": "https://developer.ppl.cz/web/guest/w/podvodne-sms",
+   "source_name": "developer.ppl.cz",
+   "result": {
+    "verdict": "bez_varovnych_signalu",
+    "verdict_label": "Nenašli jsme varovné signály",
+    "confidence": "stredni",
+    "headline": "Zpráva vypadá jako běžné oznámení PPL o doručení zásilky.",
+    "scam_type": null,
+    "red_flags": [],
+    "reassuring_signs": [
+     "Odkaz vede na doménu ppl.cz, která podle naší kontroly skutečně patří společnosti PPL.",
+     "Zpráva nežádá zadání karty, hesla ani platbu přes odkaz.",
+     "Formát odpovídá běžným SMS od PPL (číslo zásilky, čas doručení, PIN pro převzetí, telefon na řidiče).",
+     "Dobírka se platí až při převzetí zásilky."
+    ],
+    "what_to_do": [
+     "Ověřte si, zda opravdu čekáte zásilku na dobírku za 590 Kč. Pokud ne, nic neplaťte a zásilku nepřebírejte.",
+     "Pokud chcete změnit doručení, otevřete raději sami stránku ppl.cz nebo aplikaci PPL a zadejte číslo zásilky.",
+     "PIN sdělte jen řidiči při převzetí balíku, nikomu po telefonu."
+    ],
+    "explanation": "Odkaz vede na skutečný web PPL a zpráva po vás nechce citlivé údaje ani platbu předem. Dobírku platíte až kurýrovi při převzetí. Zkontrolujte jen, že jste si opravdu něco na dobírku objednali.",
+    "checks": [
+     {
+      "name": "Odkaz ppl.cz",
+      "status": "ok",
+      "detail": "Doména ppl.cz patří společnosti PPL.",
+      "source": "seznam oficiálních domén Nenaleť"
+     }
+    ],
+    "model": "anthropic/claude-opus-5.5",
+    "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+   }
+  },
+  {
+   "id": "legit-002",
+   "title": "Skutečné upozornění datové schránky",
+   "label": "legit",
+   "channel": "E-mail",
+   "sender": "Datové schránky <notifikace@mojedatovaschranka.cz>",
+   "text": "Předmět: Nová datová zpráva do vlastních rukou pro: [jméno]\n\nV datové schránce je nová datová zpráva do vlastních rukou: Re: Žádost o výpis údajů z Registru obyvatel\nOdesílatel: Automat ZR (Digitální a informační agentura) (schránka: 4h8cxph)\nPříjemce: [jméno] (schránka: [ID schránky])\nČíslo této zprávy je 1580747097.\nNotifikace jsou vám zasílány dle vašeho nastavení a mají pouze informativní charakter.\n\nPřejeme vám krásný den,\nDigitální a informační agentura\n\nDatové schránky jsou dostupné na adrese https://mojedatovaschranka.cz\n\nDávejte pozor, na co klikáte, abyste předešli zneužití přístupových údajů. Před kliknutím na odkaz v e-mailu zkontrolujte, zda vede na oficiální adresu naší aplikace. Nejlépe se ochráníte uložením adresy https://mojedatovaschranka.cz jako záložky v prohlížeči. Naše e-maily jsou opatřené el. pečetí DIA, podle které je poznáte.",
+   "url_in_message": "https://mojedatovaschranka.cz",
+   "source_url": "https://www.lupa.cz/clanky/v-datovych-schrankach-je-neprilis-bezpecna-novinka-dia-ji-ale-zduvodnuje-zvysenim-bezpecnosti/",
+   "source_name": "lupa.cz",
+   "result": {
+    "verdict": "bez_varovnych_signalu",
+    "verdict_label": "Nenašli jsme varovné signály",
+    "confidence": "stredni",
+    "headline": "Vypadá jako běžné upozornění na novou zprávu v datové schránce.",
+    "scam_type": null,
+    "red_flags": [],
+    "reassuring_signs": [
+     "Odkaz i adresa odesílatele vedou na oficiální doménu mojedatovaschranka.cz, což potvrdila naše kontrola.",
+     "Zpráva nežádá platbu, heslo, kód ani údaje z karty.",
+     "Obsahuje číslo zprávy a odesílatele, které si můžete sami ověřit po přihlášení.",
+     "Odpovídá žádosti o výpis z Registru obyvatel, pokud jste o něj žádali."
+    ],
+    "what_to_do": [
+     "Do datové schránky se přihlaste sami přes uloženou záložku nebo napsáním adresy mojedatovaschranka.cz, ne přes odkaz v e-mailu.",
+     "Zkontrolujte, zda tam opravdu je zpráva s číslem 1580747097.",
+     "Pokud jste o výpis z Registru obyvatel nežádali, zprávu neotvírejte a zavolejte na oficiální podporu datových schránek."
+    ],
+    "explanation": "E-mail přišel z oficiální adresy datových schránek a odkaz vede na správný web. Nežádá peníze ani přihlašovací údaje, jen informuje o nové zprávě. Pro jistotu se ale vždy přihlašujte sami, ne přes odkaz.",
+    "checks": [
+     {
+      "name": "Odkaz mojedatovaschranka.cz",
+      "status": "ok",
+      "detail": "Doména mojedatovaschranka.cz patří společnosti Portál občana / Identita občana.",
+      "source": "seznam oficiálních domén Nenaleť"
+     }
+    ],
+    "model": "anthropic/claude-opus-5.5",
+    "disclaimer": "Nenaleť je pomocník, ne záruka. Může se mýlit oběma směry. Když jde o peníze, vždy si to ověřte sami – zavolejte bance nebo blízkému na číslo, které znáte."
+   }
+  }
+ ]
+}
