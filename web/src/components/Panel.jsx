@@ -88,8 +88,8 @@ function innerScrolls(target, dy, stop) {
 }
 
 /**
- * Krokování: jedno gesto (kolečko, touchpad, klávesa) = jeden krok. Dojezd touchpadu se nepočítá
- * jako nové gesto; nové gesto začne až po krátké pauze v událostech kolečka.
+ * Krokování: jedno gesto (kolečko, touchpad, klávesa) = jeden krok dolů, nebo rovnou předchozí sekce nahoru.
+ * Dojezd touchpadu se nepočítá jako nové gesto; nové gesto začne až po krátké pauze v událostech kolečka.
  */
 function stepper(panels) {
   const points = () => {
@@ -102,10 +102,28 @@ function stepper(panels) {
   let last = 0;
   let acc = 0;
   let used = false;
+  // Začátek a poslední krok každé sekce s kroky (úvod kroky nemá).
+  const sections = () =>
+    panels
+      .map((p) => [...p.querySelectorAll(':scope > .snap-mark')].map((m) => Math.round(m.getBoundingClientRect().top + window.scrollY)))
+      .filter((ys) => ys.length)
+      .map((ys) => ({ first: ys[0], last: ys[ys.length - 1] }));
   const go = (dir) => {
     const y = window.scrollY;
-    const pts = points();
-    const target = dir > 0 ? pts.find((p) => p > y + 4) : [...pts].reverse().find((p) => p < y - 4);
+    let target;
+    if (dir > 0) {
+      // Dolů: další krok (nebo další sekce).
+      target = points().find((p) => p > y + 4);
+    } else {
+      // Nahoru: rovnou na předchozí sekci, celou (kroky se při návratu neschovávají).
+      const info = sections();
+      let i = -1;
+      info.forEach((sec, idx) => { if (sec.first <= y + 4) i = idx; });
+      if (i === -1) target = 0;
+      else if (y > info[i].last + 4) target = info[i].last; // z patičky na poslední sekci
+      else target = i === 0 ? 0 : info[i - 1].last;
+      if (target >= y - 4) target = undefined;
+    }
     if (target === undefined) return;
     busy = true;
     gsap.to(window, { scrollTo: { y: target, autoKill: false }, duration: 0.85, ease: 'power3.inOut', onComplete: () => { busy = false; } });
@@ -147,17 +165,22 @@ export function setupPanels(scope) {
     document.documentElement.classList.add('fp');
     const panels = gsap.utils.toArray('.panel', scope);
     panels.forEach((panel) => {
-      panel.querySelectorAll(':scope > .snap-mark').forEach((mark) => {
+      const marks = panel.querySelectorAll(':scope > .snap-mark');
+      if (!marks.length) return;
+      const n = marks.length;
+      marks.forEach((mark) => {
         const k = Number(mark.dataset.k);
         ScrollTrigger.create({
           trigger: mark,
           start: 'top 55%',
           end: 'bottom 55%',
-          onEnter: () => setStep(panel, k),
-          onEnterBack: () => setStep(panel, k),
-          onLeaveBack: () => setStep(panel, k - 1),
+          // Dolů: odkrývat po krocích. Zpátky nahoru: celá sekce hned, nic se neschovává.
+          onEnter: () => setStep(panel, Math.max(k, Number(panel.dataset.at || 0))),
+          onEnterBack: () => setStep(panel, n),
         });
       });
+      // Sekce odjela dolů z obrazovky (člověk je nad ní): příště se kroky přehrají znovu.
+      ScrollTrigger.create({ trigger: panel, start: 'top 90%', onLeaveBack: () => setStep(panel, 0) });
     });
     const fit = () => fitPanels(panels);
     fit();
