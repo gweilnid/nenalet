@@ -3,11 +3,11 @@ import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import HeroLoop from '../components/HeroLoop.jsx';
 import CaseExplorer from '../components/CaseExplorer.jsx';
+import ProofSection from '../components/ProofSection.jsx';
 import Story from '../components/Story.jsx';
 import { Logo } from '../components/Icons.jsx';
 import SplitText from '../components/reactbits/SplitText.jsx';
 import ScrollReveal from '../components/reactbits/ScrollReveal.jsx';
-import CountUp from '../components/reactbits/CountUp.jsx';
 import AnimatedContent from '../components/reactbits/AnimatedContent.jsx';
 import Magnet from '../components/reactbits/Magnet.jsx';
 import '../components/reactbits/ScrollReveal.css';
@@ -104,6 +104,8 @@ export default function Home() {
           <HeroLoop examples={examples} />
         </section>
 
+        <ProofSection />
+
         <section className="section frame" aria-labelledby="why-h">
           <div className="grid why">
             <h2 id="why-h" style={{ gridColumn: '1 / -1' }}>Hlídá, co po vás zpráva chce</h2>
@@ -129,30 +131,6 @@ export default function Home() {
 
         <Story example={ppl} />
 
-        <section id="presnost" className="proof frame" aria-labelledby="proof-h">
-          <div className="grid">
-            <h2 id="proof-h">Změřeno na skutečných zprávách</h2>
-            <p className="proof-lead">
-              Nenaleť jsme otestovali na 107 zprávách: 69 skutečných podvodů z varování policie, bank, dopravců a médií a 38 legitimních zpráv.
-            </p>
-            <div className="proof-figures">
-              <div className="figure">
-                <span className="figure-num"><CountUp to={69} duration={1.4} /> z 69</span>
-                <p className="figure-text">podvodů Nenaleť zachytil</p>
-              </div>
-              <div className="figure">
-                <span className="figure-num"><CountUp to={11} duration={1.2} /> s</span>
-                <p className="figure-text">trvá jedna kontrola (medián)</p>
-              </div>
-            </div>
-            <div className="proof-foot">
-              <p>
-                Instrukce pro model vznikly dřív než testová sada a podle výsledků jsme je neladili.
-              </p>
-              <a className="btn btn-ink" href="metodika">Celá metodika i s chybami</a>
-            </div>
-          </div>
-        </section>
 
         <section id="pouziti" className="section frame" aria-labelledby="cases-h">
           <div className="grid">
