@@ -13,6 +13,7 @@
   }
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.55 "Atkinson Hyperlegible Next", "Segoe UI", system-ui, -apple-system, sans-serif; }
 body.popup { width: 340px; padding: 16px; display: grid; gap: 10px; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
