@@ -14,7 +14,7 @@ anyio==4.15.1
     #   openai
     #   starlette
     #   watchfiles
-c2pa-python==0.38.2
+c2pa-python==0.38.1
     # via nenalet
 certifi==2026.10.23
     # via
